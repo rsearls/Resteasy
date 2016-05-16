@@ -137,6 +137,7 @@
                 <module>server-adapters/resteasy-undertow</module>
                 <module>resteasy-links</module>
                 <module>resteasy-servlet-initializer</module>
+                <module>resteasy-sse</module>
             </modules>
             <build>
                 <plugins>
@@ -184,6 +185,7 @@
                 <module>jboss-modules</module>
                 <module>profiling-tests</module>
                 <module>resteasy-wadl</module>
+                <module>resteasy-sse</module>
                 <module>arquillian</module>
             </modules>
         </profile>
@@ -212,6 +214,7 @@
                 <module>jboss-modules</module>
                 <module>profiling-tests</module>
                 <module>resteasy-wadl</module>
+                <module>resteasy-sse</module>
                 <module>arquillian</module>
             </modules>
         </profile>
@@ -245,6 +248,7 @@
                 <module>resteasy-wadl</module>
                 <!-- <module>arquillian</module> -->
                 <!-- <module>as7-integration-testing/modules-test</module> -->
+                <module>resteasy-sse</module>
             </modules>
         </profile>
         <profile>
@@ -275,6 +279,7 @@
                 <module>jboss-modules</module>
                 <module>profiling-tests</module>
                 <module>resteasy-wadl</module>
+                <module>resteasy-sse</module>
                 <module>arquillian</module>
                 <!-- <module>as7-integration-testing/modules-test</module> -->
             </modules>
@@ -583,7 +588,7 @@
                     <configuration>
                         <forkMode>once</forkMode>
                         <argLine>-Xms512m -Xmx512m</argLine>
-                        <redirectTestOutputToFile>true</redirectTestOutputToFile>
+			<redirectTestOutputToFile>true</redirectTestOutputToFile>
                     </configuration>
                 </plugin>
                 <plugin>

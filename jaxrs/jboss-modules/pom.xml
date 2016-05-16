@@ -104,6 +104,11 @@
             <artifactId>resteasy-client</artifactId>
             <version>${project.version}</version>
         </dependency>
+         <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-sse</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-crypto</artifactId>

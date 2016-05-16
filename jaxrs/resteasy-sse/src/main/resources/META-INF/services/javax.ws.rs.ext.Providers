@@ -1,0 +1,3 @@
+org.jboss.resteasy.sse.SseEventInputMessageBodyReader
+org.jboss.resteasy.sse.InboundSseEventMessageBodyReader
+org.jboss.resteasy.sse.OutboundSseEventMessageBodyWriter

@@ -15,11 +15,13 @@
      <configuration>
        <property name="jbossHome">target/wildfly</property>
        <property name="serverConfig">standalone-full.xml</property>
-         <!-- rls
+       <!-- -->
        <property name="javaVmArguments">-Xmx4096m -XX:MaxPermSize=1024m</property>
-         rls -->
+
        <!-- Uncomment next line to run server in debug mode.  -->
-       <!-- --> <property name="javaVmArguments">-Xmx2048m -XX:MaxPermSize=512m -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=y</property> <!-- -->
+       <!--
+       <property name="javaVmArguments">-Xmx2048m -XX:MaxPermSize=512m -Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=y</property>
+        -->
      </configuration>
    </container>
 </arquillian>

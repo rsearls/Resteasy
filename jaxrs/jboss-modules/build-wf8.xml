@@ -96,7 +96,11 @@
             <maven-resource group="com.fasterxml.jackson.jaxrs" artifact="jackson-jaxrs-base"/>
             <maven-resource group="com.fasterxml.jackson.module" artifact="jackson-module-jaxb-annotations" />
         </module-def>
-
+        <!-- rls start -->
+        <module-def name="javax.ws.rs.sse">
+            <maven-resource group="javax.ws.rs" artifact="javax.ws.rs-api"/>
+        </module-def>
+        <!-- rls end -->
         <!-- already present in wildfly -->
         <module-def name="javax.ws.rs.api">
             <maven-resource group="org.jboss.spec.javax.ws.rs" artifact="jboss-jaxrs-api_2.0_spec"/>
@@ -134,6 +138,7 @@
             <maven-resource group="org.jboss.resteasy" artifact="async-http-servlet-3.0"/>
             <maven-resource group="org.jboss.resteasy" artifact="resteasy-jaxrs"/>
             <maven-resource group="org.jboss.resteasy" artifact="resteasy-client"/>
+            <maven-resource group="org.jboss.resteasy" artifact="resteasy-sse"/>
         </module-def>
 
         <module-def name="org.jboss.resteasy.jose-jwt">

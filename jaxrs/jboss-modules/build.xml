@@ -142,6 +142,7 @@
             <maven-resource group="org.jboss.resteasy" artifact="async-http-servlet-3.0"/>
             <maven-resource group="org.jboss.resteasy" artifact="resteasy-jaxrs"/>
             <maven-resource group="org.jboss.resteasy" artifact="resteasy-client"/>
+            <maven-resource group="org.jboss.resteasy" artifact="resteasy-sse"/>
         </module-def>
 
         <module-def name="org.jboss.resteasy.jose-jwt">

@@ -36,6 +36,7 @@
         <module>RESTEASY-1073-WF8</module>
         <module>RESTEASY-1082-WF8</module>
         <!--<module>RESTEASY-TEST-EAP6</module>-->
+        <module>RESTEASY-SSE-TEST-WF8</module>
         <module>RESTEASY-TEST-WF8</module>
         <module>RESTEASY-1141-WF8</module>
         <module>RESTEASY-1141-jetty</module>
