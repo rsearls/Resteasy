@@ -21,10 +21,12 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.Providers;
 import javax.ws.rs.ext.ReaderInterceptor;
+import javax.ws.rs.sse.SseEventInput;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.io.Reader;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
@@ -186,7 +188,9 @@ public abstract class ClientResponse extends BuiltResponse
             {
                try
                {
+            	   if (!SseEventInput.class.isInstance(entity)) {
             	   close();
+            	   }
                }
                catch (Exception ignored)
                {

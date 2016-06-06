@@ -22,30 +22,20 @@
   ~ 02110-1301 USA, or see the FSF site: http://www.fsf.org.
   -->
 
-<module xmlns="urn:jboss:module:1.1" name="org.jboss.resteasy.resteasy-jaxrs">
+<module xmlns="urn:jboss:module:1.1" name="org.jboss.resteasy.resteasy-sse-provider">
     <resources>
         <!-- Insert resources here -->
     </resources>
 
     <dependencies>
-        <module name="javax.api"/>
-        <module name="javax.annotation.api"/>
-        <module name="javax.activation.api"/>
-        <module name="javax.ws.rs.api"/>
-        <module name="org.apache.commons.codec" />
-        <module name="org.apache.httpcomponents" />
-        <module name="org.apache.log4j"/>
-        <module name="org.slf4j" />
-        <module name="javax.servlet.api"/>
-        <module name="javax.validation.api"/>
+        <module name="com.sun.xml.bind"/>
         <module name="javax.xml.bind.api"/>
-        <module name="org.hibernate.validator"/>
-
-        <!-- exported -->
-        <module name="org.apache.httpcomponents"/>
-        <module name="org.apache.commons.io"/>
-        <module name="org.jboss.resteasy.resteasy-validator-provider-11" services="export" export="true"/>
-        <module name="org.jboss.resteasy.resteasy-sse-provider" services="export" export="true"/>
+        <module name="javax.api"/>
+        <module name="javax.enterprise.api"/>
+        <module name="javax.servlet.api"/>
+        <module name="javax.ws.rs.api"/>
+        <module name="org.yaml.snakeyaml"/>
+        <module name="org.jboss.resteasy.resteasy-jaxrs"/>
         <module name="org.jboss.logging"/>
     </dependencies>
 </module>

@@ -4,16 +4,21 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.client.AsyncInvoker;
+import javax.ws.rs.client.CompletionStageRxInvoker;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.NioInvoker;
+import javax.ws.rs.client.RxInvoker;
 import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+
 import java.net.URI;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
@@ -309,4 +314,35 @@ public class ClientInvocationBuilder implements Invocation.Builder
       invocation.property(name, value);
       return this;
    }
+
+@Override
+public CompletionStageRxInvoker rx() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public CompletionStageRxInvoker rx(ExecutorService executorService) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public <T extends RxInvoker> T rx(Class<T> clazz) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public <T extends RxInvoker> T rx(Class<T> clazz,
+		ExecutorService executorService) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+@Override
+public NioInvoker nio() {
+	// TODO Auto-generated method stub
+	return null;
+}
 }

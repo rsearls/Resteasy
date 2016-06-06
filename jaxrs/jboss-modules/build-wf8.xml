@@ -99,7 +99,7 @@
 
         <!-- already present in wildfly -->
         <module-def name="javax.ws.rs.api">
-            <maven-resource group="org.jboss.spec.javax.ws.rs" artifact="jboss-jaxrs-api_2.0_spec"/>
+            <maven-resource group="javax.ws.rs" artifact="javax.ws.rs-api"/>
         </module-def>
 
         <module-def name="org.jboss.resteasy.resteasy-atom-provider">
@@ -163,6 +163,10 @@
 
         <module-def name="org.jboss.resteasy.resteasy-yaml-provider">
             <maven-resource group="org.jboss.resteasy" artifact="resteasy-yaml-provider" jandex="true"/>
+        </module-def>
+
+        <module-def name="org.jboss.resteasy.resteasy-sse-provider">
+            <maven-resource group="org.jboss.resteasy" artifact="resteasy-sse-provider" jandex="true"/>
         </module-def>
 
         <zip destfile="${output.dir}/resteasy-jboss-modules-wf8-${project.version}.zip">

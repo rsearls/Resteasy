@@ -8,6 +8,7 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.jboss.resteasy.util.DateUtil;
 
 import javax.ws.rs.core.*;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -222,5 +223,30 @@ public class RequestImpl implements Request
 
       return Response.status(SC_PRECONDITION_FAILED);
    }
+
+@Override
+public void entity(NioReaderHandler reader) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void entity(NioReaderHandler reader, NioCompletionHandler completion) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void entity(NioReaderHandler reader, NioErrorHandler error) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void entity(NioReaderHandler reader, NioCompletionHandler completion,
+		NioErrorHandler error) {
+	// TODO Auto-generated method stub
+	
+}
 
 }
