@@ -17,9 +17,6 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
 public class InboundSseEventImpl implements InboundSseEvent
 {
-
-   private static final GenericType<String> STRING_AS_GENERIC_TYPE = new GenericType<>(String.class);
-
    private final String name;
 
    private final String id;
@@ -175,7 +172,7 @@ public class InboundSseEventImpl implements InboundSseEvent
 
    public String readData()
    {
-      return readData(STRING_AS_GENERIC_TYPE);
+      return readData(SseConstants.STRING_AS_GENERIC_TYPE);
    }
 
    public <T> T readData(Class<T> type)

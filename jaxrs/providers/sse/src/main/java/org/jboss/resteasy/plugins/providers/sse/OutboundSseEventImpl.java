@@ -24,9 +24,7 @@ public class OutboundSseEventImpl implements OutboundSseEvent
 
    private final long reconnectDelay;
 
-   /**
-    * Used for creating {@link OutboundEvent} instances.
-    */
+
    public static class BuilderImpl implements Builder
    {
 
@@ -42,7 +40,7 @@ public class OutboundSseEventImpl implements OutboundSseEvent
 
       private Object data;
 
-      private MediaType mediaType = SseContextImpl.SERVER_SENT_EVENTS_TYPE;
+      private MediaType mediaType = SseConstants.SERVER_SENT_EVENTS_TYPE;
 
       public Builder name(String name)
       {

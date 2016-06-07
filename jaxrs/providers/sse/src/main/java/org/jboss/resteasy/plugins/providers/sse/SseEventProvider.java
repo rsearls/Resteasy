@@ -26,36 +26,12 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 {"text/event-stream"})
 @Consumes(
 {"text/event-stream"})
-//TODO:move writeTo to SseEventOutputImpl
 public class SseEventProvider implements MessageBodyReader<SseEventInput>, MessageBodyWriter<OutboundSseEvent>
 {
-   public static final String SERVER_SENT_EVENTS = "text/event-stream";
-
-   public static final MediaType SERVER_SENT_EVENTS_TYPE = MediaType.valueOf(SERVER_SENT_EVENTS);
-
-   private static final Charset UTF8 = Charset.forName("UTF-8");
-
-   private static final byte[] COMMENT_LEAD = ": ".getBytes(UTF8);
-
-   private static final byte[] NAME_LEAD = "event: ".getBytes(UTF8);
-
-   private static final byte[] ID_LEAD = "id: ".getBytes(UTF8);
-
-   private static final byte[] RETRY_LEAD = "retry: ".getBytes(UTF8);
-
-   private static final byte[] DATA_LEAD = "data: ".getBytes(UTF8);
-
-   private static final byte[] EOL =
-   {'\n'};
-
-   private enum State {
-      NEW_LINE, COMMENT, FIELD,
-   }
-
    @Override
    public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType)
    {
-      return type.equals(OutboundSseEvent.class) && SERVER_SENT_EVENTS_TYPE.isCompatible(mediaType);
+      return type.equals(OutboundSseEvent.class) && SseConstants.SERVER_SENT_EVENTS_TYPE.isCompatible(mediaType);
    }
 
    @Override
@@ -70,7 +46,7 @@ public class SseEventProvider implements MessageBodyReader<SseEventInput>, Messa
          MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream)
          throws IOException, WebApplicationException
    {
-      Charset charset = UTF8;
+      Charset charset = SseConstants.UTF8;
       if (mediaType != null && mediaType.getParameters().get(MediaType.CHARSET_PARAMETER) != null)
       {
          charset = Charset.forName(mediaType.getParameters().get(MediaType.CHARSET_PARAMETER));
@@ -79,9 +55,9 @@ public class SseEventProvider implements MessageBodyReader<SseEventInput>, Messa
       {
          for (final String comment : event.getComment().split("\n"))
          {
-            entityStream.write(COMMENT_LEAD);
+            entityStream.write(SseConstants.COMMENT_LEAD);
             entityStream.write(comment.getBytes(charset));
-            entityStream.write(EOL);
+            entityStream.write(SseConstants.EOL);
          }
       }
 
@@ -89,21 +65,21 @@ public class SseEventProvider implements MessageBodyReader<SseEventInput>, Messa
       {
          if (event.getName() != null)
          {
-            entityStream.write(NAME_LEAD);
+            entityStream.write(SseConstants.NAME_LEAD);
             entityStream.write(event.getName().getBytes(charset));
-            entityStream.write(EOL);
+            entityStream.write(SseConstants.EOL);
          }
          if (event.getId() != null)
          {
-            entityStream.write(ID_LEAD);
+            entityStream.write(SseConstants.ID_LEAD);
             entityStream.write(event.getId().getBytes(charset));
-            entityStream.write(EOL);
+            entityStream.write(SseConstants.EOL);
          }
          if (event.getReconnectDelay() > -1)
          {
-            entityStream.write(RETRY_LEAD);
+            entityStream.write(SseConstants.RETRY_LEAD);
             entityStream.write(Long.toString(event.getReconnectDelay()).getBytes(charset));
-            entityStream.write(EOL);
+            entityStream.write(SseConstants.EOL);
          }
 
          if (event.getData() != null)
@@ -121,7 +97,7 @@ public class SseEventProvider implements MessageBodyReader<SseEventInput>, Messa
                payloadClass = Object.class;
             }
 
-            entityStream.write(DATA_LEAD);
+            entityStream.write(SseConstants.DATA_LEAD);
             MessageBodyWriter writer = ResteasyProviderFactory.getInstance().getMessageBodyWriter(payloadClass,
                   payloadType, annotations, event.getMediaType());
 
@@ -133,7 +109,7 @@ public class SseEventProvider implements MessageBodyReader<SseEventInput>, Messa
 
             writer.writeTo(event.getData(), payloadClass, payloadType, annotations, event.getMediaType(), httpHeaders,
                   entityStream);
-            entityStream.write(EOL);
+            entityStream.write(SseConstants.EOL);
          }
 
       }
@@ -143,7 +119,7 @@ public class SseEventProvider implements MessageBodyReader<SseEventInput>, Messa
    @Override
    public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType)
    {
-      return SERVER_SENT_EVENTS_TYPE.isCompatible(mediaType);
+      return SseConstants.SERVER_SENT_EVENTS_TYPE.isCompatible(mediaType);
    }
 
    @Override

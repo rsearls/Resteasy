@@ -401,10 +401,10 @@ public class SseEventSourceImpl implements SseEventSource
 
       private Invocation.Builder prepareHandshakeRequest()
       {
-         final Invocation.Builder request = target.request(SseContextImpl.SERVER_SENT_EVENTS_TYPE);
+         final Invocation.Builder request = target.request(SseConstants.SERVER_SENT_EVENTS_TYPE);
          if (lastEventId != null && !lastEventId.isEmpty())
          {
-            request.header(SseContextImpl.LAST_EVENT_ID_HEADER, lastEventId);
+            request.header(SseConstants.LAST_EVENT_ID_HEADER, lastEventId);
          }
          if (disableKeepAlive)
          {

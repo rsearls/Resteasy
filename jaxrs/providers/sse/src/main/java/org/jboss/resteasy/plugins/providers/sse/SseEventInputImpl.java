@@ -16,25 +16,6 @@ import javax.ws.rs.sse.SseEventInput;
 public class SseEventInputImpl implements SseEventInput
 {
 
-   private static final Charset UTF8 = Charset.forName("UTF-8");
-
-   private static final byte[] COMMENT_LEAD = ": ".getBytes(UTF8);
-
-   private static final byte[] NAME_LEAD = "event: ".getBytes(UTF8);
-
-   private static final byte[] ID_LEAD = "id: ".getBytes(UTF8);
-
-   private static final byte[] RETRY_LEAD = "retry: ".getBytes(UTF8);
-
-   private static final byte[] DATA_LEAD = "data: ".getBytes(UTF8);
-
-   private static final byte[] EOL =
-   {'\n'};
-
-   private enum State {
-      NEW_LINE, COMMENT, FIELD,
-   }
-
    private Annotation[] annotations;
 
    private MediaType mediaType;
@@ -42,7 +23,7 @@ public class SseEventInputImpl implements SseEventInput
    private MultivaluedMap<String, String> httpHeaders;
 
    private InputStream inputStream;
-   
+
    private static ChunkReader chunkReader = new ChunkReader();
 
    public SseEventInputImpl(Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, String> httpHeaders,
@@ -76,19 +57,20 @@ public class SseEventInputImpl implements SseEventInput
       try
       {
          chunk = chunkReader.readChunk(inputStream);
-         if (chunk == null) {
-             //close();
-             return null;
+         if (chunk == null)
+         {
+            //close();
+            return null;
          }
       }
       catch (IOException e1)
       {
-        e1.printStackTrace();
-      } 
-      
+         e1.printStackTrace();
+      }
+
       final ByteArrayInputStream entityStream = new ByteArrayInputStream(chunk);
       final ByteArrayOutputStream tokenData = new ByteArrayOutputStream();
-      Charset charset = UTF8;
+      Charset charset = SseConstants.UTF8;
       if (mediaType != null && mediaType.getParameters().get(MediaType.CHARSET_PARAMETER) != null)
       {
          charset = Charset.forName(mediaType.getParameters().get(MediaType.CHARSET_PARAMETER));
@@ -96,7 +78,7 @@ public class SseEventInputImpl implements SseEventInput
       final InboundSseEventImpl.Builder eventBuilder = new InboundSseEventImpl.Builder(annotations, mediaType,
             httpHeaders);
       int b = -1;
-      State currentState = State.NEW_LINE;
+      SseConstants.State currentState = SseConstants.State.NEW_LINE;
       try
       {
          loop : do
@@ -124,12 +106,12 @@ public class SseEventInputImpl implements SseEventInput
 
                   if (b == ':')
                   {
-                     currentState = State.COMMENT;
+                     currentState = SseConstants.State.COMMENT;
                   }
                   else
                   {
                      tokenData.write(b);
-                     currentState = State.FIELD;
+                     currentState = SseConstants.State.FIELD;
                   }
                   break;
                case COMMENT :
@@ -138,7 +120,7 @@ public class SseEventInputImpl implements SseEventInput
                   final String commentLine = tokenData.toString(charset.toString());
                   tokenData.reset();
                   eventBuilder.commentLine(commentLine.trim());
-                  currentState = State.NEW_LINE;
+                  currentState = SseConstants.State.NEW_LINE;
                   break;
                case FIELD :
                   // read field name
@@ -164,7 +146,7 @@ public class SseEventInputImpl implements SseEventInput
                   processField(eventBuilder, fieldName, mediaType, tokenData.toByteArray());
                   tokenData.reset();
 
-                  currentState = State.NEW_LINE;
+                  currentState = SseConstants.State.NEW_LINE;
                   break;
             }
          }
@@ -200,7 +182,7 @@ public class SseEventInputImpl implements SseEventInput
    private void processField(final InboundSseEventImpl.Builder inboundEventBuilder, final String name,
          final MediaType mediaType, final byte[] value)
    {
-      Charset charset = UTF8;
+      Charset charset = SseConstants.UTF8;
       if (mediaType != null && mediaType.getParameters().get(MediaType.CHARSET_PARAMETER) != null)
       {
          charset = Charset.forName(mediaType.getParameters().get(MediaType.CHARSET_PARAMETER));
@@ -213,7 +195,7 @@ public class SseEventInputImpl implements SseEventInput
       else if ("data".equals(name))
       {
          inboundEventBuilder.write(value);
-         inboundEventBuilder.write(EOL);
+         inboundEventBuilder.write(SseConstants.EOL);
       }
       else if ("id".equals(name))
       {

@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.sse.SseContext;
 import javax.ws.rs.sse.SseEventOutput;
 
+import org.jboss.resteasy.plugins.providers.sse.SseConstants;
 import org.jboss.resteasy.plugins.providers.sse.SseContextImpl;
 
 @Path("server-sent-events")
@@ -29,7 +30,7 @@ public class SseResource {
 	}
 
 	@GET
-	@Produces(SseContextImpl.SERVER_SENT_EVENTS)
+	@Produces(SseConstants.SERVER_SENT_EVENTS)
 	public SseEventOutput getMessageQueue() {
 		synchronized (outputLock) {
 			if (sseEventOutput != null) {
@@ -58,7 +59,7 @@ public class SseResource {
 
 	@GET
 	@Path("domains/{id}")
-	@Produces(SseContextImpl.SERVER_SENT_EVENTS)
+	@Produces(SseConstants.SERVER_SENT_EVENTS)
 	public SseEventOutput startDomain(@PathParam("id") final String id) {
 		final SseEventOutput output = sseContext.newOutput();
 
