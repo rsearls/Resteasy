@@ -57,7 +57,7 @@ public class SseEventSourceImpl implements SseEventSource
 
       private String name = null;
 
-      private boolean disableKeepAlive = true;
+      private boolean disableKeepAlive = false;
 
       public SourceBuilder(final WebTarget endpoint)
       {
@@ -228,8 +228,6 @@ public class SseEventSourceImpl implements SseEventSource
             new CopyOnWriteArrayList<>(Collections.singleton(listener)));
       if (listeners != null)
       {
-         // alas, new listener collection registration conflict:
-         // need to add the new listener to the existing listener collection
          listeners.add(listener);
       }
    }
@@ -263,8 +261,6 @@ public class SseEventSourceImpl implements SseEventSource
    {
       if (state.getAndSet(State.CLOSED) != State.CLOSED)
       {
-         // shut down only if has not been shut down before
-         //LOGGER.debugLog("Shutting down event processing.");
          //TODO:log 
          executor.shutdownNow();
       }
