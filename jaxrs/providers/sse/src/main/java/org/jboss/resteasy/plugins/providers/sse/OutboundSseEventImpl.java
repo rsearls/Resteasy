@@ -40,7 +40,7 @@ public class OutboundSseEventImpl implements OutboundSseEvent
 
       private Object data;
 
-      private MediaType mediaType = SseConstants.SERVER_SENT_EVENTS_TYPE;
+      private MediaType mediaType = MediaType.SERVER_SENT_EVENTS_TYPE;
 
       public Builder name(String name)
       {

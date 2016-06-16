@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.sse.OutboundSseEvent;
@@ -22,7 +23,7 @@ public class SseEventOutputImpl extends GenericType<OutboundSseEvent> implements
    private Servlet3AsyncHttpRequest request;
    private HttpServletResponse response;
    private boolean closed;
-   private static final byte[] CHUNK_DELIMITER =  Arrays.copyOf("\r\n".getBytes(),  "\r\n".getBytes().length);
+   private static final byte[] END = "\r\n\r\n".getBytes();
    public SseEventOutputImpl(final MessageBodyWriter<OutboundSseEvent> writer) {
       Object req = ResteasyProviderFactory.getContextData(org.jboss.resteasy.spi.HttpRequest.class);
       if (!(req instanceof Servlet3AsyncHttpRequest)) {
@@ -34,26 +35,30 @@ public class SseEventOutputImpl extends GenericType<OutboundSseEvent> implements
       if (!request.getAsyncContext().isSuspended()) {
          request.getAsyncContext().suspend();
       }
+
       response =  ResteasyProviderFactory.getContextData(HttpServletResponse.class);
-      response.setHeader(HttpHeaderNames.CONTENT_TYPE, SseConstants.SERVER_SENT_EVENTS);
-      response.setHeader(HttpHeaderNames.TRANSFER_ENCODING, "chunked");
+      response.setHeader(HttpHeaderNames.CONTENT_TYPE, MediaType.SERVER_SENT_EVENTS);
    }
   
    @Override
    public void close() throws IOException
    {
       //TODO：look at if this is enough
-      request.getAsyncContext().getAsyncResponse().resume("");
+      if (request.getAsyncContext().isSuspended() && request.getAsyncContext().getAsyncResponse() != null) {
+         if (request.getAsyncContext().isSuspended()) {
+            request.getAsyncContext().getAsyncResponse().resume(null);
+         }
+      }
       closed = true;
    }
 
    @Override
    public void write(OutboundSseEvent event) throws IOException
-   {    
-      writer.writeTo(event, event.getClass(), null, new Annotation [] {}, event.getMediaType(), null, response.getOutputStream());
-      //This is kind of hack, client side can't get chunk block. HttpClient's ChunkInputStream will read all chunks content
-      //TODO: we need to look at how to handle this
-      response.getOutputStream().write(CHUNK_DELIMITER);
+   { 
+      java.io.ByteArrayOutputStream bout = new java.io.ByteArrayOutputStream();      
+      writer.writeTo(event, event.getClass(), null, new Annotation [] {}, event.getMediaType(), null, bout);
+      response.getOutputStream().write(bout.toByteArray());
+      response.getOutputStream().write(END);
       response.flushBuffer();
    }
 

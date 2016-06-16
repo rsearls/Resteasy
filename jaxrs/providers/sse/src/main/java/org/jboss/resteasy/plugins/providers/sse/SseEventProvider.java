@@ -31,7 +31,7 @@ public class SseEventProvider implements MessageBodyReader<SseEventInput>, Messa
    @Override
    public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType)
    {
-      return type.equals(OutboundSseEvent.class) && SseConstants.SERVER_SENT_EVENTS_TYPE.isCompatible(mediaType);
+      return type.equals(OutboundSseEvent.class) && MediaType.SERVER_SENT_EVENTS_TYPE.isCompatible(mediaType);
    }
 
    @Override
@@ -119,7 +119,7 @@ public class SseEventProvider implements MessageBodyReader<SseEventInput>, Messa
    @Override
    public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType)
    {
-      return SseConstants.SERVER_SENT_EVENTS_TYPE.isCompatible(mediaType);
+      return MediaType.SERVER_SENT_EVENTS_TYPE.isCompatible(mediaType);
    }
 
    @Override

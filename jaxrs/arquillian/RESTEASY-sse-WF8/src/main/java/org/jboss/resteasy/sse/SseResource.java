@@ -1,6 +1,8 @@
 package org.jboss.resteasy.sse;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.Random;
 
 import javax.inject.Singleton;
 import javax.ws.rs.DELETE;
@@ -9,28 +11,27 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.sse.OutboundSseEvent;
 import javax.ws.rs.sse.SseContext;
 import javax.ws.rs.sse.SseEventOutput;
 
-import org.jboss.resteasy.plugins.providers.sse.SseConstants;
 import org.jboss.resteasy.plugins.providers.sse.SseContextImpl;
 
-@Path("server-sent-events")
+@Path("/server-sent-events")
 @Singleton
 public class SseResource {
 
 	private final Object outputLock = new Object();
 	private SseEventOutput sseEventOutput;
-	//@Inject
+	//TODO: @Inject
 	private SseContext sseContext = new SseContextImpl();
 
-	//@Inject
 	public SseResource() {
-		//this.sseContext = sseContext;
 	}
 
 	@GET
-	@Produces(SseConstants.SERVER_SENT_EVENTS)
+	@Produces(MediaType.SERVER_SENT_EVENTS)
 	public SseEventOutput getMessageQueue() {
 		synchronized (outputLock) {
 			if (sseEventOutput != null) {
@@ -57,9 +58,67 @@ public class SseResource {
 		}
 	}
 
+	private OutboundSseEvent createStatsEvent(
+			final OutboundSseEvent.Builder builder, final int eventId) {
+		return builder
+				.id("" + eventId)
+				.data(GreenHouse.class,
+						new GreenHouse(new Date().getTime(), 20 + new Random().nextInt(10), 30+20 + new Random().nextInt(10)))
+				.mediaType(MediaType.APPLICATION_JSON_TYPE).build();
+	}
+
+	@GET
+	@Path("sse/{id}")
+	@Produces("text/event-stream")
+	public SseEventOutput greenHouseStatus(@PathParam("id") final String id) {
+		final SseEventOutput output = sseContext.newOutput();
+
+		new Thread() {
+			public void run() {
+				try {
+					output.write(createStatsEvent(
+							sseContext.newEvent().name("greenhouse"), 1));
+					Thread.sleep(1000);
+					output.write(createStatsEvent(
+							sseContext.newEvent().name("greenhouse"), 2));
+					Thread.sleep(1000);
+					output.write(createStatsEvent(
+							sseContext.newEvent().name("greenhouse"), 3));
+					Thread.sleep(1000);
+					output.write(createStatsEvent(
+							sseContext.newEvent().name("greenhouse"), 4));
+					Thread.sleep(1000);
+					output.write(createStatsEvent(
+							sseContext.newEvent().name("greenhouse"), 5));
+					Thread.sleep(1000);
+					output.write(createStatsEvent(
+							sseContext.newEvent().name("greenhouse"), 6));
+					Thread.sleep(1000);
+					output.write(createStatsEvent(
+							sseContext.newEvent().name("greenhouse"), 7));
+					Thread.sleep(1000);
+					output.write(createStatsEvent(
+							sseContext.newEvent().name("greenhouse"), 8));
+					Thread.sleep(1000);
+					output.write(createStatsEvent(
+							sseContext.newEvent().name("greenhouse"), 9));
+					Thread.sleep(1000);
+					output.write(createStatsEvent(
+							sseContext.newEvent().name("greenhouse"), 10));
+
+					output.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}.start();
+
+		return output;
+	}
+
 	@GET
 	@Path("domains/{id}")
-	@Produces(SseConstants.SERVER_SENT_EVENTS)
+	@Produces(MediaType.SERVER_SENT_EVENTS)
 	public SseEventOutput startDomain(@PathParam("id") final String id) {
 		final SseEventOutput output = sseContext.newOutput();
 

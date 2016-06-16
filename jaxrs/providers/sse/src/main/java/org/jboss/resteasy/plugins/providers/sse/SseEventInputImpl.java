@@ -24,7 +24,7 @@ public class SseEventInputImpl implements SseEventInput
 
    private InputStream inputStream;
 
-   private static ChunkReader chunkReader = new ChunkReader();
+   private static EventReader eventReader = new EventReader();
 
    public SseEventInputImpl(Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, String> httpHeaders,
          InputStream inputStream)
@@ -56,7 +56,7 @@ public class SseEventInputImpl implements SseEventInput
       byte[] chunk = null;
       try
       {
-         chunk = chunkReader.readChunk(inputStream);
+         chunk = eventReader.read(inputStream);
          if (chunk == null)
          {
             //close();
@@ -88,8 +88,6 @@ public class SseEventInputImpl implements SseEventInput
                case NEW_LINE :
                   if (b == '\r')
                   {
-                     // read next byte in case of CRLF delimiter
-
                      b = entityStream.read();
 
                      b = b == '\n' ? entityStream.read() : b;
@@ -123,7 +121,6 @@ public class SseEventInputImpl implements SseEventInput
                   currentState = SseConstants.State.NEW_LINE;
                   break;
                case FIELD :
-                  // read field name
                   b = readLineUntil(entityStream, ':', tokenData);
                   final String fieldName = tokenData.toString(charset.toString());
                   tokenData.reset();
@@ -188,9 +185,9 @@ public class SseEventInputImpl implements SseEventInput
          charset = Charset.forName(mediaType.getParameters().get(MediaType.CHARSET_PARAMETER));
       }
       String valueString = new String(value, charset);
-      if ("event".equals(name))
+      if (name.startsWith("    "))
       {
-         inboundEventBuilder.name(valueString);
+         inboundEventBuilder.name(name.substring(4));
       }
       else if ("data".equals(name))
       {

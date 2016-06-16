@@ -19,6 +19,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.ws.rs.ServiceUnavailableException;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.sse.InboundSseEvent;
 import javax.ws.rs.sse.SseEventInput;
 import javax.ws.rs.sse.SseEventSource;
@@ -397,7 +398,7 @@ public class SseEventSourceImpl implements SseEventSource
 
       private Invocation.Builder prepareHandshakeRequest()
       {
-         final Invocation.Builder request = target.request(SseConstants.SERVER_SENT_EVENTS_TYPE);
+         final Invocation.Builder request = target.request(MediaType.SERVER_SENT_EVENTS_TYPE);
          if (lastEventId != null && !lastEventId.isEmpty())
          {
             request.header(SseConstants.LAST_EVENT_ID_HEADER, lastEventId);
