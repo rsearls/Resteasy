@@ -12,6 +12,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.sse.InboundSseEvent;
 import javax.ws.rs.sse.SseEventInput;
+import org.jboss.resteasy.plugins.providers.sse.SseEventSourceImpl.EventHandler;
+
 
 public class SseEventInputImpl implements SseEventInput
 {
@@ -50,6 +52,13 @@ public class SseEventInputImpl implements SseEventInput
       return false;
    }
 
+   // rls added start
+   private EventHandler parent;
+   public void setEventHandler(EventHandler parent) {
+      this.parent = parent;
+   }
+   // rls added end
+
    @Override
    public InboundSseEvent read() throws IllegalStateException
    {
@@ -75,7 +84,8 @@ public class SseEventInputImpl implements SseEventInput
       {
          charset = Charset.forName(mediaType.getParameters().get(MediaType.CHARSET_PARAMETER));
       }
-      final InboundSseEventImpl.Builder eventBuilder = new InboundSseEventImpl.Builder(annotations, mediaType,
+      // rls final
+      InboundSseEventImpl.Builder eventBuilder = new InboundSseEventImpl.Builder(annotations, mediaType,
             httpHeaders);
       int b = -1;
       SseConstants.State currentState = SseConstants.State.NEW_LINE;
@@ -144,6 +154,16 @@ public class SseEventInputImpl implements SseEventInput
                   tokenData.reset();
 
                   currentState = SseConstants.State.NEW_LINE;
+
+                  // rls added start
+                  if ("data".equals(fieldName)) {
+                     if (parent != null) {
+                        parent.onEvent(eventBuilder.build());
+                     }
+                     eventBuilder = new InboundSseEventImpl.Builder(annotations, mediaType,
+                         httpHeaders);
+                  }
+                  // rls added end
                   break;
             }
          }

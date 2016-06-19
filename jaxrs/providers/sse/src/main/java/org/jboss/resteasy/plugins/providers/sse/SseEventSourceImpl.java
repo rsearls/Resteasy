@@ -267,7 +267,8 @@ public class SseEventSourceImpl implements SseEventSource
       }
    }
 
-   private class EventHandler implements Runnable, Listener
+   // rls private
+   protected class EventHandler implements Runnable, Listener
    {
 
       private final CountDownLatch firstContactSignal;
@@ -334,12 +335,13 @@ public class SseEventSourceImpl implements SseEventSource
                   break;
                }
                else
-               {  
+               {
+                  ((SseEventInputImpl)eventInput).setEventHandler(this);
             	  InboundSseEvent event = eventInput.read();
             	  //TODO:remove this check 
                   if (event != null)
                   {
-                     this.onEvent(event);
+                    // rls  this.onEvent(event);
                   }
                }
             }
