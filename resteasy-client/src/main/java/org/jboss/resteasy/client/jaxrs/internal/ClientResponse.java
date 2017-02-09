@@ -19,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.Providers;
 import javax.ws.rs.ext.ReaderInterceptor;
+import javax.ws.rs.sse.SseEventInput;
 
 import java.io.ByteArrayInputStream;
 import java.io.FilterInputStream;
@@ -201,7 +202,10 @@ public abstract class ClientResponse extends BuiltResponse
             {
                try
                {
-            	   close();
+                  if (!SseEventInput.class.isInstance(entity))
+                  {
+                     close();
+                  }
                }
                catch (Exception ignored)
                {
