@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.security.PrivilegedActionException;
 
 /**
  * A JAXBXmlRootElementProvider.
@@ -42,7 +43,13 @@ public class JAXBXmlSeeAlsoProvider extends AbstractJAXBProvider<Object>
       }
 
       XmlSeeAlso seeAlso = type.getAnnotation(XmlSeeAlso.class);
-      return finder.findCacheContext(mediaType, annotations, seeAlso.value());
+      try {
+         return finder.findCacheContext(mediaType, annotations, seeAlso.value());
+      }
+      catch (PrivilegedActionException pae) {
+         // TODO rls find proper solution
+         throw new JAXBException(pae);
+      }
    }
 
 

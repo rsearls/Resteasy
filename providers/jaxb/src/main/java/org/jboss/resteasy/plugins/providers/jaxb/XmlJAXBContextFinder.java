@@ -11,6 +11,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import java.lang.annotation.Annotation;
 import java.util.concurrent.ConcurrentHashMap;
+import java.security.PrivilegedActionException;
 
 
 /**
@@ -27,7 +28,7 @@ public class XmlJAXBContextFinder extends AbstractJAXBContextFinder implements C
 
 
 	@Override
-   public JAXBContext findCachedContext(Class type, MediaType mediaType, Annotation[] parameterAnnotations) throws JAXBException
+   public JAXBContext findCachedContext(Class type, MediaType mediaType, Annotation[] parameterAnnotations) throws JAXBException, PrivilegedActionException
    {
 		JAXBContext jaxb = findProvidedJAXBContext(type, mediaType);
 		if (jaxb != null)
@@ -48,17 +49,27 @@ public class XmlJAXBContextFinder extends AbstractJAXBContextFinder implements C
    protected JAXBContext createContextObject(Annotation[] parameterAnnotations, Class... classes) throws JAXBException
    {
       JAXBConfig config = FindAnnotation.findAnnotation(parameterAnnotations, JAXBConfig.class);
-      return new JAXBContextWrapper(config, classes);
+       try {
+           return new JAXBContextWrapper(config, classes);
+       } catch (PrivilegedActionException pae) {
+           // TODO rls find proper solution
+           throw new JAXBException(pae);
+       }
    }
 
    @Override
    protected JAXBContext createContextObject(Annotation[] parameterAnnotations, String contextPath) throws JAXBException
    {
-      JAXBConfig config = FindAnnotation.findAnnotation(parameterAnnotations, JAXBConfig.class);
-      return new JAXBContextWrapper(contextPath, config);
+       JAXBConfig config = FindAnnotation.findAnnotation(parameterAnnotations, JAXBConfig.class);
+       try {
+           return new JAXBContextWrapper(contextPath, config);
+       } catch (PrivilegedActionException pae) {
+           // TODO rls find proper solution
+           throw new JAXBException(pae);
+       }
    }
 
-   public JAXBContext findCacheContext(MediaType mediaType, Annotation[] paraAnnotations, Class... classes) throws JAXBException
+   public JAXBContext findCacheContext(MediaType mediaType, Annotation[] paraAnnotations, Class... classes) throws JAXBException, PrivilegedActionException
    {
       CacheKey key = new CacheKey(classes);
       JAXBContext ctx = collectionCache.get(key);
@@ -71,7 +82,7 @@ public class XmlJAXBContextFinder extends AbstractJAXBContextFinder implements C
    }
 
    @Override
-   public JAXBContext findCacheXmlTypeContext(MediaType mediaType, Annotation[] paraAnnotations, Class... classes) throws JAXBException
+   public JAXBContext findCacheXmlTypeContext(MediaType mediaType, Annotation[] paraAnnotations, Class... classes) throws JAXBException, PrivilegedActionException
    {
       CacheKey key = new CacheKey(classes);
       JAXBContext ctx = xmlTypeCollectionCache.get(key);

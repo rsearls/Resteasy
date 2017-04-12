@@ -24,6 +24,7 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
+import java.security.PrivilegedActionException;
 
 /**
  * <p>
@@ -74,6 +75,10 @@ public class JAXBElementProvider extends AbstractJAXBProvider<JAXBElement<?>>
       try
       {
          jaxb = findJAXBContext(typeArg, annotations, mediaType, true);
+      }
+      catch (PrivilegedActionException pae) {
+         // TODO rls find proper solution
+         throw new JAXBUnmarshalException(pae);
       }
       catch (JAXBException e)
       {

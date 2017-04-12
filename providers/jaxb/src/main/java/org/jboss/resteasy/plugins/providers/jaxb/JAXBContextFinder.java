@@ -4,6 +4,7 @@ import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import java.lang.annotation.Annotation;
+import java.security.PrivilegedActionException;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
@@ -21,7 +22,7 @@ public interface JAXBContextFinder
     * @return
     * @throws JAXBException
     */
-   JAXBContext findCachedContext(Class type, MediaType mediaType, Annotation[] parameterAnnotations) throws JAXBException;
+   JAXBContext findCachedContext(Class type, MediaType mediaType, Annotation[] parameterAnnotations) throws JAXBException, PrivilegedActionException;
 
    /**
     * This method creates a JAXBContext from a collection of classes.  Unlike the other findCachedContext() method,
@@ -33,7 +34,7 @@ public interface JAXBContextFinder
     * @return
     * @throws JAXBException
     */
-   JAXBContext findCacheContext(MediaType mediaType, Annotation[] paraAnnotations, Class... classes) throws JAXBException;
+   JAXBContext findCacheContext(MediaType mediaType, Annotation[] paraAnnotations, Class... classes) throws JAXBException, PrivilegedActionException;
 
    /**
     * This method will find a JAXBContext from a set of XmlTypes that use an ObjectFactory for creation (i.e. from xjc)
@@ -44,7 +45,7 @@ public interface JAXBContextFinder
     * @return
     * @throws JAXBException
     */
-   JAXBContext findCacheXmlTypeContext(MediaType mediaType, Annotation[] paraAnnotations, Class... classes) throws JAXBException;
+   JAXBContext findCacheXmlTypeContext(MediaType mediaType, Annotation[] paraAnnotations, Class... classes) throws JAXBException, PrivilegedActionException;
 
-   JAXBContext createContext(Annotation[] parameterAnnotations, Class... classes) throws JAXBException;
+   JAXBContext createContext(Annotation[] parameterAnnotations, Class... classes) throws JAXBException, PrivilegedActionException;
 }

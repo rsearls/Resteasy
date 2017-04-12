@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 import java.lang.annotation.Annotation;
 import java.util.Set;
 import java.util.HashSet;
+import java.security.PrivilegedActionException;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
@@ -139,7 +140,7 @@ public abstract class AbstractJAXBContextFinder implements JAXBContextFinder
    }
 
 	@Override
-	public JAXBContext createContext(Annotation[] parameterAnnotations, Class... classes) throws JAXBException
+	public JAXBContext createContext(Annotation[] parameterAnnotations, Class... classes) throws JAXBException, PrivilegedActionException
  {
 		Set<Class<?>> classes1 = Collections.emptySet();
 		if (classes != null && classes.length != 0) {

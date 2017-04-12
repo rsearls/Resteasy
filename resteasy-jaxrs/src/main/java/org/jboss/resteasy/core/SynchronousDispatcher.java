@@ -33,6 +33,9 @@ import javax.ws.rs.ext.Providers;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -397,9 +400,28 @@ public class SynchronousDispatcher implements Dispatcher
    public void invoke(HttpRequest request, HttpResponse response, ResourceInvoker invoker)
    {
       Response jaxrsResponse = null;
+
       try
       {
-         jaxrsResponse = invoker.invoke(request, response);
+         final SecurityManager sm = System.getSecurityManager();
+         if (sm == null) {
+            jaxrsResponse = invoker.invoke(request, response);
+         } else {
+            final ResourceInvoker smInvoker = invoker;
+            final HttpRequest smRequest = request;
+            final HttpResponse smResponse = response;
+            jaxrsResponse =(Response) AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
+               @Override
+               public Object run() throws Exception {
+                  try {
+                     return smInvoker.invoke(smRequest, smResponse);
+                  } catch (Exception e) {
+                     throw new PrivilegedActionException(e);
+                  }
+               }
+            });
+         }
+
          if (request.getAsyncContext().isSuspended())
          {
             /**

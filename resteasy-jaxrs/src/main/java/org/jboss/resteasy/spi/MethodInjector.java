@@ -2,6 +2,9 @@ package org.jboss.resteasy.spi;
 
 import org.jboss.resteasy.core.ValueInjector;
 
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedActionException;
+
 /**
  * Will invoke a method in the context of an HTTP request.  Does all the parameter injection for you.
  *
@@ -19,7 +22,7 @@ public interface MethodInjector
     * @return
     * @throws Failure
     */
-   Object invoke(HttpRequest request, HttpResponse response, Object target) throws Failure, ApplicationException;
+   Object invoke(HttpRequest request, HttpResponse response, Object target) throws Failure, ApplicationException, PrivilegedActionException;
 
    /**
     * Create the arguments that would be used to invoke the method in the context of an HTTP request.

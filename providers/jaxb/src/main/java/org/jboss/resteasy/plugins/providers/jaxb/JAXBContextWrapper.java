@@ -25,6 +25,11 @@ import java.lang.reflect.Constructor;
 import java.util.Collections;
 import java.util.Map;
 
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
+
+
 /**
  * A wrapper class around a JAXBContext that enables additional features
  * to the RESTEasy JAXB-based providers.
@@ -38,23 +43,22 @@ public class JAXBContextWrapper extends JAXBContext
 
    private static final String NAMESPACE_PREFIX_MAPPER = "com.sun.xml.bind.namespacePrefixMapper";
    private static Constructor mapperConstructor = null;
-
+  /*** rls tmp disable
    static
    {
       try
       {
-         // check to see if NamespacePrefixMapper is in classpath
-         Class namespace =  JAXBContextWrapper.class.getClassLoader().loadClass("com.sun.xml.bind.marshaller.NamespacePrefixMapper");
-         Class mapper =  JAXBContextWrapper.class.getClassLoader().loadClass("org.jboss.resteasy.plugins.providers.jaxb.XmlNamespacePrefixMapper");
-         mapperConstructor = mapper.getConstructors()[0];
+            // check to see if NamespacePrefixMapper is in classpath
+            Class namespace = JAXBContextWrapper.class.getClassLoader().loadClass("com.sun.xml.bind.marshaller.NamespacePrefixMapper");
+            Class mapper = JAXBContextWrapper.class.getClassLoader().loadClass("org.jboss.resteasy.plugins.providers.jaxb.XmlNamespacePrefixMapper");
+            mapperConstructor = mapper.getConstructors()[0];
       }
       catch (ClassNotFoundException e)
       {
 
       }
-
    }
-
+ ***/
    private JAXBContext wrappedContext;
 
    /**
@@ -67,8 +71,9 @@ public class JAXBContextWrapper extends JAXBContext
     */
    private Schema schema;
 
-   public JAXBContextWrapper(JAXBContext wrappedContext, JAXBConfig config) throws JAXBException
+   public JAXBContextWrapper(JAXBContext wrappedContext, JAXBConfig config) throws JAXBException, PrivilegedActionException
    {
+      init();
       processConfig(config);
       this.wrappedContext = wrappedContext;
    }
@@ -82,8 +87,9 @@ public class JAXBContextWrapper extends JAXBContext
     * @throws JAXBException
     */
    public JAXBContextWrapper(Class<?>[] classes, Map<String, Object> properties, JAXBConfig config)
-           throws JAXBException
+           throws JAXBException, PrivilegedActionException
    {
+      init();
       processConfig(config);
       wrappedContext = JAXBContext.newInstance(classes, properties);
    }
@@ -95,8 +101,9 @@ public class JAXBContextWrapper extends JAXBContext
     * @param config
     * @throws JAXBException
     */
-   public JAXBContextWrapper(String contextPath, JAXBConfig config) throws JAXBException
+   public JAXBContextWrapper(String contextPath, JAXBConfig config) throws JAXBException, PrivilegedActionException
    {
+      init();
       processConfig(config);
       wrappedContext = JAXBContext.newInstance(contextPath);
    }
@@ -108,12 +115,43 @@ public class JAXBContextWrapper extends JAXBContext
     * @param config
     * @throws JAXBException
     */
-   public JAXBContextWrapper(JAXBConfig config, Class<?>... classes) throws JAXBException
+   public JAXBContextWrapper(JAXBConfig config, Class<?>... classes) throws JAXBException, PrivilegedActionException
    {
       this(classes, Collections.<String, Object>emptyMap(), config);
    }
 
-   /**
+
+    private void init() throws PrivilegedActionException {
+
+        if (mapperConstructor == null) {
+            try {
+                final SecurityManager sm = System.getSecurityManager();
+                if (sm == null) {
+                    // check to see if NamespacePrefixMapper is in classpath
+                    Class namespace = JAXBContextWrapper.class.getClassLoader().loadClass("com.sun.xml.bind.marshaller.NamespacePrefixMapper");
+                    Class mapper = JAXBContextWrapper.class.getClassLoader().loadClass("org.jboss.resteasy.plugins.providers.jaxb.XmlNamespacePrefixMapper");
+                    mapperConstructor = mapper.getConstructors()[0];
+                } else {
+                    final Class mapper = AccessController.doPrivileged(new PrivilegedExceptionAction<Class>() {
+                        @Override
+                        public Class run() throws Exception {
+                            try {
+                                Class namespace = JAXBContextWrapper.class.getClassLoader().loadClass("com.sun.xml.bind.marshaller.NamespacePrefixMapper");
+                                return JAXBContextWrapper.class.getClassLoader().loadClass("org.jboss.resteasy.plugins.providers.jaxb.XmlNamespacePrefixMapper");
+                            } catch (Exception e) {
+                                throw new PrivilegedActionException(e);
+                            }
+                        }
+                    });
+                    mapperConstructor = mapper.getConstructors()[0];
+                }
+            } catch (ClassNotFoundException e) {
+
+            }
+        }
+    }
+
+    /**
     * FIXME Comment this
     *
     * @param config

@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.security.PrivilegedActionException;
 
 /**
  * A special JAXB Provider. It is not a real provider, it is only used as a
@@ -176,7 +177,12 @@ public class XopWithMultipartRelatedJAXBProvider extends
 							xopPackage));
 			return unmarshaller.unmarshal(new StreamSource(rootPart.getBody(
 					InputStream.class, null)));
-		} catch (JAXBException e) {
+		}
+		catch (PrivilegedActionException pae) {
+			// TODO rls find proper solution
+			throw new WebApplicationException(pae);
+		}
+		catch (JAXBException e) {
 			Response response = Response.serverError().build();
 			throw new WebApplicationException(e, response);
 		}
@@ -207,7 +213,12 @@ public class XopWithMultipartRelatedJAXBProvider extends
 			List<OutputPart> outputParts = xopPackage.getParts();
 			outputParts.remove(outputPart);
 			outputParts.add(0, outputPart);
-		} catch (JAXBException e) {
+		}
+		catch (PrivilegedActionException pae) {
+			// TODO rls find proper solution
+			throw new WebApplicationException(pae);
+		}
+		catch (JAXBException e) {
 			Response response = Response.serverError().build();
 			throw new WebApplicationException(e, response);
 		}

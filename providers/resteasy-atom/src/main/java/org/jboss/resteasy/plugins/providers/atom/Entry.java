@@ -21,6 +21,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.security.PrivilegedActionException;
 
 /**
  * <p>Per RFC4287:</p>
@@ -363,7 +364,13 @@ public class Entry extends CommonAttributes
             for (int i = 0; i < otherPossibleClasses.length; i++) classes[i + 1] = otherPossibleClasses[i];
         }
         if (finder != null) {
-            ctx = finder.findCacheContext(MediaType.APPLICATION_XML_TYPE, null, classes);
+            try {
+                ctx = finder.findCacheContext(MediaType.APPLICATION_XML_TYPE, null, classes);
+            }
+            catch (PrivilegedActionException pae) {
+                // TODO rls find proper solution
+                throw new JAXBException(pae);
+            }
         } else {
             ctx = JAXBContext.newInstance(classes);
         }

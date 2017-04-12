@@ -26,6 +26,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.security.PrivilegedActionException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 
@@ -95,19 +96,19 @@ public class ResourceLocatorInvoker implements ResourceInvoker
       return method.getMethod();
    }
 
-   public BuiltResponse invoke(HttpRequest request, HttpResponse response)
+   public BuiltResponse invoke(HttpRequest request, HttpResponse response) throws PrivilegedActionException
    {
       Object target = createResource(request, response);
       return invokeOnTargetObject(request, response, target);
    }
 
-   public BuiltResponse invoke(HttpRequest request, HttpResponse response, Object locator)
+   public BuiltResponse invoke(HttpRequest request, HttpResponse response, Object locator) throws PrivilegedActionException
    {
       Object target = createResource(request, response, locator);
       return invokeOnTargetObject(request, response, target);
    }
 
-   protected BuiltResponse invokeOnTargetObject(HttpRequest request, HttpResponse response, Object target)
+   protected BuiltResponse invokeOnTargetObject(HttpRequest request, HttpResponse response, Object target) throws PrivilegedActionException
    {
       if (target == null)
       {

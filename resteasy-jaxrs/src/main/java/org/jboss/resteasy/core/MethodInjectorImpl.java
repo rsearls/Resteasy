@@ -19,6 +19,9 @@ import javax.ws.rs.WebApplicationException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
@@ -110,7 +113,8 @@ public class MethodInjectorImpl implements MethodInjector
       }
    }
 
-   public Object invoke(HttpRequest request, HttpResponse httpResponse, Object resource) throws Failure, ApplicationException
+   public Object invoke(HttpRequest request, HttpResponse httpResponse, Object resource)
+       throws Failure, ApplicationException, PrivilegedActionException
    {
       Object[] args = injectArguments(request, httpResponse);
       GeneralValidator validator = GeneralValidator.class.cast(request.getAttribute(GeneralValidator.class.getName()));
@@ -137,7 +141,24 @@ public class MethodInjectorImpl implements MethodInjector
       Object result = null;
       try
       {
-         result = invokedMethod.invoke(resource, args);
+         final SecurityManager sm = System.getSecurityManager();
+         if (sm == null) {
+            result = invokedMethod.invoke(resource, args);
+         } else {
+            final Method smInvokedMethod = invokedMethod;
+            final Object smResource = resource;
+            final Object[] smArgs = args;
+            result = AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
+               @Override
+               public Object run() throws Exception {
+                  try {
+                     return smInvokedMethod.invoke(smResource, smArgs);
+                  } catch (Exception e) {
+                     throw new PrivilegedActionException(e);
+                  }
+               }
+            });
+         }
       }
       catch (IllegalAccessException e)
       {

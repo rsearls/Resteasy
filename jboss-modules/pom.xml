@@ -117,13 +117,13 @@
             <artifactId>resteasy-crypto</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+<!-- rls tmp 
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-atom-provider</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+ ##-->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-cdi</artifactId>

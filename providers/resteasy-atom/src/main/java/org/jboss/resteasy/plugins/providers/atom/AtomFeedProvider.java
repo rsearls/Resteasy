@@ -29,6 +29,7 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.HashSet;
+import java.security.PrivilegedActionException;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
@@ -73,6 +74,10 @@ public class AtomFeedProvider implements MessageBodyReader<Feed>, MessageBodyWri
             if (entry.getContent() != null) entry.getContent().setFinder(finder);
          }
          return feed;
+      }
+      catch (PrivilegedActionException pae) {
+         // TODO rls find proper solution
+         throw new JAXBUnmarshalException(pae);
       }
       catch (JAXBException e)
       {
@@ -127,6 +132,10 @@ public class AtomFeedProvider implements MessageBodyReader<Feed>, MessageBodyWri
          marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", mapper);
 
          marshaller.marshal(feed, entityStream);
+      }
+      catch (PrivilegedActionException pae) {
+         // TODO rls find proper solution
+         throw new JAXBMarshalException(pae);
       }
       catch (JAXBException e)
       {

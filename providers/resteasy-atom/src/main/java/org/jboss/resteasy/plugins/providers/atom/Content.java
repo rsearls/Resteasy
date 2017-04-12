@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlType;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.security.PrivilegedActionException;
 
 /**
  * <p>Represents an atom:content element.</p>
@@ -249,7 +250,13 @@ public class Content extends CommonAttributes
       }
       if (finder != null)
       {
-         ctx = finder.findCacheContext(MediaType.APPLICATION_XML_TYPE, null, classes);
+         try {
+            ctx = finder.findCacheContext(MediaType.APPLICATION_XML_TYPE, null, classes);
+         }
+         catch (PrivilegedActionException pae) {
+            // TODO rls find proper solution
+            throw new JAXBException(pae);
+         }
       }
       else
       {

@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.security.PrivilegedActionException;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
@@ -180,6 +181,10 @@ public class JsonCollectionProvider extends CollectionProvider
             }
          }
          entityStream.write(']');
+      }
+      catch (PrivilegedActionException pae) {
+         // TODO rls find proper solution
+         throw new JAXBMarshalException(pae);
       }
       catch (JAXBException e)
       {

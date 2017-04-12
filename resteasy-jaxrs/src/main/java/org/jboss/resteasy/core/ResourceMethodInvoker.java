@@ -35,6 +35,10 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -230,13 +234,14 @@ public class ResourceMethodInvoker implements ResourceInvoker, JaxrsInterceptorR
 
 
 
-   public BuiltResponse invoke(HttpRequest request, HttpResponse response)
+   public BuiltResponse invoke(HttpRequest request, HttpResponse response) throws PrivilegedActionException
    {
       Object target = resource.createResource(request, response, resourceMethodProviderFactory);
       return invoke(request, response, target);
    }
 
    public BuiltResponse invoke(HttpRequest request, HttpResponse response, Object target)
+       throws PrivilegedActionException
    {
       request.setAttribute(ResourceMethodInvoker.class.getName(), this);
       incrementMethodCount(request.getHttpMethod());
@@ -251,6 +256,7 @@ public class ResourceMethodInvoker implements ResourceInvoker, JaxrsInterceptorR
    }
 
    protected BuiltResponse invokeOnTarget(HttpRequest request, HttpResponse response, Object target)
+       throws PrivilegedActionException
    {
       ResteasyProviderFactory.pushContext(ResourceInfo.class, resourceInfo);  // we don't pop so writer interceptors can get at this
 
@@ -292,7 +298,24 @@ public class ResourceMethodInvoker implements ResourceInvoker, JaxrsInterceptorR
       Object rtn = null;
       try
       {
-         rtn = methodInjector.invoke(request, response, target);
+         final SecurityManager sm = System.getSecurityManager();
+         if (sm == null) {
+            rtn = methodInjector.invoke(request, response, target);
+         } else {
+            final HttpRequest smRequest = request;
+            final HttpResponse smResponse = response;
+            final Object smTarget  = target;
+            rtn = AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
+               @Override
+               public Object run() throws Exception {
+                  try {
+                     return methodInjector.invoke(smRequest, smResponse, smTarget);
+                  } catch (Exception e) {
+                     throw new PrivilegedActionException(e);
+                  }
+               }
+            });
+         }
       }
       catch (RuntimeException ex)
       {

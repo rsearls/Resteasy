@@ -44,6 +44,7 @@ import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.security.PrivilegedActionException;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
@@ -113,8 +114,14 @@ public class MapProvider implements MessageBodyReader<Object>, MessageBodyWriter
 
    public Object getJAXBObject(JAXBContextFinder finder, MediaType mediaType, Class<?> clazz, Element element) throws JAXBException
    {
-      JAXBContext ctx = finder.findCachedContext(clazz, mediaType, null);
-      return ctx.createUnmarshaller().unmarshal(element);
+      try {
+         JAXBContext ctx = finder.findCachedContext(clazz, mediaType, null);
+         return ctx.createUnmarshaller().unmarshal(element);
+      }
+      catch (PrivilegedActionException pae) {
+         // TODO rls find proper solution
+         throw new JAXBUnmarshalException(pae);
+      }
    }
 
 
@@ -230,6 +237,10 @@ public class MapProvider implements MessageBodyReader<Object>, MessageBodyWriter
          }
          return map;
       }
+      catch (PrivilegedActionException pae) {
+         // TODO rls find proper solution
+         throw new JAXBUnmarshalException(pae);
+      }
       catch (JAXBException e)
       {
          throw new JAXBUnmarshalException(e);
@@ -305,6 +316,10 @@ public class MapProvider implements MessageBodyReader<Object>, MessageBodyWriter
          Marshaller marshaller = ctx.createMarshaller();
          marshaller = AbstractJAXBProvider.decorateMarshaller(valueType, annotations, mediaType, marshaller);
          marshaller.marshal(jaxbMap, entityStream);
+      }
+      catch (PrivilegedActionException pae) {
+         // TODO rls find proper solution
+         throw new JAXBMarshalException(pae);
       }
       catch (JAXBException e)
       {

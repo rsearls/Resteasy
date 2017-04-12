@@ -30,6 +30,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
+import java.security.PrivilegedActionException;
 
 /**
  * <p>
@@ -138,6 +139,10 @@ public class JAXBXmlTypeProvider extends AbstractJAXBProvider<Object>
          {
             return obj;
          }
+      }
+      catch (PrivilegedActionException pae) {
+         // TODO rls find proper solution
+         throw new JAXBUnmarshalException(pae);
       }
       catch (JAXBException e)
       {

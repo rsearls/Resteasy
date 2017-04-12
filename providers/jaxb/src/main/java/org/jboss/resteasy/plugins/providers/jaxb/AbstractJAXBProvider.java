@@ -28,6 +28,7 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
+import java.security.PrivilegedActionException;
 
 /**
  * A AbstractJAXBProvider.
@@ -70,7 +71,7 @@ public abstract class AbstractJAXBProvider<T> extends AbstractEntityProvider<T>
    }
    
    public JAXBContext findJAXBContext(Class<?> type, Annotation[] annotations, MediaType mediaType, boolean reader)
-           throws JAXBException
+           throws JAXBException, PrivilegedActionException
    {
       ContextResolver<JAXBContextFinder> resolver = providers.getContextResolver(JAXBContextFinder.class, mediaType);
       JAXBContextFinder finder = resolver.getContext(type);
@@ -131,6 +132,10 @@ public abstract class AbstractJAXBProvider<T> extends AbstractEntityProvider<T>
             return (T) unmarshaller.unmarshal(new StreamSource(entityStream));  
          }
       }
+      catch (PrivilegedActionException pae) {
+         // TODO rls find proper solution
+         throw new JAXBUnmarshalException(pae);
+      }
       catch (JAXBException e)
       {
          throw new JAXBUnmarshalException(e);
@@ -155,6 +160,10 @@ public abstract class AbstractJAXBProvider<T> extends AbstractEntityProvider<T>
          marshaller = decorateMarshaller(type, annotations, mediaType, marshaller);
          marshaller.marshal(t, outputStream);
       }
+      catch (PrivilegedActionException pae) {
+         // TODO rls find proper solution
+         throw new JAXBUnmarshalException(pae);
+      }
       catch (JAXBException e)
       {
          throw new JAXBMarshalException(e);
@@ -171,7 +180,7 @@ public abstract class AbstractJAXBProvider<T> extends AbstractEntityProvider<T>
     */
    protected Marshaller getMarshaller(Class<?> type,
                                       Annotation[] annotations,
-                                      MediaType mediaType)
+                                      MediaType mediaType) throws PrivilegedActionException
    {
       try
       {

@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlType;
 import org.jboss.resteasy.plugins.providers.jaxb.JAXBContextFinder;
 import org.jboss.resteasy.plugins.providers.jaxb.JAXBXmlTypeProvider;
 import org.w3c.dom.Element;
+import java.security.PrivilegedActionException;
 
 /**
  * <p>Represents an atomTextConstruct element.</p>
@@ -227,7 +228,13 @@ public class Text extends CommonAttributes
      }
      if (finder != null)
      {
-        ctx = finder.findCacheContext(MediaType.APPLICATION_XML_TYPE, null, classes);
+         try {
+             ctx = finder.findCacheContext(MediaType.APPLICATION_XML_TYPE, null, classes);
+         }
+         catch (PrivilegedActionException pae) {
+             // TODO rls find proper solution
+             throw new JAXBException(pae);
+         }
      }
      else
      {

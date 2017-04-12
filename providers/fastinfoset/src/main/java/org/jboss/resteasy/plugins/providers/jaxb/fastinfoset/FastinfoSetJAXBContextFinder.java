@@ -13,6 +13,7 @@ import javax.ws.rs.ext.Provider;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import java.lang.annotation.Annotation;
+import java.security.PrivilegedActionException;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
@@ -28,7 +29,13 @@ public class FastinfoSetJAXBContextFinder extends XmlJAXBContextFinder implement
    {
       JAXBConfig config = FindAnnotation.findAnnotation(annotations, JAXBConfig.class);
       JAXBContext context = new FastinfoSetContext(classes);
-      return new JAXBContextWrapper(context, config);
+      try {
+         return new JAXBContextWrapper(context, config);
+      }
+      catch (PrivilegedActionException pae) {
+         // TODO rls find proper solution
+         throw new JAXBException(pae);
+      }
    }
 
    @Override
@@ -36,6 +43,11 @@ public class FastinfoSetJAXBContextFinder extends XmlJAXBContextFinder implement
    {
       JAXBConfig config = FindAnnotation.findAnnotation(annotations, JAXBConfig.class);
       JAXBContext context = new FastinfoSetContext(contextPath);
-      return new JAXBContextWrapper(context, config);
+      try {
+         return new JAXBContextWrapper(context, config);
+      } catch (PrivilegedActionException pae) {
+         // TODO rls find proper solution
+         throw new JAXBException(pae);
+      }
    }
 }
