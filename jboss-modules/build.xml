@@ -126,6 +126,14 @@
             <maven-resource group="org.jboss.resteasy" artifact="resteasy-jackson2-provider"/>
         </module-def>
 
+        <module-def name="com.github.fge.jackson-coreutils">
+            <maven-resource group="com.github.fge" artifact="jackson-coreutils"/>
+        </module-def>
+
+        <module-def name="com.github.fge.json-patch">
+            <maven-resource group="com.github.fge" artifact="json-patch"/>
+        </module-def>
+
         <module-def name="org.jboss.resteasy.resteasy-jaxb-provider">
             <maven-resource group="org.jboss.resteasy" artifact="resteasy-jaxb-provider"/>
         </module-def>

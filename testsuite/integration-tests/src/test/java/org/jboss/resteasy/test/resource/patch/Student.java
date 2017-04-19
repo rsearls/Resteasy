@@ -4,9 +4,13 @@ public class Student
 {
    private Long id;
 
-   private String name;
+   private String firstName;
+
+   private String lastName;
 
    private String school;
+
+   private String gender;
 
    public Long getId()
    {
@@ -19,14 +23,25 @@ public class Student
       return this;
    }
 
-   public String getName()
+   public String getFirstName()
    {
-      return name;
+      return firstName;
    }
 
-   public Student setName(String name)
+   public Student setFirstName(String firstName)
    {
-      this.name = name;
+      this.firstName = firstName;
+      return this;
+   }
+
+   public String getLastName()
+   {
+      return lastName;
+   }
+
+   public Student setLastName(String lastName)
+   {
+      this.lastName = lastName;
       return this;
    }
 
@@ -41,5 +56,15 @@ public class Student
       return this;
    }
 
+   public String getGender()
+   {
+      return gender;
+   }
+
+   public Student setGender(String gender)
+   {
+      this.gender = gender;
+      return this;
+   }
 }
 

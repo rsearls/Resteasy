@@ -57,21 +57,29 @@ public class StudentPatchTest
    }
 
    @Test
-   @Ignore
+   //@Ignore
    public void testPatchStudent() throws Exception
    {
       ResteasyClient client = new ResteasyClientBuilder().connectionPoolSize(10).build();
+ 
       WebTarget base = client.target(generateURL("/students"));
-      //add a student
-      Student newStudent = new Student().setId(1L).setName("John").setSchool("SchoolName1");
+      //add a student, first name is Taylor and school is school1, other fields is null.
+      Student newStudent = new Student().setId(1L).setFirstName("Taylor").setSchool("school1");
       Response response = base.request().post(Entity.<Student> entity(newStudent, MediaType.APPLICATION_JSON_TYPE));
       Student s = response.readEntity(Student.class);
       Assert.assertNotNull("Add student failed", s);
-      
-      //udpate with patch
+      Assert.assertEquals("Taylor", s.getFirstName());
+      Assert.assertNull("Last name is not null", s.getLastName());
+      Assert.assertEquals("school1", s.getSchool());
+      Assert.assertNull("Gender is not null", s.getGender());
+
+      //patch a student, after patch we can get a male student named John Taylor and school is null.
       WebTarget patchTarget = client.target(generateURL("/students/1"));
       javax.json.JsonArray patchRequest = Json.createArrayBuilder()
-            .add(Json.createObjectBuilder().add("op", "replace").add("path", "/name").add("value", "Mike").build())
+            .add(Json.createObjectBuilder().add("op", "copy").add("from", "/firstName").add("path", "/lastName").build())
+            .add(Json.createObjectBuilder().add("op", "replace").add("path", "/firstName").add("value", "John").build())
+            .add(Json.createObjectBuilder().add("op", "remove").add("path", "/school").build())
+            .add(Json.createObjectBuilder().add("op", "add").add("path", "/gender").add("value", "male").build())
             .build();
       patchTarget.request().patch(Entity.entity(patchRequest, MediaType.APPLICATION_JSON_PATCH_JSON));
 
@@ -79,7 +87,9 @@ public class StudentPatchTest
       WebTarget getTarget = client.target(generateURL("/students/1"));
       Response getResponse = getTarget.request().get();
       Student patchedStudent = getResponse.readEntity(Student.class);
-      Assert.assertEquals("Student uddate with patch method doesn't work, expect student name is changed to Mike", "Mike", patchedStudent.getName());
-
+      Assert.assertEquals("Expected lastname is changed to Taylor", "Taylor", patchedStudent.getLastName());
+      Assert.assertEquals("Expected firstname is replaced from Taylor to John", "John", patchedStudent.getFirstName());
+      Assert.assertEquals("Expected school is null", null, patchedStudent.getSchool());
+      Assert.assertEquals("Add gender", "male", patchedStudent.getGender());
    }
 }
