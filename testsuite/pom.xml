@@ -67,6 +67,7 @@
                 <module>legacy-integration-tests</module>
                 <module>integration-tests</module>
                 <module>integration-tests-spring</module>
+                <module>RESTEASY-1630-wildfly-ResteasyServletInitializer</module>
             </modules>
         </profile>
         <!-- Forward compatibility: use EAP 7.0.0.GA and newer Client from CP stream (e.g. client from RESTEasy delivered by EAP 7.0.2 -->
@@ -84,6 +85,7 @@
                 <!-- <module>legacy-integration-tests</module>-->
                 <module>integration-tests</module>
                 <module>integration-tests-spring</module>
+                <module>RESTEASY-1630-wildfly-ResteasyServletInitializer</module>
             </modules>
             <properties>
                 <additional.surefire.excluded.groups>org.jboss.resteasy.category.NotForForwardCompatibility</additional.surefire.excluded.groups>
