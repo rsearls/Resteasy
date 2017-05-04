@@ -13,6 +13,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.sse.InboundSseEvent;
 
+import org.jboss.resteasy.plugins.providers.RegisterBuiltin;
 import org.jboss.resteasy.resteasy_jaxrs.i18n.Messages;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
@@ -172,12 +173,15 @@ public class InboundSseEventImpl implements InboundSseEvent
 
    public <T> T readData(GenericType<T> type, MediaType mediaType)
    {
+      //System.out.println("Thread " + Thread.currentThread().getName() + "read data");
       final MediaType effectiveMediaType = mediaType == null ? this.mediaType : mediaType;
-      final MessageBodyReader reader = ResteasyProviderFactory.getInstance().getMessageBodyReader(type.getRawType(),
+      ResteasyProviderFactory factory =  ResteasyProviderFactory.getInstance();
+      RegisterBuiltin.register(factory);
+      final MessageBodyReader reader = factory.getClientMessageBodyReader(type.getRawType(),
             type.getType(), annotations, mediaType);
       if (reader == null)
       {
-         throw new IllegalStateException(Messages.MESSAGES.notFoundMBW(type.getClass().getName()));
+         throw new IllegalStateException(Messages.MESSAGES.notFoundMBR(type.getClass().getName()));
       }
       return readAndCast(type, effectiveMediaType, reader);
    }

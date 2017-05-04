@@ -5,6 +5,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -51,9 +52,13 @@ public class SseBroadcasterImpl implements SseBroadcaster
    @Override  
    public CompletionStage<?> broadcast(OutboundSseEvent event)
    {  
-      outputQueue.forEach(eventSink -> {SseEventOutputImpl outputImpl=(SseEventOutputImpl)eventSink; outputImpl.send(event, callAllErrConsumers());});
       //return event immediately and doesn't block anything
-      return CompletableFuture.supplyAsync(() -> { return event;});
+      return CompletableFuture.runAsync(() -> {
+         outputQueue.forEach(eventSink -> {
+            SseEventOutputImpl outputImpl = (SseEventOutputImpl) eventSink;
+            outputImpl.send(event, callAllErrConsumers());
+         });
+      });
    }
    
    BiConsumer<SseEventSink, Throwable> callAllErrConsumers() {

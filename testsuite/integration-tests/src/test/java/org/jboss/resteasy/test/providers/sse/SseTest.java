@@ -132,7 +132,7 @@ public class SseTest {
        //To give some time to subscribe, otherwise the broadcast will execute before subscribe
        Thread.sleep(3000);
        client.target(generateURL("/service/server-sent-events/broadcast")).request().post(Entity.entity(textMessage, MediaType.SERVER_SENT_EVENTS)); 
-       Assert.assertTrue("Waiting for broadcast event to be delivered has timed out.", latch.await(10, TimeUnit.SECONDS));
+       Assert.assertTrue("Waiting for broadcast event to be delivered has timed out.", latch.await(20, TimeUnit.SECONDS));
        eventSource.close();
        eventSource2.close();
        client.close();
