@@ -48,7 +48,7 @@ public class BuiltResponse extends Response
    protected Class entityClass;
    protected Type genericType;
    protected HeaderValueProcessor processor;
-   protected boolean isClosed;
+   protected volatile boolean isClosed;
 
    public BuiltResponse()
    {
