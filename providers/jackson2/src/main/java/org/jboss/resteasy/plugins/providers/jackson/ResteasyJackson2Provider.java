@@ -241,11 +241,11 @@ public class ResteasyJackson2Provider extends JacksonJaxbJsonProvider
          } else {
             final ObjectWriter smWriter = writer;
             final Object smValue = value;
+            final JsonGenerator smJg = jg;
             AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
                @Override
                public Object run() throws Exception {
-
-                  smWriter.writeValue(jg, smValue);
+                  smWriter.writeValue(smJg, smValue);
                   return null;
                }
             });
