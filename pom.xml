@@ -328,6 +328,27 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- JDK 9 modules prototype -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jdeps-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jdkinternals
+                            </goal> <!-- verify main classes -->
+                            <goal>test-jdkinternals
+                            </goal> <!-- verify test classes -->
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <dotOutput>${project.build.directory}/xdot</dotOutput>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 </project>
