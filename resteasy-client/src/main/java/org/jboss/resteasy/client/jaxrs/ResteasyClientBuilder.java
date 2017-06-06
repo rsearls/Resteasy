@@ -131,6 +131,14 @@ public class ResteasyClientBuilder extends ClientBuilder
       return this;
    }
 
+   @Override
+   public ResteasyClientBuilder readTimeout(long timeout, TimeUnit unit)
+   {
+      this.socketTimeout = timeout;
+      this.socketTimeoutUnits = unit;
+      return this;
+   }
+
    /**
     * The timeout for waiting for data. A timeout value of zero is interpreted as an infinite timeout
     *
@@ -138,10 +146,17 @@ public class ResteasyClientBuilder extends ClientBuilder
     * @param unit
     * @return
     */
+   @Deprecated
    public ResteasyClientBuilder socketTimeout(long timeout, TimeUnit unit)
    {
-      this.socketTimeout = timeout;
-      this.socketTimeoutUnits = unit;
+      return readTimeout(timeout, unit);
+   }
+
+   @Override
+   public ResteasyClientBuilder connectTimeout(long timeout, TimeUnit unit)
+   {
+      this.establishConnectionTimeout = timeout;
+      this.establishConnectionTimeoutUnits = unit;
       return this;
    }
 
@@ -152,11 +167,10 @@ public class ResteasyClientBuilder extends ClientBuilder
     * @param unit
     * @return
     */
+   @Deprecated
    public ResteasyClientBuilder establishConnectionTimeout(long timeout, TimeUnit unit)
    {
-      this.establishConnectionTimeout = timeout;
-      this.establishConnectionTimeoutUnits = unit;
-      return this;
+      return connectTimeout(timeout, unit);
    }
 
 

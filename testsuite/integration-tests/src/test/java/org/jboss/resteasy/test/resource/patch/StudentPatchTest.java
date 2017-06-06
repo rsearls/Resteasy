@@ -1,6 +1,7 @@
 package org.jboss.resteasy.test.resource.patch;
 
 import javax.json.Json;
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -20,7 +21,6 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -81,7 +81,7 @@ public class StudentPatchTest
             .add(Json.createObjectBuilder().add("op", "remove").add("path", "/school").build())
             .add(Json.createObjectBuilder().add("op", "add").add("path", "/gender").add("value", "male").build())
             .build();
-      patchTarget.request().patch(Entity.entity(patchRequest, MediaType.APPLICATION_JSON_PATCH_JSON));
+      patchTarget.request().build(HttpMethod.PATCH, Entity.entity(patchRequest, MediaType.APPLICATION_JSON_PATCH_JSON)).invoke();
 
       //verify the patch update result
       WebTarget getTarget = client.target(generateURL("/students/1"));

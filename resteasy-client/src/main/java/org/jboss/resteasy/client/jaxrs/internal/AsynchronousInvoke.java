@@ -245,24 +245,20 @@ public class AsynchronousInvoke implements AsyncInvoker
       return invocation.submit(callback);
    }
 
-   @Override
    public Future<Response> patch(Entity<?> entity) {
       throw new NotImplementedYetException();
    }
 
-   @Override
    public <T> Future<T> patch(Entity<?> entity, Class<T> responseType)
    {
       return method(HttpMethod.PATCH, entity, responseType);
    }
 
-   @Override
    public <T> Future<T> patch(Entity<?> entity, GenericType<T> responseType)
    {
       return method(HttpMethod.PATCH, entity, responseType);
    }
 
-   @Override
    public <T> Future<T> patch(Entity<?> entity, InvocationCallback<T> callback)
    {
       return method(HttpMethod.PATCH, entity, callback);

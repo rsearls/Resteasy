@@ -4,13 +4,12 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutorService;
 
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.client.CompletionStageRxInvoker;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.SyncInvoker;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
-
-import org.jboss.resteasy.spi.NotImplementedYetException;
 
 /**
  * 
@@ -364,42 +363,39 @@ public class CompletionStageRxInvokerImpl implements CompletionStageRxInvoker
       return executor;
    }
 
-   @Override
    public CompletionStage<Response> patch(Entity<?> entity)
    {
       if (executor == null)
       {
-         return CompletableFuture.supplyAsync(() -> builder.patch(entity));
+         return CompletableFuture.supplyAsync(() -> builder.method(HttpMethod.PATCH, entity));
       }
       else
       {
-         return CompletableFuture.supplyAsync(() -> builder.patch(entity), executor);
+         return CompletableFuture.supplyAsync(() -> builder.method(HttpMethod.PATCH, entity), executor);
       }
    }
 
-   @Override
    public <T> CompletionStage<T> patch(Entity<?> entity, Class<T> responseType)
    {
       if (executor == null)
       {
-         return CompletableFuture.supplyAsync(() -> builder.patch(entity, responseType));
+         return CompletableFuture.supplyAsync(() -> builder.method(HttpMethod.PATCH, entity, responseType));
       }
       else
       {
-         return CompletableFuture.supplyAsync(() -> builder.patch(entity, responseType), executor);
+         return CompletableFuture.supplyAsync(() -> builder.method(HttpMethod.PATCH, entity, responseType), executor);
       }
    }
 
-   @Override
    public <T> CompletionStage<T> patch(Entity<?> entity, GenericType<T> responseType)
    {
       if (executor == null)
       {
-         return CompletableFuture.supplyAsync(() -> builder.patch(entity, responseType));
+         return CompletableFuture.supplyAsync(() -> builder.method(HttpMethod.PATCH, entity, responseType));
       }
       else
       {
-         return CompletableFuture.supplyAsync(() -> builder.patch(entity, responseType), executor);
+         return CompletableFuture.supplyAsync(() -> builder.method(HttpMethod.PATCH, entity, responseType), executor);
       }
    }
 

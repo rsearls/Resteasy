@@ -2,7 +2,6 @@ package org.jboss.resteasy.client.jaxrs.internal;
 
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.i18n.Messages;
-import org.jboss.resteasy.spi.NotImplementedYetException;
 
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.client.AsyncInvoker;
@@ -332,19 +331,16 @@ public class ClientInvocationBuilder implements Invocation.Builder
       return provider.getRxInvoker(this, invocation.getClient().asyncInvocationExecutor());
    }
 
-   @Override
    public Response patch(Entity<?> entity)
    {
       return build(HttpMethod.PATCH, entity).invoke();
    }
 
-   @Override
    public <T> T patch(Entity<?> entity, Class<T> responseType)
    {
       return build(HttpMethod.PATCH, entity).invoke(responseType);
    }
 
-   @Override
    public <T> T patch(Entity<?> entity, GenericType<T> responseType)
    {
       return build(HttpMethod.PATCH, entity).invoke(responseType);
