@@ -1,0 +1,39 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/providers/jettison/target/classes
+   "org.jboss.resteasy.annotations.providers.jaxb.json" -> "java.lang";
+   "org.jboss.resteasy.annotations.providers.jaxb.json" -> "java.lang.annotation";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "java.io";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "java.lang";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "java.lang.annotation";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "java.lang.reflect";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "java.net";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "java.nio.charset";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "java.util";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "java.util.concurrent";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "javax.ws.rs (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "javax.xml.bind (jaxb-api-2.2.7.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "javax.xml.bind.annotation.adapters (jaxb-api-2.2.7.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "javax.xml.bind.attachment (jaxb-api-2.2.7.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "javax.xml.namespace";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "javax.xml.stream";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "javax.xml.transform";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "javax.xml.transform.stream";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "javax.xml.validation";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "org.codehaus.jettison.badgerfish (jettison-1.3.8.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "org.codehaus.jettison.json (jettison-1.3.8.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "org.codehaus.jettison.mapped (jettison-1.3.8.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "org.jboss.resteasy.annotations.providers.jaxb.json (classes)";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "org.jboss.resteasy.plugins.providers.jaxb (resteasy-jaxb-provider-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "org.jboss.resteasy.plugins.providers.jaxb.json.i18n (classes)";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "org.jboss.resteasy.resteasy_jaxrs.i18n (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "org.jboss.resteasy.util (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "org.w3c.dom";
+   "org.jboss.resteasy.plugins.providers.jaxb.json"   -> "org.xml.sax";
+   "org.jboss.resteasy.plugins.providers.jaxb.json.i18n" -> "java.io";
+   "org.jboss.resteasy.plugins.providers.jaxb.json.i18n" -> "java.lang";
+   "org.jboss.resteasy.plugins.providers.jaxb.json.i18n" -> "java.util";
+   "org.jboss.resteasy.plugins.providers.jaxb.json.i18n" -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.json.i18n" -> "org.jboss.logging (jboss-logging-3.3.1.Final.jar)";
+}

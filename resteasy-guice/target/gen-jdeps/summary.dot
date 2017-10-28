@@ -1,0 +1,12 @@
+digraph "summary" {
+  "classes"                                          -> "guice-4.1.0.jar";
+  "classes"                                          -> "javax.inject-1.jar";
+  "classes"                                          -> "jboss-annotations-api_1.2_spec-1.0.0.Final.jar";
+  "classes"                                          -> "jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar";
+  "classes"                                          -> "jboss-logging-3.3.1.Final.jar";
+  "classes"                                          -> "jboss-logging-annotations-2.1.0.Final.jar";
+  "classes"                                          -> "jboss-servlet-api_3.1_spec-1.0.0.Final.jar";
+  "classes"                                          -> "resteasy-client-4.0.0-SNAPSHOT.jar";
+  "classes"                                          -> "resteasy-jaxrs-4.0.0-SNAPSHOT.jar";
+  "classes"                                          -> "rt.jar";
+}

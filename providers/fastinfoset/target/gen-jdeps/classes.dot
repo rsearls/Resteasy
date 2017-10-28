@@ -1,0 +1,27 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/providers/fastinfoset/target/classes
+   "org.jboss.resteasy.plugins.providers.fastinfoset.i18n" -> "java.io";
+   "org.jboss.resteasy.plugins.providers.fastinfoset.i18n" -> "java.lang";
+   "org.jboss.resteasy.plugins.providers.fastinfoset.i18n" -> "java.util";
+   "org.jboss.resteasy.plugins.providers.fastinfoset.i18n" -> "org.jboss.logging (jboss-logging-3.3.1.Final.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "com.sun.xml.fastinfoset.stax (FastInfoset-1.2.13.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "java.io";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "java.lang";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "java.lang.annotation";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "java.net";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "javax.ws.rs (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "javax.xml.bind (jaxb-api-2.2.7.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "javax.xml.bind.annotation.adapters (jaxb-api-2.2.7.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "javax.xml.bind.attachment (jaxb-api-2.2.7.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "javax.xml.stream";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "javax.xml.transform";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "javax.xml.transform.stream";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "javax.xml.validation";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "org.jboss.resteasy.annotations.providers.jaxb (resteasy-jaxb-provider-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "org.jboss.resteasy.plugins.providers.fastinfoset.i18n (classes)";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "org.jboss.resteasy.plugins.providers.jaxb (resteasy-jaxb-provider-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "org.jboss.resteasy.util (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "org.w3c.dom";
+   "org.jboss.resteasy.plugins.providers.jaxb.fastinfoset" -> "org.xml.sax";
+}

@@ -1,0 +1,7 @@
+digraph "summary" {
+  "classes"                                          -> "jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar";
+  "classes"                                          -> "reactive-streams-1.0.1.jar";
+  "classes"                                          -> "resteasy-jaxrs-4.0.0-SNAPSHOT.jar";
+  "classes"                                          -> "rt.jar";
+  "classes"                                          -> "rxjava-2.1.5.jar";
+}

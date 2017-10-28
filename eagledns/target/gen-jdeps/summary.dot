@@ -1,0 +1,5 @@
+digraph "summary" {
+  "classes"                                          -> "dnsjava-2.0.8.jar";
+  "classes"                                          -> "log4j-1.2.17.jar";
+  "classes"                                          -> "rt.jar";
+}

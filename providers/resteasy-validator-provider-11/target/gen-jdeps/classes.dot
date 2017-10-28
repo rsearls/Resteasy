@@ -1,0 +1,44 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/providers/resteasy-validator-provider-11/target/classes
+   "org.jboss.resteasy.api.validation"                -> "java.io";
+   "org.jboss.resteasy.api.validation"                -> "java.lang";
+   "org.jboss.resteasy.api.validation"                -> "java.util";
+   "org.jboss.resteasy.api.validation"                -> "javax.validation (validation-api-1.1.0.Final.jar)";
+   "org.jboss.resteasy.api.validation"                -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.api.validation"                -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.api.validation"                -> "javax.xml.bind.annotation (jaxb-api-2.2.7.jar)";
+   "org.jboss.resteasy.api.validation"                -> "org.jboss.resteasy.plugins.providers.validation (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.api.validation"                -> "org.jboss.resteasy.plugins.validation (classes)";
+   "org.jboss.resteasy.api.validation"                -> "org.jboss.resteasy.plugins.validation.i18n (classes)";
+   "org.jboss.resteasy.api.validation"                -> "org.jboss.resteasy.spi (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.validation"            -> "com.fasterxml.classmate (classmate-1.3.3.jar)";
+   "org.jboss.resteasy.plugins.validation"            -> "com.fasterxml.classmate.members (classmate-1.3.3.jar)";
+   "org.jboss.resteasy.plugins.validation"            -> "java.io";
+   "org.jboss.resteasy.plugins.validation"            -> "java.lang";
+   "org.jboss.resteasy.plugins.validation"            -> "java.lang.annotation";
+   "org.jboss.resteasy.plugins.validation"            -> "java.lang.reflect";
+   "org.jboss.resteasy.plugins.validation"            -> "java.security";
+   "org.jboss.resteasy.plugins.validation"            -> "java.util";
+   "org.jboss.resteasy.plugins.validation"            -> "javax.enterprise.context (cdi-api-1.2.jar)";
+   "org.jboss.resteasy.plugins.validation"            -> "javax.naming";
+   "org.jboss.resteasy.plugins.validation"            -> "javax.validation (validation-api-1.1.0.Final.jar)";
+   "org.jboss.resteasy.plugins.validation"            -> "javax.validation.bootstrap (validation-api-1.1.0.Final.jar)";
+   "org.jboss.resteasy.plugins.validation"            -> "javax.validation.executable (validation-api-1.1.0.Final.jar)";
+   "org.jboss.resteasy.plugins.validation"            -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.validation"            -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.validation"            -> "org.hibernate.validator (hibernate-validator-5.2.4.Final.jar)";
+   "org.jboss.resteasy.plugins.validation"            -> "org.jboss.resteasy.api.validation (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.validation"            -> "org.jboss.resteasy.api.validation (classes)";
+   "org.jboss.resteasy.plugins.validation"            -> "org.jboss.resteasy.cdi (resteasy-cdi-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.validation"            -> "org.jboss.resteasy.plugins.providers.validation (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.validation"            -> "org.jboss.resteasy.plugins.validation.i18n (classes)";
+   "org.jboss.resteasy.plugins.validation"            -> "org.jboss.resteasy.spi (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.validation"            -> "org.jboss.resteasy.spi.validation (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.validation"            -> "org.jboss.resteasy.util (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.validation.i18n"       -> "java.io";
+   "org.jboss.resteasy.plugins.validation.i18n"       -> "java.lang";
+   "org.jboss.resteasy.plugins.validation.i18n"       -> "java.util";
+   "org.jboss.resteasy.plugins.validation.i18n"       -> "javax.validation (validation-api-1.1.0.Final.jar)";
+   "org.jboss.resteasy.plugins.validation.i18n"       -> "org.jboss.logging (jboss-logging-3.3.1.Final.jar)";
+   "org.jboss.resteasy.plugins.validation.i18n"       -> "org.jboss.resteasy.api.validation (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+}

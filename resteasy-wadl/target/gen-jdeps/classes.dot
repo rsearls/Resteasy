@@ -1,0 +1,33 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/resteasy-wadl/target/classes
+   "org.jboss.resteasy.wadl"                          -> "java.io";
+   "org.jboss.resteasy.wadl"                          -> "java.lang";
+   "org.jboss.resteasy.wadl"                          -> "java.lang.annotation";
+   "org.jboss.resteasy.wadl"                          -> "java.lang.reflect";
+   "org.jboss.resteasy.wadl"                          -> "java.util";
+   "org.jboss.resteasy.wadl"                          -> "javax.servlet (jboss-servlet-api_3.1_spec-1.0.0.Final.jar)";
+   "org.jboss.resteasy.wadl"                          -> "javax.servlet.http (jboss-servlet-api_3.1_spec-1.0.0.Final.jar)";
+   "org.jboss.resteasy.wadl"                          -> "javax.ws.rs (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.wadl"                          -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.wadl"                          -> "javax.xml.bind";
+   "org.jboss.resteasy.wadl"                          -> "javax.xml.namespace";
+   "org.jboss.resteasy.wadl"                          -> "org.jboss.resteasy.annotations (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.wadl"                          -> "org.jboss.resteasy.core (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.wadl"                          -> "org.jboss.resteasy.plugins.server.servlet (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.wadl"                          -> "org.jboss.resteasy.spi (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.wadl"                          -> "org.jboss.resteasy.spi.metadata (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.wadl"                          -> "org.jboss.resteasy.util (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.wadl"                          -> "org.jboss.resteasy.wadl.i18n (classes)";
+   "org.jboss.resteasy.wadl"                          -> "org.jboss.resteasy.wadl.jaxb (classes)";
+   "org.jboss.resteasy.wadl.i18n"                     -> "java.io";
+   "org.jboss.resteasy.wadl.i18n"                     -> "java.lang";
+   "org.jboss.resteasy.wadl.i18n"                     -> "java.text";
+   "org.jboss.resteasy.wadl.i18n"                     -> "java.util";
+   "org.jboss.resteasy.wadl.i18n"                     -> "org.jboss.logging (jboss-logging-3.3.1.Final.jar)";
+   "org.jboss.resteasy.wadl.i18n"                     -> "org.jboss.logging.annotations (jboss-logging-annotations-2.1.0.Final.jar)";
+   "org.jboss.resteasy.wadl.jaxb"                     -> "java.lang";
+   "org.jboss.resteasy.wadl.jaxb"                     -> "java.util";
+   "org.jboss.resteasy.wadl.jaxb"                     -> "javax.xml.bind.annotation";
+   "org.jboss.resteasy.wadl.jaxb"                     -> "javax.xml.bind.annotation.adapters";
+   "org.jboss.resteasy.wadl.jaxb"                     -> "javax.xml.namespace";
+}

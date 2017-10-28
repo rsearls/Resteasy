@@ -1,0 +1,13 @@
+digraph "summary" {
+  "classes"                                          -> "bcprov-jdk15on-1.55.jar";
+  "classes"                                          -> "jackson-core-asl-1.9.13.jar";
+  "classes"                                          -> "jackson-mapper-asl-1.9.13.jar";
+  "classes"                                          -> "jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar";
+  "classes"                                          -> "jboss-logging-3.3.1.Final.jar";
+  "classes"                                          -> "jboss-logging-annotations-2.1.0.Final.jar";
+  "classes"                                          -> "jce.jar";
+  "classes"                                          -> "jcip-annotations-1.0.jar";
+  "classes"                                          -> "resteasy-jackson-provider-4.0.0-SNAPSHOT.jar";
+  "classes"                                          -> "resteasy-jaxrs-4.0.0-SNAPSHOT.jar";
+  "classes"                                          -> "rt.jar";
+}

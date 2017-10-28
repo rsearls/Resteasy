@@ -1,0 +1,10 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/arquillian/RESTEASY-1630-jetty-resteasy-servlet-initializer/target/classes
+   "org.jboss.resteasy.resteasy1630"                  -> "java.io";
+   "org.jboss.resteasy.resteasy1630"                  -> "java.lang";
+   "org.jboss.resteasy.resteasy1630"                  -> "java.util";
+   "org.jboss.resteasy.resteasy1630"                  -> "javax.validation.constraints (validation-api-1.1.0.Final.jar)";
+   "org.jboss.resteasy.resteasy1630"                  -> "javax.ws.rs (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.resteasy1630"                  -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.resteasy1630"                  -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+}

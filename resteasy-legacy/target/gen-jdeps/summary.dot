@@ -1,0 +1,11 @@
+digraph "summary" {
+  "classes"                                          -> "commons-io-2.5.jar";
+  "classes"                                          -> "httpclient-4.5.2.jar";
+  "classes"                                          -> "httpcore-4.4.5.jar";
+  "classes"                                          -> "jboss-annotations-api_1.2_spec-1.0.0.Final.jar";
+  "classes"                                          -> "jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar";
+  "classes"                                          -> "log4j-1.2.17.jar";
+  "classes"                                          -> "resteasy-jaxrs-4.0.0-SNAPSHOT.jar";
+  "classes"                                          -> "rt.jar";
+  "classes"                                          -> "slf4j-api-1.7.7.jar";
+}

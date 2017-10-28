@@ -1,0 +1,28 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/resteasy-cache/resteasy-cache-core/target/classes
+   "org.jboss.resteasy.plugins.cache.server"          -> "java.io";
+   "org.jboss.resteasy.plugins.cache.server"          -> "java.lang";
+   "org.jboss.resteasy.plugins.cache.server"          -> "java.lang.invoke";
+   "org.jboss.resteasy.plugins.cache.server"          -> "java.net";
+   "org.jboss.resteasy.plugins.cache.server"          -> "java.security";
+   "org.jboss.resteasy.plugins.cache.server"          -> "java.util";
+   "org.jboss.resteasy.plugins.cache.server"          -> "java.util.concurrent";
+   "org.jboss.resteasy.plugins.cache.server"          -> "java.util.function";
+   "org.jboss.resteasy.plugins.cache.server"          -> "javax.ws.rs (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.cache.server"          -> "javax.ws.rs.container (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.cache.server"          -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.cache.server"          -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.cache.server"          -> "org.infinispan (infinispan-core-8.2.6.Final.jar)";
+   "org.jboss.resteasy.plugins.cache.server"          -> "org.infinispan.configuration.cache (infinispan-core-8.2.6.Final.jar)";
+   "org.jboss.resteasy.plugins.cache.server"          -> "org.infinispan.configuration.global (infinispan-core-8.2.6.Final.jar)";
+   "org.jboss.resteasy.plugins.cache.server"          -> "org.infinispan.eviction (infinispan-core-8.2.6.Final.jar)";
+   "org.jboss.resteasy.plugins.cache.server"          -> "org.infinispan.manager (infinispan-core-8.2.6.Final.jar)";
+   "org.jboss.resteasy.plugins.cache.server"          -> "org.jboss.resteasy.plugins.cache.server.i18n (classes)";
+   "org.jboss.resteasy.plugins.cache.server"          -> "org.jboss.resteasy.resteasy_jaxrs.i18n (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.cache.server"          -> "org.jboss.resteasy.specimpl (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.cache.server"          -> "org.jboss.resteasy.spi (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.cache.server.i18n"     -> "java.io";
+   "org.jboss.resteasy.plugins.cache.server.i18n"     -> "java.lang";
+   "org.jboss.resteasy.plugins.cache.server.i18n"     -> "java.util";
+   "org.jboss.resteasy.plugins.cache.server.i18n"     -> "org.jboss.logging (jboss-logging-3.3.1.Final.jar)";
+}

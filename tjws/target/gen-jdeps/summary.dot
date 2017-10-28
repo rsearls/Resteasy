@@ -1,0 +1,7 @@
+digraph "summary" {
+  "classes"                                          -> "commons-codec-1.9.jar";
+  "classes"                                          -> "junit-4.12.jar";
+  "classes"                                          -> "resteasy-jaxrs-4.0.0-SNAPSHOT.jar";
+  "classes"                                          -> "rt.jar";
+  "classes"                                          -> "servlet-api-2.5.jar";
+}

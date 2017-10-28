@@ -1,0 +1,12 @@
+digraph "summary" {
+  "classes"                                          -> "cdi-api-1.2.jar";
+  "classes"                                          -> "classmate-1.3.3.jar";
+  "classes"                                          -> "hibernate-validator-5.2.4.Final.jar";
+  "classes"                                          -> "jaxb-api-2.2.7.jar";
+  "classes"                                          -> "jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar";
+  "classes"                                          -> "jboss-logging-3.3.1.Final.jar";
+  "classes"                                          -> "resteasy-cdi-4.0.0-SNAPSHOT.jar";
+  "classes"                                          -> "resteasy-jaxrs-4.0.0-SNAPSHOT.jar";
+  "classes"                                          -> "rt.jar";
+  "classes"                                          -> "validation-api-1.1.0.Final.jar";
+}

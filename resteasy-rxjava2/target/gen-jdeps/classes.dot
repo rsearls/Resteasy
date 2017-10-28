@@ -1,0 +1,14 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/resteasy-rxjava2/target/classes
+   "org.jboss.resteasy.rxjava2"                       -> "io.reactivex (rxjava-2.1.5.jar)";
+   "org.jboss.resteasy.rxjava2"                       -> "io.reactivex.disposables (rxjava-2.1.5.jar)";
+   "org.jboss.resteasy.rxjava2"                       -> "io.reactivex.functions (rxjava-2.1.5.jar)";
+   "org.jboss.resteasy.rxjava2"                       -> "io.reactivex.plugins (rxjava-2.1.5.jar)";
+   "org.jboss.resteasy.rxjava2"                       -> "java.lang";
+   "org.jboss.resteasy.rxjava2"                       -> "java.lang.invoke";
+   "org.jboss.resteasy.rxjava2"                       -> "java.util";
+   "org.jboss.resteasy.rxjava2"                       -> "java.util.concurrent";
+   "org.jboss.resteasy.rxjava2"                       -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.rxjava2"                       -> "org.jboss.resteasy.spi (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.rxjava2"                       -> "org.reactivestreams (reactive-streams-1.0.1.jar)";
+}

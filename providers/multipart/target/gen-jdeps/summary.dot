@@ -1,0 +1,12 @@
+digraph "summary" {
+  "classes"                                          -> "activation-1.1.1.jar";
+  "classes"                                          -> "apache-mime4j-0.6.jar";
+  "classes"                                          -> "javax.mail-1.5.6.jar";
+  "classes"                                          -> "jaxb-api-2.2.7.jar";
+  "classes"                                          -> "jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar";
+  "classes"                                          -> "jboss-logging-3.3.1.Final.jar";
+  "classes"                                          -> "jboss-logging-annotations-2.1.0.Final.jar";
+  "classes"                                          -> "resteasy-jaxb-provider-4.0.0-SNAPSHOT.jar";
+  "classes"                                          -> "resteasy-jaxrs-4.0.0-SNAPSHOT.jar";
+  "classes"                                          -> "rt.jar";
+}

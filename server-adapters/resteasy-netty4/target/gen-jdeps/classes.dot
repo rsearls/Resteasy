@@ -1,0 +1,39 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/server-adapters/resteasy-netty4/target/classes
+   "org.jboss.resteasy.plugins.server.netty"          -> "io.netty.bootstrap (netty-all-4.1.8.Final.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "io.netty.buffer (netty-all-4.1.8.Final.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "io.netty.channel (netty-all-4.1.8.Final.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "io.netty.channel.nio (netty-all-4.1.8.Final.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "io.netty.channel.socket (netty-all-4.1.8.Final.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "io.netty.channel.socket.nio (netty-all-4.1.8.Final.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "io.netty.handler.codec (netty-all-4.1.8.Final.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "io.netty.handler.codec.http (netty-all-4.1.8.Final.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "io.netty.handler.ssl (netty-all-4.1.8.Final.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "io.netty.handler.timeout (netty-all-4.1.8.Final.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "io.netty.util (netty-all-4.1.8.Final.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "io.netty.util.concurrent (netty-all-4.1.8.Final.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "java.io";
+   "org.jboss.resteasy.plugins.server.netty"          -> "java.lang";
+   "org.jboss.resteasy.plugins.server.netty"          -> "java.lang.annotation";
+   "org.jboss.resteasy.plugins.server.netty"          -> "java.net";
+   "org.jboss.resteasy.plugins.server.netty"          -> "java.security";
+   "org.jboss.resteasy.plugins.server.netty"          -> "java.util";
+   "org.jboss.resteasy.plugins.server.netty"          -> "java.util.concurrent";
+   "org.jboss.resteasy.plugins.server.netty"          -> "javax.net.ssl";
+   "org.jboss.resteasy.plugins.server.netty"          -> "javax.ws.rs (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "javax.ws.rs.container (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "org.apache.commons.codec.binary (commons-codec-1.9.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "org.jboss.resteasy.core (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "org.jboss.resteasy.plugins.server (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "org.jboss.resteasy.plugins.server.embedded (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "org.jboss.resteasy.plugins.server.netty.i18n (classes)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "org.jboss.resteasy.specimpl (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "org.jboss.resteasy.spi (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.netty"          -> "org.jboss.resteasy.util (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.netty.i18n"     -> "java.io";
+   "org.jboss.resteasy.plugins.server.netty.i18n"     -> "java.lang";
+   "org.jboss.resteasy.plugins.server.netty.i18n"     -> "java.util";
+   "org.jboss.resteasy.plugins.server.netty.i18n"     -> "org.jboss.logging (jboss-logging-3.3.1.Final.jar)";
+}

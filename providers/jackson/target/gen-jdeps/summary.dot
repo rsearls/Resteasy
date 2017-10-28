@@ -1,0 +1,7 @@
+digraph "summary" {
+  "classes"                                          -> "jackson-jaxrs-1.9.13.jar";
+  "classes"                                          -> "jackson-mapper-asl-1.9.13.jar";
+  "classes"                                          -> "jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar";
+  "classes"                                          -> "resteasy-jaxrs-4.0.0-SNAPSHOT.jar";
+  "classes"                                          -> "rt.jar";
+}

@@ -1,0 +1,14 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/providers/json-p-ee7/target/classes
+   "org.jboss.resteasy.plugins.providers.jsonp"       -> "java.io";
+   "org.jboss.resteasy.plugins.providers.jsonp"       -> "java.lang";
+   "org.jboss.resteasy.plugins.providers.jsonp"       -> "java.lang.annotation";
+   "org.jboss.resteasy.plugins.providers.jsonp"       -> "java.lang.reflect";
+   "org.jboss.resteasy.plugins.providers.jsonp"       -> "java.nio.charset";
+   "org.jboss.resteasy.plugins.providers.jsonp"       -> "java.util";
+   "org.jboss.resteasy.plugins.providers.jsonp"       -> "javax.json (javax.json-1.1.jar)";
+   "org.jboss.resteasy.plugins.providers.jsonp"       -> "javax.ws.rs (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.jsonp"       -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.jsonp"       -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.jsonp"       -> "org.jboss.resteasy.resteasy_jaxrs.i18n (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+}

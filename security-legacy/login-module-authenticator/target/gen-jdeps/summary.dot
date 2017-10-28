@@ -1,0 +1,5 @@
+digraph "summary" {
+  "classes"                                          -> "jboss-servlet-api_3.0_spec-1.0.0.Final.jar";
+  "classes"                                          -> "jbossweb-7.0.17.Final.jar";
+  "classes"                                          -> "rt.jar";
+}

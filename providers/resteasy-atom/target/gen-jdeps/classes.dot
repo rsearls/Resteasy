@@ -1,0 +1,34 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/providers/resteasy-atom/target/classes
+   "org.jboss.resteasy.plugins.providers.atom"        -> "com.sun.xml.bind.marshaller (jaxb-impl-2.2.7.jar)";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "java.io";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "java.lang";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "java.lang.annotation";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "java.lang.reflect";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "java.net";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "java.security";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "java.util";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "javax.ws.rs (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "javax.xml.bind (jaxb-api-2.2.7.jar)";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "javax.xml.bind.annotation (jaxb-api-2.2.7.jar)";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "javax.xml.bind.annotation.adapters (jaxb-api-2.2.7.jar)";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "org.jboss.resteasy.plugins.providers.jaxb (resteasy-jaxb-provider-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "org.jboss.resteasy.plugins.providers.resteasy_atom.i18n (classes)";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "org.jboss.resteasy.resteasy_jaxrs.i18n (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "org.jboss.resteasy.spi (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.providers.atom"        -> "org.w3c.dom";
+   "org.jboss.resteasy.plugins.providers.atom.app"    -> "java.io";
+   "org.jboss.resteasy.plugins.providers.atom.app"    -> "java.lang";
+   "org.jboss.resteasy.plugins.providers.atom.app"    -> "java.util";
+   "org.jboss.resteasy.plugins.providers.atom.app"    -> "javax.xml.bind.annotation (jaxb-api-2.2.7.jar)";
+   "org.jboss.resteasy.plugins.providers.atom.app"    -> "javax.xml.bind.annotation.adapters (jaxb-api-2.2.7.jar)";
+   "org.jboss.resteasy.plugins.providers.atom.app"    -> "javax.xml.namespace";
+   "org.jboss.resteasy.plugins.providers.atom.app"    -> "org.jboss.resteasy.plugins.providers.atom (classes)";
+   "org.jboss.resteasy.plugins.providers.resteasy_atom.i18n" -> "java.io";
+   "org.jboss.resteasy.plugins.providers.resteasy_atom.i18n" -> "java.lang";
+   "org.jboss.resteasy.plugins.providers.resteasy_atom.i18n" -> "java.util";
+   "org.jboss.resteasy.plugins.providers.resteasy_atom.i18n" -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.resteasy_atom.i18n" -> "org.jboss.logging (jboss-logging-3.3.1.Final.jar)";
+}

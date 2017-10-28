@@ -1,0 +1,20 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/security-legacy/resteasy-oauth/target/classes
+   "org.jboss.resteasy.auth.oauth"                    -> "java.io";
+   "org.jboss.resteasy.auth.oauth"                    -> "java.lang";
+   "org.jboss.resteasy.auth.oauth"                    -> "java.net";
+   "org.jboss.resteasy.auth.oauth"                    -> "java.nio.charset";
+   "org.jboss.resteasy.auth.oauth"                    -> "java.util";
+   "org.jboss.resteasy.auth.oauth"                    -> "java.util.concurrent";
+   "org.jboss.resteasy.auth.oauth"                    -> "javax.servlet (jboss-servlet-api_3.1_spec-1.0.0.Final.jar)";
+   "org.jboss.resteasy.auth.oauth"                    -> "javax.servlet.http (jboss-servlet-api_3.1_spec-1.0.0.Final.jar)";
+   "org.jboss.resteasy.auth.oauth"                    -> "net.oauth (oauth-provider-20100527.jar)";
+   "org.jboss.resteasy.auth.oauth"                    -> "net.oauth (oauth-20100527.jar)";
+   "org.jboss.resteasy.auth.oauth"                    -> "org.jboss.resteasy.auth.oauth.i18n (classes)";
+   "org.jboss.resteasy.auth.oauth.i18n"               -> "java.io";
+   "org.jboss.resteasy.auth.oauth.i18n"               -> "java.lang";
+   "org.jboss.resteasy.auth.oauth.i18n"               -> "java.text";
+   "org.jboss.resteasy.auth.oauth.i18n"               -> "java.util";
+   "org.jboss.resteasy.auth.oauth.i18n"               -> "org.jboss.logging (jboss-logging-3.3.1.Final.jar)";
+   "org.jboss.resteasy.auth.oauth.i18n"               -> "org.jboss.logging.annotations (jboss-logging-annotations-2.1.0.Final.jar)";
+}

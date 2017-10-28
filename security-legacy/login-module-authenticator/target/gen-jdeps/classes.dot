@@ -1,0 +1,13 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/security-legacy/login-module-authenticator/target/classes
+   "org.jboss.security.web"                           -> "java.io";
+   "org.jboss.security.web"                           -> "java.lang";
+   "org.jboss.security.web"                           -> "java.security";
+   "org.jboss.security.web"                           -> "java.util";
+   "org.jboss.security.web"                           -> "java.util.logging";
+   "org.jboss.security.web"                           -> "javax.servlet.http (jboss-servlet-api_3.0_spec-1.0.0.Final.jar)";
+   "org.jboss.security.web"                           -> "org.apache.catalina (jbossweb-7.0.17.Final.jar)";
+   "org.jboss.security.web"                           -> "org.apache.catalina.authenticator (jbossweb-7.0.17.Final.jar)";
+   "org.jboss.security.web"                           -> "org.apache.catalina.connector (jbossweb-7.0.17.Final.jar)";
+   "org.jboss.security.web"                           -> "org.apache.catalina.deploy (jbossweb-7.0.17.Final.jar)";
+}

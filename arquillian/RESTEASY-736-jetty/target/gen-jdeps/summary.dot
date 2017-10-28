@@ -1,0 +1,4 @@
+digraph "summary" {
+  "classes"                                          -> "jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar";
+  "classes"                                          -> "rt.jar";
+}

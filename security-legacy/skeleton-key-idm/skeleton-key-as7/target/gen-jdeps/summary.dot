@@ -1,0 +1,16 @@
+digraph "summary" {
+  "classes"                                          -> "bcpkix-jdk15on-1.55.jar";
+  "classes"                                          -> "jackson-core-asl-1.9.13.jar";
+  "classes"                                          -> "jackson-mapper-asl-1.9.13.jar";
+  "classes"                                          -> "jboss-as-web-7.1.2.Final.jar";
+  "classes"                                          -> "jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar";
+  "classes"                                          -> "jboss-logging-3.3.1.Final.jar";
+  "classes"                                          -> "jboss-servlet-api_3.0_spec-1.0.0.Final.jar";
+  "classes"                                          -> "jbossweb-7.0.17.Final.jar";
+  "classes"                                          -> "jose-jwt-4.0.0-SNAPSHOT.jar";
+  "classes"                                          -> "picketbox-4.0.7.Final.jar";
+  "classes"                                          -> "resteasy-client-4.0.0-SNAPSHOT.jar";
+  "classes"                                          -> "resteasy-jaxrs-4.0.0-SNAPSHOT.jar";
+  "classes"                                          -> "rt.jar";
+  "classes"                                          -> "skeleton-key-core-4.0.0-SNAPSHOT.jar";
+}

@@ -1,0 +1,16 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/server-adapters/resteasy-netty4-cdi/target/classes
+   "org.jboss.resteasy.plugins.server.netty.cdi"      -> "io.netty.channel (netty-all-4.1.8.Final.jar)";
+   "org.jboss.resteasy.plugins.server.netty.cdi"      -> "java.io";
+   "org.jboss.resteasy.plugins.server.netty.cdi"      -> "java.lang";
+   "org.jboss.resteasy.plugins.server.netty.cdi"      -> "java.lang.annotation";
+   "org.jboss.resteasy.plugins.server.netty.cdi"      -> "java.util";
+   "org.jboss.resteasy.plugins.server.netty.cdi"      -> "javax.enterprise.context (cdi-api-1.2.jar)";
+   "org.jboss.resteasy.plugins.server.netty.cdi"      -> "javax.enterprise.inject (cdi-api-1.2.jar)";
+   "org.jboss.resteasy.plugins.server.netty.cdi"      -> "javax.enterprise.inject.spi (cdi-api-1.2.jar)";
+   "org.jboss.resteasy.plugins.server.netty.cdi"      -> "org.jboss.resteasy.core (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.netty.cdi"      -> "org.jboss.resteasy.plugins.server.embedded (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.netty.cdi"      -> "org.jboss.resteasy.plugins.server.netty (resteasy-netty4-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.netty.cdi"      -> "org.jboss.resteasy.spi (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.netty.cdi"      -> "org.jboss.weld.context.bound (weld-api-2.1.Final.jar)";
+}

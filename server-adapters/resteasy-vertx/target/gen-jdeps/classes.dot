@@ -1,0 +1,33 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/server-adapters/resteasy-vertx/target/classes
+   "org.jboss.resteasy.plugins.server.vertx"          -> "io.netty.buffer (netty-buffer-4.1.8.Final.jar)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "io.vertx.core (vertx-core-3.4.1.jar)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "io.vertx.core.buffer (vertx-core-3.4.1.jar)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "io.vertx.core.http (vertx-core-3.4.1.jar)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "io.vertx.core.json (vertx-core-3.4.1.jar)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "java.io";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "java.lang";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "java.lang.invoke";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "java.net";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "java.security";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "java.util";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "java.util.concurrent";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "javax.ws.rs (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "javax.ws.rs.container (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "org.apache.commons.codec.binary (commons-codec-1.9.jar)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "org.jboss.resteasy.core (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "org.jboss.resteasy.plugins.server (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "org.jboss.resteasy.plugins.server.embedded (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "org.jboss.resteasy.plugins.server.resourcefactory (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "org.jboss.resteasy.plugins.server.vertx.i18n (classes)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "org.jboss.resteasy.specimpl (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "org.jboss.resteasy.spi (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "org.jboss.resteasy.spi.metadata (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.vertx"          -> "org.jboss.resteasy.util (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.vertx.i18n"     -> "java.io";
+   "org.jboss.resteasy.plugins.server.vertx.i18n"     -> "java.lang";
+   "org.jboss.resteasy.plugins.server.vertx.i18n"     -> "java.util";
+   "org.jboss.resteasy.plugins.server.vertx.i18n"     -> "org.jboss.logging (jboss-logging-3.3.1.Final.jar)";
+}

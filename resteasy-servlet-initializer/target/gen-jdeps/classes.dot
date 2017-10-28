@@ -1,0 +1,19 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/resteasy-servlet-initializer/target/classes
+   "org.jboss.resteasy.plugins.servlet"               -> "java.lang";
+   "org.jboss.resteasy.plugins.servlet"               -> "java.lang.annotation";
+   "org.jboss.resteasy.plugins.servlet"               -> "java.util";
+   "org.jboss.resteasy.plugins.servlet"               -> "javax.servlet (jboss-servlet-api_3.1_spec-1.0.0.Final.jar)";
+   "org.jboss.resteasy.plugins.servlet"               -> "javax.servlet.annotation (jboss-servlet-api_3.1_spec-1.0.0.Final.jar)";
+   "org.jboss.resteasy.plugins.servlet"               -> "javax.ws.rs (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.servlet"               -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.servlet"               -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.servlet"               -> "org.jboss.resteasy.core (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.servlet"               -> "org.jboss.resteasy.plugins.server.servlet (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.servlet"               -> "org.jboss.resteasy.plugins.servlet.i18n (classes)";
+   "org.jboss.resteasy.plugins.servlet"               -> "org.jboss.resteasy.spi (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.servlet.i18n"          -> "java.io";
+   "org.jboss.resteasy.plugins.servlet.i18n"          -> "java.lang";
+   "org.jboss.resteasy.plugins.servlet.i18n"          -> "java.util";
+   "org.jboss.resteasy.plugins.servlet.i18n"          -> "org.jboss.logging (jboss-logging-3.3.1.Final.jar)";
+}

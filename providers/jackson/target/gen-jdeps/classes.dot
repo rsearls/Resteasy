@@ -1,0 +1,19 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/providers/jackson/target/classes
+   "org.jboss.resteasy.annotations.providers"         -> "java.lang";
+   "org.jboss.resteasy.annotations.providers"         -> "java.lang.annotation";
+   "org.jboss.resteasy.plugins.providers.jackson"     -> "java.io";
+   "org.jboss.resteasy.plugins.providers.jackson"     -> "java.lang";
+   "org.jboss.resteasy.plugins.providers.jackson"     -> "java.lang.annotation";
+   "org.jboss.resteasy.plugins.providers.jackson"     -> "java.lang.reflect";
+   "org.jboss.resteasy.plugins.providers.jackson"     -> "java.util";
+   "org.jboss.resteasy.plugins.providers.jackson"     -> "javax.ws.rs (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.jackson"     -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.jackson"     -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.jackson"     -> "org.codehaus.jackson.jaxrs (jackson-jaxrs-1.9.13.jar)";
+   "org.jboss.resteasy.plugins.providers.jackson"     -> "org.codehaus.jackson.map (jackson-mapper-asl-1.9.13.jar)";
+   "org.jboss.resteasy.plugins.providers.jackson"     -> "org.jboss.resteasy.annotations.providers (classes)";
+   "org.jboss.resteasy.plugins.providers.jackson"     -> "org.jboss.resteasy.core (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.providers.jackson"     -> "org.jboss.resteasy.resteasy_jaxrs.i18n (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.providers.jackson"     -> "org.jboss.resteasy.util (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+}

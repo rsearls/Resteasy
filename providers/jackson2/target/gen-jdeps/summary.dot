@@ -1,0 +1,11 @@
+digraph "summary" {
+  "classes"                                          -> "jackson-core-2.8.9.jar";
+  "classes"                                          -> "jackson-databind-2.8.9.jar";
+  "classes"                                          -> "jackson-jaxrs-base-2.8.9.jar";
+  "classes"                                          -> "jackson-jaxrs-json-provider-2.8.9.jar";
+  "classes"                                          -> "jboss-annotations-api_1.2_spec-1.0.0.Final.jar";
+  "classes"                                          -> "jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar";
+  "classes"                                          -> "json-patch-1.3.jar";
+  "classes"                                          -> "resteasy-jaxrs-4.0.0-SNAPSHOT.jar";
+  "classes"                                          -> "rt.jar";
+}

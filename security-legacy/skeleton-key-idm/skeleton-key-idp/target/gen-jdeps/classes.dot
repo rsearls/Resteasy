@@ -1,0 +1,48 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/security-legacy/skeleton-key-idm/skeleton-key-idp/target/classes
+   "org.jboss.resteasy.skeleton.key.idm"              -> "java.lang";
+   "org.jboss.resteasy.skeleton.key.idm"              -> "java.util";
+   "org.jboss.resteasy.skeleton.key.idm"              -> "org.jboss.resteasy.skeleton.key.idm.model.data (classes)";
+   "org.jboss.resteasy.skeleton.key.idm.adapters.infinispan" -> "java.lang";
+   "org.jboss.resteasy.skeleton.key.idm.adapters.infinispan" -> "java.util";
+   "org.jboss.resteasy.skeleton.key.idm.adapters.infinispan" -> "java.util.concurrent.atomic";
+   "org.jboss.resteasy.skeleton.key.idm.adapters.infinispan" -> "org.infinispan (infinispan-core-8.2.6.Final.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.adapters.infinispan" -> "org.jboss.resteasy.skeleton.key.idm (classes)";
+   "org.jboss.resteasy.skeleton.key.idm.adapters.infinispan" -> "org.jboss.resteasy.skeleton.key.idm.model.data (classes)";
+   "org.jboss.resteasy.skeleton.key.idm.adapters.infinispan" -> "org.jboss.resteasy.spi (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.i18n"         -> "java.io";
+   "org.jboss.resteasy.skeleton.key.idm.i18n"         -> "java.lang";
+   "org.jboss.resteasy.skeleton.key.idm.i18n"         -> "java.util";
+   "org.jboss.resteasy.skeleton.key.idm.i18n"         -> "org.jboss.logging (jboss-logging-3.3.1.Final.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.model.data"   -> "java.io";
+   "org.jboss.resteasy.skeleton.key.idm.model.data"   -> "java.lang";
+   "org.jboss.resteasy.skeleton.key.idm.model.data"   -> "java.security";
+   "org.jboss.resteasy.skeleton.key.idm.model.data"   -> "java.util";
+   "org.jboss.resteasy.skeleton.key.idm.model.data"   -> "org.bouncycastle.openssl (bcpkix-jdk15on-1.55.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.model.data"   -> "org.jboss.resteasy.security (resteasy-crypto-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "java.io";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "java.lang";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "java.net";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "java.nio.charset";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "java.security";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "java.util";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "java.util.concurrent.atomic";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "javax.ws.rs (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "org.infinispan (infinispan-core-8.2.6.Final.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "org.infinispan.manager (infinispan-core-8.2.6.Final.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "org.jboss.resteasy.jose (jose-jwt-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "org.jboss.resteasy.jose.jws (jose-jwt-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "org.jboss.resteasy.jose.jws.crypto (jose-jwt-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "org.jboss.resteasy.jwt (jose-jwt-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "org.jboss.resteasy.skeleton.key (skeleton-key-core-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "org.jboss.resteasy.skeleton.key.idm (classes)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "org.jboss.resteasy.skeleton.key.idm.adapters.infinispan (classes)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "org.jboss.resteasy.skeleton.key.idm.i18n (classes)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "org.jboss.resteasy.skeleton.key.idm.model.data (classes)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "org.jboss.resteasy.skeleton.key.representations (skeleton-key-core-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "org.jboss.resteasy.skeleton.key.representations.idm (skeleton-key-core-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "org.jboss.resteasy.spi (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.skeleton.key.idm.service"      -> "org.jboss.resteasy.util (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+}

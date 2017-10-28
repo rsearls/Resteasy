@@ -1,0 +1,33 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/resteasy-guice/target/classes
+   "org.jboss.resteasy.plugins.guice"                 -> "com.google.inject (guice-4.1.0.jar)";
+   "org.jboss.resteasy.plugins.guice"                 -> "java.lang";
+   "org.jboss.resteasy.plugins.guice"                 -> "java.lang.annotation";
+   "org.jboss.resteasy.plugins.guice"                 -> "java.lang.reflect";
+   "org.jboss.resteasy.plugins.guice"                 -> "java.util";
+   "org.jboss.resteasy.plugins.guice"                 -> "javax.annotation (jboss-annotations-api_1.2_spec-1.0.0.Final.jar)";
+   "org.jboss.resteasy.plugins.guice"                 -> "javax.inject (javax.inject-1.jar)";
+   "org.jboss.resteasy.plugins.guice"                 -> "javax.servlet (jboss-servlet-api_3.1_spec-1.0.0.Final.jar)";
+   "org.jboss.resteasy.plugins.guice"                 -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.guice"                 -> "org.jboss.resteasy.plugins.guice.i18n (classes)";
+   "org.jboss.resteasy.plugins.guice"                 -> "org.jboss.resteasy.plugins.server.servlet (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.guice"                 -> "org.jboss.resteasy.spi (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.guice"                 -> "org.jboss.resteasy.util (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.guice.ext"             -> "com.google.inject (guice-4.1.0.jar)";
+   "org.jboss.resteasy.plugins.guice.ext"             -> "com.google.inject.binder (guice-4.1.0.jar)";
+   "org.jboss.resteasy.plugins.guice.ext"             -> "java.lang";
+   "org.jboss.resteasy.plugins.guice.ext"             -> "java.lang.reflect";
+   "org.jboss.resteasy.plugins.guice.ext"             -> "javax.servlet.http (jboss-servlet-api_3.1_spec-1.0.0.Final.jar)";
+   "org.jboss.resteasy.plugins.guice.ext"             -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.guice.ext"             -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.guice.ext"             -> "org.jboss.resteasy.client.jaxrs (resteasy-client-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.guice.ext"             -> "org.jboss.resteasy.client.jaxrs.engines (resteasy-client-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.guice.ext"             -> "org.jboss.resteasy.plugins.guice (classes)";
+   "org.jboss.resteasy.plugins.guice.ext"             -> "org.jboss.resteasy.spi (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.guice.i18n"            -> "java.io";
+   "org.jboss.resteasy.plugins.guice.i18n"            -> "java.lang";
+   "org.jboss.resteasy.plugins.guice.i18n"            -> "java.text";
+   "org.jboss.resteasy.plugins.guice.i18n"            -> "java.util";
+   "org.jboss.resteasy.plugins.guice.i18n"            -> "org.jboss.logging (jboss-logging-3.3.1.Final.jar)";
+   "org.jboss.resteasy.plugins.guice.i18n"            -> "org.jboss.logging.annotations (jboss-logging-annotations-2.1.0.Final.jar)";
+}

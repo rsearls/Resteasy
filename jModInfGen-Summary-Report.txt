@@ -1,0 +1,35 @@
+  Mon Oct 30 12:20:37 EDT 2017
+  jModInfoGet Summary Report
+
+69 root directories processed
+0 module-info.java files found
+47 classes.dot files found
+22 service provider files found
+47 generated-module-info.java files written
+
+  *** Duplicate Package Names ***
+  8 duplicate package names found in the following modules.
+  package: org.jboss.resteasy.plugins.server.netty.i18n in modules
+	resteasy-netty4
+	resteasy-netty
+  package: org.jboss.resteasy.plugins.server.netty in modules
+	resteasy-netty4
+	resteasy-netty
+  package: org.jboss.resteasy.test in modules
+	resteasy-client
+	tjws
+  package: org.jboss.resteasy.plugins.providers.jackson in modules
+	jackson2
+	jackson
+  package: org.jboss.resteasy.wadl in modules
+	resteasy-wadl
+	resteasy-wadl-undertow-connector
+  package: org.jboss.resteasy.api.validation in modules
+	resteasy-jaxrs
+	resteasy-validator-provider-11
+  package: org.jboss.resteasy.annotations.providers in modules
+	jackson2
+	jackson
+  package: org.jboss.resteasy.plugins.providers in modules
+	resteasy-jaxrs
+	yaml

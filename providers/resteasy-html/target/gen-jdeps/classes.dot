@@ -1,0 +1,23 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/providers/resteasy-html/target/classes
+   "org.jboss.resteasy.plugins.providers.html"        -> "java.io";
+   "org.jboss.resteasy.plugins.providers.html"        -> "java.lang";
+   "org.jboss.resteasy.plugins.providers.html"        -> "java.lang.annotation";
+   "org.jboss.resteasy.plugins.providers.html"        -> "java.lang.reflect";
+   "org.jboss.resteasy.plugins.providers.html"        -> "java.net";
+   "org.jboss.resteasy.plugins.providers.html"        -> "java.util";
+   "org.jboss.resteasy.plugins.providers.html"        -> "javax.servlet (jboss-servlet-api_3.1_spec-1.0.0.Final.jar)";
+   "org.jboss.resteasy.plugins.providers.html"        -> "javax.servlet.http (jboss-servlet-api_3.1_spec-1.0.0.Final.jar)";
+   "org.jboss.resteasy.plugins.providers.html"        -> "javax.ws.rs (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.html"        -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.html"        -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers.html"        -> "org.jboss.resteasy.core (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.providers.html"        -> "org.jboss.resteasy.plugins.providers.html.i18n (classes)";
+   "org.jboss.resteasy.plugins.providers.html"        -> "org.jboss.resteasy.plugins.server.servlet (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.providers.html"        -> "org.jboss.resteasy.spi (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.providers.html"        -> "org.jboss.resteasy.util (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.providers.html.i18n"   -> "java.io";
+   "org.jboss.resteasy.plugins.providers.html.i18n"   -> "java.lang";
+   "org.jboss.resteasy.plugins.providers.html.i18n"   -> "java.util";
+   "org.jboss.resteasy.plugins.providers.html.i18n"   -> "org.jboss.logging (jboss-logging-3.3.1.Final.jar)";
+}

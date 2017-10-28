@@ -1,0 +1,23 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/server-adapters/resteasy-jdk-http/target/classes
+   "org.jboss.resteasy.plugins.server.sun.http"       -> "com.sun.net.httpserver";
+   "org.jboss.resteasy.plugins.server.sun.http"       -> "java.io";
+   "org.jboss.resteasy.plugins.server.sun.http"       -> "java.lang";
+   "org.jboss.resteasy.plugins.server.sun.http"       -> "java.net";
+   "org.jboss.resteasy.plugins.server.sun.http"       -> "java.security";
+   "org.jboss.resteasy.plugins.server.sun.http"       -> "java.util";
+   "org.jboss.resteasy.plugins.server.sun.http"       -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.server.sun.http"       -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.server.sun.http"       -> "org.apache.commons.codec.binary (commons-codec-1.9.jar)";
+   "org.jboss.resteasy.plugins.server.sun.http"       -> "org.jboss.resteasy.core (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.sun.http"       -> "org.jboss.resteasy.plugins.server (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.sun.http"       -> "org.jboss.resteasy.plugins.server.embedded (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.sun.http"       -> "org.jboss.resteasy.plugins.server.sun.http.i18n (classes)";
+   "org.jboss.resteasy.plugins.server.sun.http"       -> "org.jboss.resteasy.specimpl (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.sun.http"       -> "org.jboss.resteasy.spi (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.sun.http"       -> "org.jboss.resteasy.util (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.server.sun.http.i18n"  -> "java.io";
+   "org.jboss.resteasy.plugins.server.sun.http.i18n"  -> "java.lang";
+   "org.jboss.resteasy.plugins.server.sun.http.i18n"  -> "java.util";
+   "org.jboss.resteasy.plugins.server.sun.http.i18n"  -> "org.jboss.logging (jboss-logging-3.3.1.Final.jar)";
+}

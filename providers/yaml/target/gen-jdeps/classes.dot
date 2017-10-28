@@ -1,0 +1,19 @@
+digraph "classes" {
+    // Path: /home/rsearls/j1/Resteasy/providers/yaml/target/classes
+   "org.jboss.resteasy.plugins.providers"             -> "java.io";
+   "org.jboss.resteasy.plugins.providers"             -> "java.lang";
+   "org.jboss.resteasy.plugins.providers"             -> "java.lang.annotation";
+   "org.jboss.resteasy.plugins.providers"             -> "java.lang.reflect";
+   "org.jboss.resteasy.plugins.providers"             -> "java.util";
+   "org.jboss.resteasy.plugins.providers"             -> "javax.ws.rs (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers"             -> "javax.ws.rs.core (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers"             -> "javax.ws.rs.ext (jboss-jaxrs-api_2.1_spec-1.0.0.Alpha1.jar)";
+   "org.jboss.resteasy.plugins.providers"             -> "org.jboss.resteasy.plugins.providers.yaml.i18n (classes)";
+   "org.jboss.resteasy.plugins.providers"             -> "org.jboss.resteasy.spi (resteasy-jaxrs-4.0.0-SNAPSHOT.jar)";
+   "org.jboss.resteasy.plugins.providers"             -> "org.yaml.snakeyaml (snakeyaml-1.17.jar)";
+   "org.jboss.resteasy.plugins.providers"             -> "org.yaml.snakeyaml.constructor (snakeyaml-1.17.jar)";
+   "org.jboss.resteasy.plugins.providers.yaml.i18n"   -> "java.io";
+   "org.jboss.resteasy.plugins.providers.yaml.i18n"   -> "java.lang";
+   "org.jboss.resteasy.plugins.providers.yaml.i18n"   -> "java.util";
+   "org.jboss.resteasy.plugins.providers.yaml.i18n"   -> "org.jboss.logging (jboss-logging-3.3.1.Final.jar)";
+}
