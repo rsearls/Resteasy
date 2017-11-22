@@ -213,6 +213,69 @@
                   <additionalparam>--add-modules=ALL-SYSTEM</additionalparam>
                 </configuration>
               </plugin>
+
+                <!-- rls test start -->
+                <!-- There were issues with provider org.jboss.resteasy.spi.ResteasyProviderFactory
+                     being in one module and the provider ref in a different module.
+                     There is an issue with jar's that do not follow the required naming
+                     (jdk9) convention.  redhat team is deciding how to address this issue.
+                -->
+                <plugin>
+                    <groupId>org.moditect</groupId>
+                    <artifactId>moditect-maven-plugin</artifactId>
+                    <version>1.0.0-SNAPSHOT</version>
+                    <executions>
+                        <execution>
+                            <id>generate-module-info</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>generate-module-info</goal>
+                            </goals>
+                            <configuration>
+                                <modules>
+                                    <module>
+                                        <artifact>
+                                            <groupId>org.jboss.resteasy</groupId>
+                                            <artifactId>resteasy-jaxrs</artifactId>
+                                            <version>4.0.0-SNAPSHOT</version>
+                                        </artifact>
+                                        <!-- rls
+                                        <additionalDependencies>
+                                            <dependency>
+                                                <groupId>com.example</groupId>
+                                                <artifactId>example-extended</artifactId>
+                                                <version>1.0.0.Final</version>
+                                            </dependency>
+                                        </additionalDependencies>
+                                        -->
+                                        <moduleInfo>
+                                            <name>resteasy.jaxrs</name>
+                                            <exports>
+                                                *;
+                                            </exports>
+                                            <!--
+                                            <requires>
+                                                static com.some.optional.dependency;
+                                                *;
+                                            </requires>
+                                            <uses>
+                                                com.example.SomeService;
+                                            </uses>
+                                            -->
+                                            <addServiceUses>true</addServiceUses>
+                                        </moduleInfo>
+                                    </module>
+                                    <!--
+                                    <module>
+                                        ...
+                                    </module>
+                                    -->
+                                </modules>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- rls test end -->
             </plugins>
           </build>
         </profile>
