@@ -6,6 +6,7 @@ import org.jboss.logging.Logger;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
+import org.jboss.resteasy.plugins.server.servlet.ResteasyContextParameters;
 import org.jboss.resteasy.test.providers.jaxb.resource.JaxbMarshallingSoakAsyncService;
 import org.jboss.resteasy.test.providers.jaxb.resource.JaxbMarshallingSoakItem;
 import org.jboss.resteasy.util.HttpResponseCodes;
@@ -78,7 +79,7 @@ public class JaxbMarshallingSoakTest {
         WebArchive war =  TestUtil.prepareArchive(JaxbMarshallingSoakTest.class.getSimpleName());
         war.addClasses(JaxbMarshallingSoakItem.class, TestUtil.class, PortProviderUtil.class, TimeoutUtil.class);
         Map<String, String> contextParam = new HashMap<>();
-        contextParam.put("resteasy.async.job.service.enabled", "true");
+        contextParam.put(ResteasyContextParameters.RESTEASY_ASYNC_JOB_SERVICE_ENABLED, "true");
         // Arquillian in the deployment use if TimeoutUtil in the deployment
         war.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(new ReflectPermission("suppressAccessChecks"),
                 new LoggingPermission("control", ""),

@@ -23,9 +23,6 @@ public class PortProviderUtil {
 
     // HOST_PROPERTY_NAME is enforced by maven-enforcer-plugin
     private static String host = System.getProperty(HOST_PROPERTY_NAME);
-
-    public static final String ASYNC_JOB_SERVICE_CONTEXT_KEY = "resteasy.async.job.service.enabled";
-
     private static boolean ipv6 = Boolean.parseBoolean(System.getProperty("ipv6"));
 
     /**

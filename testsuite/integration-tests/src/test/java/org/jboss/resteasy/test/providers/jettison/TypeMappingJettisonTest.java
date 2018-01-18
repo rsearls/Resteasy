@@ -5,6 +5,7 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
+import org.jboss.resteasy.plugins.server.servlet.ResteasyContextParameters;
 import org.jboss.resteasy.test.providers.jettison.resource.TypeMappingBean;
 import org.jboss.resteasy.test.providers.jettison.resource.TypeMappingResource;
 import org.jboss.resteasy.util.HttpHeaderNames;
@@ -42,7 +43,7 @@ public class TypeMappingJettisonTest {
         war.addClass(TypeMappingBean.class);
 
         Map<String, String> params = new HashMap<>();
-        params.put("resteasy.media.type.mappings", "xml : application/xml, json : application/json");
+        params.put(ResteasyContextParameters.RESTEASY_MEDIA_TYPE_MAPPINGS, "xml : application/xml, json : application/json");
         return TestUtil.finishContainerPrepare(war, params, TypeMappingResource.class);
     }
 

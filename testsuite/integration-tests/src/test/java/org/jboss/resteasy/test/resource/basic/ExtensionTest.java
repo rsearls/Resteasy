@@ -3,6 +3,7 @@ package org.jboss.resteasy.test.resource.basic;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.resteasy.plugins.server.servlet.ResteasyContextParameters;
 import org.jboss.resteasy.test.resource.basic.resource.ExtensionResource;
 import org.jboss.resteasy.util.HttpResponseCodes;
 import org.jboss.resteasy.utils.PortProviderUtil;
@@ -38,8 +39,8 @@ public class ExtensionTest {
         WebArchive war = TestUtil.prepareArchive(ExtensionTest.class.getSimpleName());
 
         Map<String, String> params = new HashMap<>();
-        params.put("resteasy.media.type.mappings", "xml : application/xml, html : text/html, txt : text/plain");
-        params.put("resteasy.language.mappings", "en : en-US");
+        params.put(ResteasyContextParameters.RESTEASY_MEDIA_TYPE_MAPPINGS, "xml : application/xml, html : text/html, txt : text/plain");
+        params.put(ResteasyContextParameters.RESTEASY_LANGUAGE_MAPPINGS, "en : en-US");
         return TestUtil.finishContainerPrepare(war, params, ExtensionResource.class);
     }
 

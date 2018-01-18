@@ -1,6 +1,7 @@
 package org.jboss.resteasy.test;
 
 import org.jboss.resteasy.plugins.server.embedded.SecurityDomain;
+import org.jboss.resteasy.plugins.server.servlet.ResteasyContextParameters;
 import org.jboss.resteasy.plugins.server.tjws.TJWSEmbeddedJaxrsServer;
 import org.jboss.resteasy.spi.ResteasyDeployment;
 
@@ -63,8 +64,8 @@ public class TJWSServletContainer
       String applicationClass = null;
       if (contextParams != null)
       {
-         applicationClass = contextParams.get("javax.ws.rs.Application");
-         String mediaTypeMappingsString = contextParams.get("resteasy.media.type.mappings");
+         applicationClass = contextParams.get(ResteasyContextParameters.JAVAX_WS_RS_APPLICATION);
+         String mediaTypeMappingsString = contextParams.get(ResteasyContextParameters.RESTEASY_MEDIA_TYPE_MAPPINGS);
          if (mediaTypeMappingsString != null)
          {
             Map<String, String> mediaTypeMappings = new HashMap<String, String>();
@@ -79,7 +80,7 @@ public class TJWSServletContainer
       }
       if (applicationClass == null && initParams != null)
       {
-         applicationClass = initParams.get("javax.ws.rs.Application"); 
+         applicationClass = initParams.get(ResteasyContextParameters.JAVAX_WS_RS_APPLICATION);
       }
       if (applicationClass != null)
       {

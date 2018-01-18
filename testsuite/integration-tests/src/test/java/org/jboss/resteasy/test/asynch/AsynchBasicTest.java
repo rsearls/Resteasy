@@ -5,6 +5,7 @@ import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
+import org.jboss.resteasy.plugins.server.servlet.ResteasyContextParameters;
 import org.jboss.resteasy.test.asynch.resource.AsynchBasicResource;
 import org.jboss.resteasy.utils.PermissionUtil;
 import org.jboss.resteasy.utils.PortProviderUtil;
@@ -53,9 +54,9 @@ public class AsynchBasicTest {
         war.addClass(PortProviderUtil.class);
         war.addClass(TestUtil.class);
         Map<String, String> contextParam = new HashMap<>();
-        contextParam.put("resteasy.async.job.service.enabled", "true");
+        contextParam.put(ResteasyContextParameters.RESTEASY_ASYNC_JOB_SERVICE_ENABLED, "true");
         if (maxSize != null) {
-            contextParam.put("resteasy.async.job.service.max.job.results", maxSize);
+            contextParam.put(ResteasyContextParameters.RESTEASY_ASYNC_JOB_SERVICE_MAX_JOB_RESULTS, maxSize);
         }
         // Arquillian in the deployment
         war.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(new ReflectPermission("suppressAccessChecks"),

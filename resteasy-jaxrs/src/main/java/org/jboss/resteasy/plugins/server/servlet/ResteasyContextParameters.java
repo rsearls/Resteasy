@@ -47,4 +47,14 @@ public interface ResteasyContextParameters
    String RESTEASY_DEPLOYMENTS = "resteasy.deployments";
    String RESTEASY_SERVLET_MAPPING_PREFIX = "resteasy.servlet.mapping.prefix";
    String RESTEASY_WIDER_REQUEST_MATCHING = "resteasy.wider.request.matching";
+
+   //Bootstrap configuration settings flags
+   String RESTEASY_USE_DEPLOYMENT_SENSITIVE_FACTORY = "resteasy.use.deployment.sensitive.factory";
+   String RESTEASY_ASYNC_JOB_SERVICE_ENABLED = "resteasy.async.job.service.enabled";
+   String RESTEASY_ASYNC_JOB_SERVICE_MAX_JOB_RESULTS = "resteasy.async.job.service.max.job.results";
+   String RESTEASY_ASYNC_JOB_SERVICE_MAX_WAIT = "resteasy.async.job.service.max.wait";
+   String RESTEASY_ASYNC_JOB_SERVICE_THREAD_POOL_SIZE = "resteasy.async.job.service.thread.pool.size";
+   String RESTEASY_ASYNC_JOB_SERVICE_BASE_PATH = "resteasy.async.job.service.base.path";
+   String JAVAX_WS_RS_APPLICATION = "javax.ws.rs.Application";
+   String RESTEASY_INJECTOR_FACTORY = "resteasy.injector.factory";
 }

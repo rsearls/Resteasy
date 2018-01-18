@@ -9,6 +9,7 @@ import org.jboss.resteasy.api.validation.Validation;
 import org.jboss.resteasy.api.validation.ViolationReport;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
+import org.jboss.resteasy.plugins.server.servlet.ResteasyContextParameters;
 import org.jboss.resteasy.test.validation.resource.ValidationComplexA;
 import org.jboss.resteasy.test.validation.resource.ValidationComplexArrayOfStrings;
 import org.jboss.resteasy.test.validation.resource.ValidationComplexB;
@@ -170,7 +171,7 @@ public class ValidationComplexTest {
         war = addBasicClasses(war);
         war = addCustomObjectClasses(war);
         Map<String, String> contextParams = new HashMap<>();
-        contextParams.put("resteasy.async.job.service.enabled", "true");
+        contextParams.put(ResteasyContextParameters.RESTEASY_ASYNC_JOB_SERVICE_ENABLED, "true");
         return TestUtil.finishContainerPrepare(war, contextParams, clazz, ValidationComplexFooReaderWriter.class);
     }
 

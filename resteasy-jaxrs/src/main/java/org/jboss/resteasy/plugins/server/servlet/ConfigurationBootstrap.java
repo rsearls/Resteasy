@@ -20,38 +20,37 @@ abstract public class ConfigurationBootstrap implements ResteasyConfiguration
 {
    private ResteasyDeployment deployment = new ResteasyDeployment();
 
-
    public ResteasyDeployment createDeployment()
    {
-      String deploymentSensitive = getParameter("resteasy.use.deployment.sensitive.factory");
+      String deploymentSensitive = getParameter(ResteasyContextParameters.RESTEASY_USE_DEPLOYMENT_SENSITIVE_FACTORY);
       if (deploymentSensitive != null)
          deployment.setDeploymentSensitiveFactoryEnabled(Boolean.valueOf(deploymentSensitive.trim()));
       else deployment.setDeploymentSensitiveFactoryEnabled(true);
 
 
-      String async = getParameter("resteasy.async.job.service.enabled");
+      String async = getParameter(ResteasyContextParameters.RESTEASY_ASYNC_JOB_SERVICE_ENABLED);
       if (async != null) deployment.setAsyncJobServiceEnabled(Boolean.valueOf(async.trim()));
       if (deployment.isAsyncJobServiceEnabled())
       {
-         String maxJobResults = getParameter("resteasy.async.job.service.max.job.results");
+         String maxJobResults = getParameter(ResteasyContextParameters.RESTEASY_ASYNC_JOB_SERVICE_MAX_JOB_RESULTS);
          if (maxJobResults != null)
          {
             int maxJobs = Integer.valueOf(maxJobResults);
             deployment.setAsyncJobServiceMaxJobResults(maxJobs);
          }
-         String maxWaitStr = getParameter("resteasy.async.job.service.max.wait");
+         String maxWaitStr = getParameter(ResteasyContextParameters.RESTEASY_ASYNC_JOB_SERVICE_MAX_WAIT);
          if (maxWaitStr != null)
          {
             long maxWait = Long.valueOf(maxWaitStr);
             deployment.setAsyncJobServiceMaxWait(maxWait);
          }
-         String threadPool = getParameter("resteasy.async.job.service.thread.pool.size");
+         String threadPool = getParameter(ResteasyContextParameters.RESTEASY_ASYNC_JOB_SERVICE_THREAD_POOL_SIZE);
          if (threadPool != null)
          {
             int threadPoolSize = Integer.valueOf(threadPool);
             deployment.setAsyncJobServiceThreadPoolSize(threadPoolSize);
          }
-         String basePath = getParameter("resteasy.async.job.service.base.path");
+         String basePath = getParameter(ResteasyContextParameters.RESTEASY_ASYNC_JOB_SERVICE_BASE_PATH);
          if (basePath != null)
          {
             deployment.setAsyncJobServiceBasePath(basePath);
@@ -61,7 +60,7 @@ abstract public class ConfigurationBootstrap implements ResteasyConfiguration
       if (applicationConfig == null)
       {
          // stupid spec doesn't use FQN of Application class name
-         applicationConfig = getParameter("javax.ws.rs.Application");
+         applicationConfig = getParameter(ResteasyContextParameters.JAVAX_WS_RS_APPLICATION);
       }
       else
       {
@@ -246,7 +245,7 @@ abstract public class ConfigurationBootstrap implements ResteasyConfiguration
          deployment.setAddCharset(add);
       }
 
-      String injectorFactoryClass = getParameter("resteasy.injector.factory");
+      String injectorFactoryClass = getParameter(ResteasyContextParameters.RESTEASY_INJECTOR_FACTORY);
       if (injectorFactoryClass != null)
       {
          deployment.setInjectorFactoryClass(injectorFactoryClass);

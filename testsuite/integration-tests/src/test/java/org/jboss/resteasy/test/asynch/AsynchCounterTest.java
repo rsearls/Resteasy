@@ -13,6 +13,7 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.resteasy.category.NotForForwardCompatibility;
+import org.jboss.resteasy.plugins.server.servlet.ResteasyContextParameters;
 import org.jboss.resteasy.test.asynch.resource.AsynchCounterResource;
 import org.jboss.resteasy.utils.PortProviderUtil;
 import org.jboss.resteasy.utils.TestUtil;
@@ -52,8 +53,8 @@ public class AsynchCounterTest {
     public static Archive<?> deploy() {
         WebArchive war = TestUtil.prepareArchive(AsynchCounterTest.class.getSimpleName());
         Map<String, String> contextParam = new HashMap<>();
-        contextParam.put("resteasy.async.job.service.enabled", "true");
-        contextParam.put("resteasy.secure.random.max.use", "2");
+        contextParam.put(ResteasyContextParameters.RESTEASY_ASYNC_JOB_SERVICE_ENABLED, "true");
+        contextParam.put(ResteasyContextParameters.RESTEASY_SECURE_RANDOM_MAX_USE, "2");
         return TestUtil.finishContainerPrepare(war, contextParam, AsynchCounterResource.class);
     }
 
