@@ -36,45 +36,45 @@ import java.util.Map;
  */
 public class ResteasyDeployment
 {
-   protected boolean widerRequestMatching;
-   protected boolean useContainerFormParams = false;
-   protected boolean deploymentSensitiveFactoryEnabled = false;
-   protected boolean asyncJobServiceEnabled = false;
-   protected boolean addCharset = true;
-   protected int asyncJobServiceMaxJobResults = 100;
-   protected long asyncJobServiceMaxWait = 300000;
-   protected int asyncJobServiceThreadPoolSize = 100;
-   protected String asyncJobServiceBasePath = "/asynch/jobs";
-   protected String applicationClass;
-   protected String injectorFactoryClass;
-   protected Application application;
-   protected boolean registerBuiltin = true;
-   protected List<String> scannedResourceClasses = new ArrayList<String>();
-   protected List<String> scannedProviderClasses = new ArrayList<String>();
-   protected List<String> scannedJndiComponentResources = new ArrayList<String>();
-   protected List<String> jndiComponentResources = new ArrayList<String>();
-   protected List<String> providerClasses = new ArrayList<String>();
-   protected List<Class> actualProviderClasses = new ArrayList<Class>();
-   protected List<Object> providers = new ArrayList<Object>();
-   protected boolean securityEnabled = false;
-   protected List<String> jndiResources = new ArrayList<String>();
-   protected List<String> resourceClasses = new ArrayList<String>();
-   protected List<String> unwrappedExceptions = new ArrayList<String>();
-   protected List<Class> actualResourceClasses = new ArrayList<Class>();
-   protected List<ResourceFactory> resourceFactories = new ArrayList<ResourceFactory>();
-   protected List<Object> resources = new ArrayList<Object>();
-   protected Map<String, String> mediaTypeMappings = new HashMap<String, String>();
-   protected Map<String, String> languageExtensions = new HashMap<String, String>();
-   protected List<String> interceptorPrecedences = new ArrayList<String>();
-   protected Map<String, String> interceptorBeforePrecedences = new HashMap<String, String>();
-   protected Map<String, String> interceptorAfterPrecedences = new HashMap<String, String>();
-   protected Map<Class, Object> defaultContextObjects = new HashMap<Class, Object>();
-   protected Map<String, String> constructedDefaultContextObjects = new HashMap<String, String>();
-   protected Registry registry;
-   protected Dispatcher dispatcher;
-   protected ResteasyProviderFactory providerFactory;
-   protected ThreadLocalResteasyProviderFactory threadLocalProviderFactory;
-   protected String paramMapping;
+   private boolean widerRequestMatching;
+   private boolean useContainerFormParams = false;
+   private boolean deploymentSensitiveFactoryEnabled = false;
+   private boolean asyncJobServiceEnabled = false;
+   private boolean addCharset = true;
+   private int asyncJobServiceMaxJobResults = 100;
+   private long asyncJobServiceMaxWait = 300000;
+   private int asyncJobServiceThreadPoolSize = 100;
+   private String asyncJobServiceBasePath = "/asynch/jobs";
+   private String applicationClass;
+   private String injectorFactoryClass;
+   private Application application;
+   private boolean registerBuiltin = true;
+   private List<String> scannedResourceClasses = new ArrayList<String>();
+   private List<String> scannedProviderClasses = new ArrayList<String>();
+   private List<String> scannedJndiComponentResources = new ArrayList<String>();
+   private List<String> jndiComponentResources = new ArrayList<String>();
+   private List<String> providerClasses = new ArrayList<String>();
+   private List<Class> actualProviderClasses = new ArrayList<Class>();
+   private List<Object> providers = new ArrayList<Object>();
+   private boolean securityEnabled = false;
+   private List<String> jndiResources = new ArrayList<String>();
+   private List<String> resourceClasses = new ArrayList<String>();
+   private List<String> unwrappedExceptions = new ArrayList<String>();
+   private List<Class> actualResourceClasses = new ArrayList<Class>();
+   private List<ResourceFactory> resourceFactories = new ArrayList<ResourceFactory>();
+   private List<Object> resources = new ArrayList<Object>();
+   private Map<String, String> mediaTypeMappings = new HashMap<String, String>();
+   private Map<String, String> languageExtensions = new HashMap<String, String>();
+   private List<String> interceptorPrecedences = new ArrayList<String>();
+   private Map<String, String> interceptorBeforePrecedences = new HashMap<String, String>();
+   private Map<String, String> interceptorAfterPrecedences = new HashMap<String, String>();
+   private Map<Class, Object> defaultContextObjects = new HashMap<Class, Object>();
+   private Map<String, String> constructedDefaultContextObjects = new HashMap<String, String>();
+   private Registry registry;
+   private Dispatcher dispatcher;
+   private ResteasyProviderFactory providerFactory;
+   private ThreadLocalResteasyProviderFactory threadLocalProviderFactory;
+   private String paramMapping;
 
    public void start()
    {
@@ -625,12 +625,12 @@ public class ResteasyDeployment
       }
       providerFactory.registerProvider(provider);
    }
-
+/***
    public boolean isUseContainerFormParams()
    {
       return useContainerFormParams;
    }
-
+***/
    public void setUseContainerFormParams(boolean useContainerFormParams)
    {
       this.useContainerFormParams = useContainerFormParams;
@@ -640,7 +640,7 @@ public class ResteasyDeployment
    {
       return jndiComponentResources;
    }
-
+/***
    public void setJndiComponentResources(List<String> jndiComponentResources)
    {
       this.jndiComponentResources = jndiComponentResources;
@@ -650,27 +650,27 @@ public class ResteasyDeployment
    {
       return applicationClass;
    }
-
+***/
    public void setApplicationClass(String applicationClass)
    {
       this.applicationClass = applicationClass;
    }
-
+/***
    public String getInjectorFactoryClass()
    {
       return injectorFactoryClass;
    }
-
+***/
    public void setInjectorFactoryClass(String injectorFactoryClass)
    {
       this.injectorFactoryClass = injectorFactoryClass;
    }
-
+/***
    public boolean isDeploymentSensitiveFactoryEnabled()
    {
       return deploymentSensitiveFactoryEnabled;
    }
-
+***/
    public void setDeploymentSensitiveFactoryEnabled(boolean deploymentSensitiveFactoryEnabled)
    {
       this.deploymentSensitiveFactoryEnabled = deploymentSensitiveFactoryEnabled;
@@ -685,42 +685,42 @@ public class ResteasyDeployment
    {
       this.asyncJobServiceEnabled = asyncJobServiceEnabled;
    }
-
+/***
    public int getAsyncJobServiceMaxJobResults()
    {
       return asyncJobServiceMaxJobResults;
    }
-
+***/
    public void setAsyncJobServiceMaxJobResults(int asyncJobServiceMaxJobResults)
    {
       this.asyncJobServiceMaxJobResults = asyncJobServiceMaxJobResults;
    }
-
+/***
    public long getAsyncJobServiceMaxWait()
    {
       return asyncJobServiceMaxWait;
    }
-
+***/
    public void setAsyncJobServiceMaxWait(long asyncJobServiceMaxWait)
    {
       this.asyncJobServiceMaxWait = asyncJobServiceMaxWait;
    }
-
+/***
    public int getAsyncJobServiceThreadPoolSize()
    {
       return asyncJobServiceThreadPoolSize;
    }
-
+***/
    public void setAsyncJobServiceThreadPoolSize(int asyncJobServiceThreadPoolSize)
    {
       this.asyncJobServiceThreadPoolSize = asyncJobServiceThreadPoolSize;
    }
-
+/***
    public String getAsyncJobServiceBasePath()
    {
       return asyncJobServiceBasePath;
    }
-
+***/
    public void setAsyncJobServiceBasePath(String asyncJobServiceBasePath)
    {
       this.asyncJobServiceBasePath = asyncJobServiceBasePath;
@@ -735,12 +735,12 @@ public class ResteasyDeployment
    {
       this.application = application;
    }
-
+/***
    public boolean isRegisterBuiltin()
    {
       return registerBuiltin;
    }
-
+***/
    public void setRegisterBuiltin(boolean registerBuiltin)
    {
       this.registerBuiltin = registerBuiltin;
@@ -750,12 +750,12 @@ public class ResteasyDeployment
    {
       return providerClasses;
    }
-
+/***
    public void setProviderClasses(List<String> providerClasses)
    {
       this.providerClasses = providerClasses;
    }
-
+***/
    public List<Object> getProviders()
    {
       return providers;
@@ -770,27 +770,28 @@ public class ResteasyDeployment
    {
       return actualProviderClasses;
    }
-
+/***
    public void setActualProviderClasses(List<Class> actualProviderClasses)
    {
       this.actualProviderClasses = actualProviderClasses;
    }
-
+***/
    public List<Class> getActualResourceClasses()
    {
       return actualResourceClasses;
    }
 
+   // todo called by CdiNettyTest
    public void setActualResourceClasses(List<Class> actualResourceClasses)
    {
       this.actualResourceClasses = actualResourceClasses;
    }
-
+   /***
    public boolean isSecurityEnabled()
    {
       return securityEnabled;
    }
-
+***/
    public void setSecurityEnabled(boolean securityEnabled)
    {
       this.securityEnabled = securityEnabled;
@@ -800,22 +801,22 @@ public class ResteasyDeployment
    {
       return jndiResources;
    }
-
+/***
    public void setJndiResources(List<String> jndiResources)
    {
       this.jndiResources = jndiResources;
    }
-
+***/
    public List<String> getResourceClasses()
    {
       return resourceClasses;
    }
-
+/***
    public void setResourceClasses(List<String> resourceClasses)
    {
       this.resourceClasses = resourceClasses;
    }
-
+***/
    public Map<String, String> getMediaTypeMappings()
    {
       return mediaTypeMappings;
@@ -850,12 +851,12 @@ public class ResteasyDeployment
    {
       return interceptorPrecedences;
    }
-
+/***
    public void setInterceptorPrecedences(List<String> interceptorPrecedences)
    {
       this.interceptorPrecedences = interceptorPrecedences;
    }
-
+***/
    public Map<String, String> getInterceptorBeforePrecedences()
    {
       return interceptorBeforePrecedences;
@@ -915,22 +916,22 @@ public class ResteasyDeployment
    {
       return resourceFactories;
    }
-
+/***
    public void setResourceFactories(List<ResourceFactory> resourceFactories)
    {
       this.resourceFactories = resourceFactories;
    }
-
+***/
    public List<String> getUnwrappedExceptions()
    {
       return unwrappedExceptions;
    }
-
+/***
    public void setUnwrappedExceptions(List<String> unwrappedExceptions)
    {
       this.unwrappedExceptions = unwrappedExceptions;
    }
-
+***/
    public Map<String, String> getConstructedDefaultContextObjects()
    {
       return constructedDefaultContextObjects;
@@ -945,37 +946,37 @@ public class ResteasyDeployment
    {
       return defaultContextObjects;
    }
-
+/***
    public void setDefaultContextObjects(Map<Class, Object> defaultContextObjects)
    {
       this.defaultContextObjects = defaultContextObjects;
    }
-
+***/
    public List<String> getScannedResourceClasses()
    {
       return scannedResourceClasses;
    }
-
+/***
    public void setScannedResourceClasses(List<String> scannedResourceClasses)
    {
       this.scannedResourceClasses = scannedResourceClasses;
    }
-
+***/
    public List<String> getScannedProviderClasses()
    {
       return scannedProviderClasses;
    }
-
+/**
    public void setScannedProviderClasses(List<String> scannedProviderClasses)
    {
       this.scannedProviderClasses = scannedProviderClasses;
    }
-
+**/
    public List<String> getScannedJndiComponentResources()
    {
       return scannedJndiComponentResources;
    }
-
+/**
    public void setScannedJndiComponentResources(List<String> scannedJndiComponentResources)
    {
       this.scannedJndiComponentResources = scannedJndiComponentResources;
@@ -985,7 +986,7 @@ public class ResteasyDeployment
    {
       return widerRequestMatching;
    }
-
+***/
    public void setWiderRequestMatching(boolean widerRequestMatching)
    {
       this.widerRequestMatching = widerRequestMatching;

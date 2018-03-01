@@ -196,28 +196,29 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
       }
    }
    
-   protected static AtomicReference<ResteasyProviderFactory> pfr = new AtomicReference<ResteasyProviderFactory>();
-   protected static ThreadLocalStack<Map<Class<?>, Object>> contextualData = new ThreadLocalStack<Map<Class<?>, Object>>();
-   protected static int maxForwards = 20;
-   protected static volatile ResteasyProviderFactory instance;
+   //todo rls obsolete protected static AtomicReference<ResteasyProviderFactory> pfr = new AtomicReference<ResteasyProviderFactory>();
+   private static ThreadLocalStack<Map<Class<?>, Object>> contextualData = new ThreadLocalStack<Map<Class<?>, Object>>();
+   private static int maxForwards = 20;
+   private static volatile ResteasyProviderFactory instance;
    public static boolean registerBuiltinByDefault = true;
 
-   protected MediaTypeMap<SortedKey<MessageBodyReader>> serverMessageBodyReaders;
-   protected MediaTypeMap<SortedKey<MessageBodyWriter>> serverMessageBodyWriters;
-   protected MediaTypeMap<SortedKey<MessageBodyReader>> clientMessageBodyReaders;
-   protected MediaTypeMap<SortedKey<MessageBodyWriter>> clientMessageBodyWriters;
-   protected Map<Class<?>, SortedKey<ExceptionMapper>> sortedExceptionMappers;
-   protected Map<Class<?>, ExceptionMapper> exceptionMappers;
-   protected Map<Class<?>, AsyncResponseProvider> asyncResponseProviders;
-   protected Map<Class<?>, AsyncStreamProvider> asyncStreamProviders;
-   protected Map<Class<?>, MediaTypeMap<SortedKey<ContextResolver>>> contextResolvers;
-   protected Map<Class<?>, StringConverter> stringConverters;
-   protected Set<ExtSortedKey<ParamConverterProvider>> sortedParamConverterProviders;
-   protected List<ParamConverterProvider> paramConverterProviders;
-   protected Map<Class<?>, Class<? extends StringParameterUnmarshaller>> stringParameterUnmarshallers;
+   private MediaTypeMap<SortedKey<MessageBodyReader>> serverMessageBodyReaders;
+   private MediaTypeMap<SortedKey<MessageBodyWriter>> serverMessageBodyWriters;
+
+   private MediaTypeMap<SortedKey<MessageBodyReader>> clientMessageBodyReaders;
+   private MediaTypeMap<SortedKey<MessageBodyWriter>> clientMessageBodyWriters;
+   private Map<Class<?>, SortedKey<ExceptionMapper>> sortedExceptionMappers;
+   private Map<Class<?>, ExceptionMapper> exceptionMappers;
+   private Map<Class<?>, AsyncResponseProvider> asyncResponseProviders;
+   private Map<Class<?>, AsyncStreamProvider> asyncStreamProviders;
+   private Map<Class<?>, MediaTypeMap<SortedKey<ContextResolver>>> contextResolvers;
+   private Map<Class<?>, StringConverter> stringConverters;
+   private Set<ExtSortedKey<ParamConverterProvider>> sortedParamConverterProviders;
+   private List<ParamConverterProvider> paramConverterProviders;
+   private Map<Class<?>, Class<? extends StringParameterUnmarshaller>> stringParameterUnmarshallers;
    protected Map<Class<?>, Map<Class<?>, Integer>> classContracts;
 
-   protected Map<Class<?>, HeaderDelegate> headerDelegates;
+   private Map<Class<?>, HeaderDelegate> headerDelegates;
 
    protected ReaderInterceptorRegistry serverReaderInterceptorRegistry;
    protected WriterInterceptorRegistry serverWriterInterceptorRegistry;
@@ -232,20 +233,20 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
    protected ReaderInterceptorRegistry clientReaderInterceptorRegistry;
    protected WriterInterceptorRegistry clientWriterInterceptorRegistry;
 
-   protected boolean builtinsRegistered = false;
-   protected boolean registerBuiltins = true;
+   private boolean builtinsRegistered = false;
+   private boolean registerBuiltins = true;
 
-   protected InjectorFactory injectorFactory;
+   private InjectorFactory injectorFactory;
    protected ResteasyProviderFactory parent;
 
-   protected Set<DynamicFeature> serverDynamicFeatures;
-   protected Set<DynamicFeature> clientDynamicFeatures;
+   private Set<DynamicFeature> serverDynamicFeatures;
+   private Set<DynamicFeature> clientDynamicFeatures;
    protected Set<Feature> enabledFeatures;
-   protected Map<String, Object> properties;
+   private Map<String, Object> properties;
    protected Set<Class<?>> providerClasses;
    protected Set<Object> providerInstances;
-   protected Set<Class<?>> featureClasses;
-   protected Set<Object> featureInstances;
+   private Set<Class<?>> featureClasses;
+   private Set<Object> featureInstances;
 
 
    public ResteasyProviderFactory()
@@ -560,7 +561,14 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
 
    public static Map<Class<?>, Object> getContextDataMap()
    {
-      return getContextDataMap(true);
+      //return getContextDataMap(true);
+
+      Map<Class<?>, Object> map = contextualData.get();
+      if (map == null)
+      {
+         contextualData.setLast(map = new HashMap<Class<?>, Object>());
+      }
+      return map;
    }
 
    public static <T> T getContextData(Class<T> type)
@@ -578,6 +586,8 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
       contextualData.clear();
    }
 
+   /*** todo rls input param is never used.  Method is called from
+    * class method getContextDataMap().  Code moved to that method.
    private static Map<Class<?>, Object> getContextDataMap(boolean create)
    {
       Map<Class<?>, Object> map = contextualData.get();
@@ -587,7 +597,7 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
       }
       return map;
    }
-
+rls ***/
    public static Map<Class<?>, Object> addContextDataLevel()
    {
       if (getContextDataLevelCount() == maxForwards)
@@ -711,12 +721,12 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
          throw new RuntimeException(ex);
      }
    }
-
+/****
    public static void setRegisterBuiltinByDefault(boolean registerBuiltinByDefault)
    {
       ResteasyProviderFactory.registerBuiltinByDefault = registerBuiltinByDefault;
    }
-
+rls ****/
 
    public boolean isRegisterBuiltins()
    {
@@ -888,12 +898,12 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
       MessageBodyReader reader = createProviderInstance(provider);
       addMessageBodyReader(reader, provider, priority, isBuiltin);
    }
-
+/***
    protected void addMessageBodyReader(MessageBodyReader provider)
    {
       addMessageBodyReader(provider, Priorities.USER, false);
    }
-
+rls ***/
    protected void addMessageBodyReader(MessageBodyReader provider, int priority, boolean isBuiltin)
    {
       addMessageBodyReader(provider, provider.getClass(), priority, isBuiltin);
@@ -977,12 +987,12 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
       MessageBodyWriter writer = createProviderInstance(provider);
       addMessageBodyWriter(writer, provider, priority, isBuiltin);
    }
-
+/***
    protected void addMessageBodyWriter(MessageBodyWriter provider)
    {
       addMessageBodyWriter(provider, provider.getClass(), Priorities.USER, false);
    }
-
+rls ***/
    /**
     * Specify the provider class.  This is there jsut in case the provider instance is a proxy.  Proxies tend
     * to lose generic type information
@@ -1114,7 +1124,7 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
       }
       return null;
    }
-
+/***
    protected void addExceptionMapper(Class<? extends ExceptionMapper> providerClass)
    {
       addExceptionMapper(providerClass, false);
@@ -1134,7 +1144,7 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
    {
       addExceptionMapper(provider, exceptionType, provider.getClass(), false);
    }
-
+rls ***/
    protected void addExceptionMapper(Class<? extends ExceptionMapper> providerClass, boolean isBuiltin)
    {
       ExceptionMapper provider = createProviderInstance(providerClass);

@@ -70,7 +70,9 @@
             <modules>
                 <module>arquillian-utils</module>
                 <module>unit-tests</module>
+                <!-- rls -->
                 <module>legacy-integration-tests</module>
+
                 <module>integration-tests</module>
                 <module>integration-tests-spring</module>
             </modules>

@@ -522,4 +522,10 @@ public class ResteasyProviderFactory extends org.jboss.resteasy.spi.ResteasyProv
    {
       return getClientExceptionMappers().get(type);
    }
+
+   // todo rls note: Moved from spi/ResteasyProviderFactory
+   protected boolean isA(Object target, Class type, Map<Class<?>, Integer> contracts)
+   {
+      return isA(target.getClass(), type, contracts);
+   }
 }

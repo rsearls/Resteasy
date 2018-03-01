@@ -52,28 +52,28 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class ResourceMethodInvoker implements ResourceInvoker, JaxrsInterceptorRegistryListener
 {
-   protected MethodInjector methodInjector;
-   protected InjectorFactory injector;
-   protected ResourceFactory resource;
-   protected ResteasyProviderFactory parentProviderFactory;
-   protected ResteasyProviderFactory resourceMethodProviderFactory;
-   protected ResourceMethod method;
-   protected Annotation[] methodAnnotations;
-   protected ContainerRequestFilter[] requestFilters;
-   protected ContainerResponseFilter[] responseFilters;
-   protected WriterInterceptor[] writerInterceptors;
-   protected ConcurrentHashMap<String, AtomicLong> stats = new ConcurrentHashMap<String, AtomicLong>();
-   protected GeneralValidator validator;
-   protected boolean isValidatable;
-   protected boolean methodIsValidatable;
+   private final MethodInjector methodInjector;
+   private final InjectorFactory injector;
+   private final ResourceFactory resource;
+   private final ResteasyProviderFactory parentProviderFactory;
+   private ResteasyProviderFactory resourceMethodProviderFactory;
+   private final ResourceMethod method;
+   private final Annotation[] methodAnnotations;
+   private ContainerRequestFilter[] requestFilters;
+   private ContainerResponseFilter[] responseFilters;
+   private WriterInterceptor[] writerInterceptors;
+   private final ConcurrentHashMap<String, AtomicLong> stats = new ConcurrentHashMap<String, AtomicLong>();
+   private GeneralValidator validator;
+   private boolean isValidatable;
+   private boolean methodIsValidatable;
    @SuppressWarnings("rawtypes")
-   protected AsyncResponseProvider asyncResponseProvider;
+   private final AsyncResponseProvider asyncResponseProvider;
    @SuppressWarnings("rawtypes")
-   AsyncStreamProvider asyncStreamProvider;
-   protected boolean isSse;
-   protected ResourceInfo resourceInfo;
+   private AsyncStreamProvider asyncStreamProvider;
+   private boolean isSse;
+   private final ResourceInfo resourceInfo;
 
-   protected boolean expectsBody;
+   private final boolean expectsBody;
 
 
 
@@ -260,12 +260,12 @@ public class ResourceMethodInvoker implements ResourceInvoker, JaxrsInterceptorR
    }
 
 
-
+/***
    public ContainerRequestFilter[] getRequestFilters()
    {
       return requestFilters;
    }
-
+rls ***/
    public ContainerResponseFilter[] getResponseFilters()
    {
       return responseFilters;
@@ -650,9 +650,10 @@ public class ResourceMethodInvoker implements ResourceInvoker, JaxrsInterceptorR
    {
 	 return isSse;
    }
-
+/***
    public void markMethodAsAsync()
    {
       method.markAsynchronous();
    }
+   rls ***/
 }
