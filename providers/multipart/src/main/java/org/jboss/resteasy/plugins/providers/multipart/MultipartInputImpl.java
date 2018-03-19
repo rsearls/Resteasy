@@ -100,13 +100,13 @@ public class MultipartInputImpl implements MultipartInput, ProvidersContextRetai
             throw new RuntimeException(e);
          }
       }
-
-      private BinaryOnlyMessageBuilder(Entity entity)
-      {
-         super(entity);
-         init();
-      }
-
+      /* @Deprecated // tuning-openjdk
+            private BinaryOnlyMessageBuilder(Entity entity)
+            {
+               super(entity);
+               init();
+            }
+      */
       private BinaryOnlyMessageBuilder(Entity entity, StorageProvider storageProvider)
       {
          super(entity, storageProvider);
@@ -209,20 +209,20 @@ public class MultipartInputImpl implements MultipartInput, ProvidersContextRetai
          }
       }
    }
-
-   public MultipartInputImpl(MediaType contentType, Providers workers,
-                             MediaType defaultPartContentType, String defaultPartCharset)
-   {
-      this.contentType = contentType;
-      this.workers = workers;
-      if (defaultPartContentType != null) this.defaultPartContentType = defaultPartContentType;
-      this.defaultPartCharset = defaultPartCharset;
-      if (defaultPartCharset != null)
+   /* @Deprecated // tuning-openjdk
+      public MultipartInputImpl(MediaType contentType, Providers workers,
+                                MediaType defaultPartContentType, String defaultPartCharset)
       {
-         this.defaultPartContentType = getMediaTypeWithDefaultCharset(this.defaultPartContentType);
+         this.contentType = contentType;
+         this.workers = workers;
+         if (defaultPartContentType != null) this.defaultPartContentType = defaultPartContentType;
+         this.defaultPartCharset = defaultPartCharset;
+         if (defaultPartCharset != null)
+         {
+            this.defaultPartContentType = getMediaTypeWithDefaultCharset(this.defaultPartContentType);
+         }
       }
-   }
-   
+    */
    public MultipartInputImpl(Multipart multipart, Providers workers) throws IOException
    {
       for (BodyPart bodyPart : multipart.getBodyParts())

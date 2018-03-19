@@ -45,12 +45,12 @@ public class RequestImpl implements Request
       ResteasyConfiguration context = ResteasyProviderFactory.getContextData(ResteasyConfiguration.class);
       return context != null && Boolean.parseBoolean(context.getParameter("resteasy.rfc7232preconditions"));
    }
-
-   public MultivaluedMap<String, String> getFormParameters()
-   {
-      return request.getDecodedFormParameters();
-   }
-
+   /* @Deprecated // tuning-openjdk
+      public MultivaluedMap<String, String> getFormParameters()
+      {
+         return request.getDecodedFormParameters();
+      }
+   */
    public Variant selectVariant(List<Variant> variants) throws IllegalArgumentException
    {
       if (variants == null || variants.size() == 0) throw new IllegalArgumentException(MESSAGES.variantListMustNotBeZero());

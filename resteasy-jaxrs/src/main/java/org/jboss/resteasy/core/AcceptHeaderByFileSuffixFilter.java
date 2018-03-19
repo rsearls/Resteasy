@@ -104,7 +104,7 @@ public class AcceptHeaderByFileSuffixFilter implements ContainerRequestFilter
       requestContext.setRequestUri(newUri);
 
    }
-
+/* @Deprecated // tuning-openjdk
    private List<PathSegment> process(ContainerRequestContext in)
    {
       String path = in.getUriInfo().getPath(false);
@@ -156,5 +156,5 @@ public class AcceptHeaderByFileSuffixFilter implements ContainerRequestFilter
       }
       return segments;
    }
-
+*/
 }

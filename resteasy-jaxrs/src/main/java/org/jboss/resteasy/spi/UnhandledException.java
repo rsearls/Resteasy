@@ -10,11 +10,12 @@ package org.jboss.resteasy.spi;
  */
 public class UnhandledException extends RuntimeException
 {
+   /* @Deprecated // tuning-openjdk
    public UnhandledException(String s, Throwable throwable)
    {
       super(s, throwable);
    }
-
+*/
    public UnhandledException(Throwable throwable)
    {
       super(throwable);

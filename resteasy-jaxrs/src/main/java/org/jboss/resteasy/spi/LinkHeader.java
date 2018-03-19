@@ -24,23 +24,25 @@ public class LinkHeader
       links.add(link);
       return this;
    }
-
+/* @Deprecated // tuning-openjdk
    public LinkHeader addLink(final String title, final String rel, final String href, final String type)
    {
       final Link link = new LinkBuilderImpl().uri(href).rel(rel).title(title).type(type).build();
       return addLink(link);
    }
-
+   */
+/* @Deprecated // tuning-openjdk
    public Link getLinkByTitle(String title)
    {
       return linksByTitle.get(title);
    }
-
+   */
+/* @Deprecated // tuning-openjdk
    public Link getLinkByRelationship(String rel)
    {
       return linksByRelationship.get(rel);
    }
-
+*/
    /**
     * Index of links by relationship "rel" or "rev"
     *

@@ -156,6 +156,7 @@ public final class FindAnnotation
     * @param method
     * @return
     */
+ /* @Deprecated // tuning-openjdk
    public static Annotation[] getResourcesAnnotations(Method method)
    {
       Map<Class<?>, Annotation> annotations = new HashMap<Class<?>, Annotation>();
@@ -169,7 +170,7 @@ public final class FindAnnotation
       }
       return annotations.values().toArray(new Annotation[annotations.size()]);
    }
-
+*/
    /**
     * Look for an annotation in a list of annotations.  If not there, see if it is on the type provided
     *

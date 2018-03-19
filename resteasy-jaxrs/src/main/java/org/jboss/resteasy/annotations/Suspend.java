@@ -11,7 +11,8 @@ import java.lang.annotation.Target;
  * 
  * @deprecated Replaced by javax.ws.rs.container.Suspended
  * 
- * @see javax.ws.rs.container.Suspended
+ * @see javax.ws.r
+ * s.container.Suspended
  */
 @Deprecated
 @Target({ElementType.PARAMETER})

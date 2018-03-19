@@ -172,17 +172,18 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
       {
          super(intf, reader, readerClass, priority, isBuiltin);
       }
-
-      protected ExtSortedKey(Class<?> intf, T reader, Class<?> readerClass, boolean isBuiltin)
-      {
-         super(intf, reader, readerClass, isBuiltin);
-      }
-
-      protected ExtSortedKey(Class<?> intf, T reader, Class<?> readerClass)
-      {
-         super(intf, reader, readerClass);
-      }
-
+      /* @Deprecated // tuning-openjdk
+            protected ExtSortedKey(Class<?> intf, T reader, Class<?> readerClass, boolean isBuiltin)
+            {
+               super(intf, reader, readerClass, isBuiltin);
+            }
+            */
+      /* @Deprecated // tuning-openjdk
+            protected ExtSortedKey(Class<?> intf, T reader, Class<?> readerClass)
+            {
+               super(intf, reader, readerClass);
+            }
+      */
       @Override
       public int compareTo(SortedKey<T> tMessageBodyKey)
       {
@@ -199,28 +200,29 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
       }
    }
 
-   protected static AtomicReference<ResteasyProviderFactory> pfr = new AtomicReference<ResteasyProviderFactory>();
-   protected static ThreadLocalStack<Map<Class<?>, Object>> contextualData = new ThreadLocalStack<Map<Class<?>, Object>>();
-   protected static int maxForwards = 20;
-   protected static volatile ResteasyProviderFactory instance;
+   //todo rls obsolete protected static AtomicReference<ResteasyProviderFactory> pfr = new AtomicReference<ResteasyProviderFactory>();
+   private static ThreadLocalStack<Map<Class<?>, Object>> contextualData = new ThreadLocalStack<Map<Class<?>, Object>>();
+   private static int maxForwards = 20;
+   private static volatile ResteasyProviderFactory instance;
    public static boolean registerBuiltinByDefault = true;
 
-   protected MediaTypeMap<SortedKey<MessageBodyReader>> serverMessageBodyReaders;
-   protected MediaTypeMap<SortedKey<MessageBodyWriter>> serverMessageBodyWriters;
-   protected MediaTypeMap<SortedKey<MessageBodyReader>> clientMessageBodyReaders;
-   protected MediaTypeMap<SortedKey<MessageBodyWriter>> clientMessageBodyWriters;
-   protected Map<Class<?>, SortedKey<ExceptionMapper>> sortedExceptionMappers;
-   protected Map<Class<?>, ExceptionMapper> exceptionMappers;
-   protected Map<Class<?>, AsyncResponseProvider> asyncResponseProviders;
-   protected Map<Class<?>, AsyncStreamProvider> asyncStreamProviders;
-   protected Map<Class<?>, MediaTypeMap<SortedKey<ContextResolver>>> contextResolvers;
-   protected Map<Class<?>, StringConverter> stringConverters;
-   protected Set<ExtSortedKey<ParamConverterProvider>> sortedParamConverterProviders;
-   protected List<ParamConverterProvider> paramConverterProviders;
-   protected Map<Class<?>, Class<? extends StringParameterUnmarshaller>> stringParameterUnmarshallers;
+   private MediaTypeMap<SortedKey<MessageBodyReader>> serverMessageBodyReaders;
+   private MediaTypeMap<SortedKey<MessageBodyWriter>> serverMessageBodyWriters;
+
+   private MediaTypeMap<SortedKey<MessageBodyReader>> clientMessageBodyReaders;
+   private MediaTypeMap<SortedKey<MessageBodyWriter>> clientMessageBodyWriters;
+   private Map<Class<?>, SortedKey<ExceptionMapper>> sortedExceptionMappers;
+   private Map<Class<?>, ExceptionMapper> exceptionMappers;
+   private Map<Class<?>, AsyncResponseProvider> asyncResponseProviders;
+   private Map<Class<?>, AsyncStreamProvider> asyncStreamProviders;
+   private Map<Class<?>, MediaTypeMap<SortedKey<ContextResolver>>> contextResolvers;
+   private Map<Class<?>, StringConverter> stringConverters;
+   private Set<ExtSortedKey<ParamConverterProvider>> sortedParamConverterProviders;
+   private List<ParamConverterProvider> paramConverterProviders;
+   private Map<Class<?>, Class<? extends StringParameterUnmarshaller>> stringParameterUnmarshallers;
    protected Map<Class<?>, Map<Class<?>, Integer>> classContracts;
 
-   protected Map<Class<?>, HeaderDelegate> headerDelegates;
+   private Map<Class<?>, HeaderDelegate> headerDelegates;
 
    protected ReaderInterceptorRegistry serverReaderInterceptorRegistry;
    protected WriterInterceptorRegistry serverWriterInterceptorRegistry;
@@ -235,20 +237,20 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
    protected ReaderInterceptorRegistry clientReaderInterceptorRegistry;
    protected WriterInterceptorRegistry clientWriterInterceptorRegistry;
 
-   protected boolean builtinsRegistered = false;
-   protected boolean registerBuiltins = true;
+   private boolean builtinsRegistered = false;
+   private boolean registerBuiltins = true;
 
-   protected InjectorFactory injectorFactory;
+   private InjectorFactory injectorFactory;
    protected ResteasyProviderFactory parent;
 
-   protected Set<DynamicFeature> serverDynamicFeatures;
-   protected Set<DynamicFeature> clientDynamicFeatures;
+   private Set<DynamicFeature> serverDynamicFeatures;
+   private Set<DynamicFeature> clientDynamicFeatures;
    protected Set<Feature> enabledFeatures;
-   protected Map<String, Object> properties;
+   private Map<String, Object> properties;
    protected Set<Class<?>> providerClasses;
    protected Set<Object> providerInstances;
-   protected Set<Class<?>> featureClasses;
-   protected Set<Object> featureInstances;
+   private Set<Class<?>> featureClasses;
+   private Set<Object> featureInstances;
 
    protected ResourceBuilder resourceBuilder;
 
@@ -719,11 +721,13 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
      }
    }
 
-   public static void setRegisterBuiltinByDefault(boolean registerBuiltinByDefault)
-   {
-      ResteasyProviderFactory.registerBuiltinByDefault = registerBuiltinByDefault;
-   }
+   /* @Deprecated // tuning-openjdk
+      public static void setRegisterBuiltinByDefault(boolean registerBuiltinByDefault)
+      {
+         ResteasyProviderFactory.registerBuiltinByDefault = registerBuiltinByDefault;
+      }
 
+   */
 
    public boolean isRegisterBuiltins()
    {
@@ -984,12 +988,12 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
       MessageBodyWriter writer = createProviderInstance(provider);
       addMessageBodyWriter(writer, provider, priority, isBuiltin);
    }
-
+/* @Deprecated // tuning-openjdk
    protected void addMessageBodyWriter(MessageBodyWriter provider)
    {
       addMessageBodyWriter(provider, provider.getClass(), Priorities.USER, false);
    }
-
+*/
    /**
     * Specify the provider class.  This is there jsut in case the provider instance is a proxy.  Proxies tend
     * to lose generic type information
@@ -1121,26 +1125,30 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
       }
       return null;
    }
-
-   protected void addExceptionMapper(Class<? extends ExceptionMapper> providerClass)
-   {
-      addExceptionMapper(providerClass, false);
-   }
-
+   /* @Deprecated // tuning-openjdk
+      protected void addExceptionMapper(Class<? extends ExceptionMapper> providerClass)
+      {
+         addExceptionMapper(providerClass, false);
+      }
+   */
+   /* @Deprecated // tuning-openjdk
    protected void addExceptionMapper(ExceptionMapper provider)
    {
       addExceptionMapper(provider, false);
    }
-
+*/
+   /* @Deprecated // tuning-openjdk
    protected void addExceptionMapper(ExceptionMapper provider, Class providerClass)
    {
       addExceptionMapper(provider, providerClass, false);
    }
-
+*/
+   /* @Deprecated // tuning-openjdk
    protected void addExceptionMapper(ExceptionMapper provider, Type exceptionType)
    {
       addExceptionMapper(provider, exceptionType, provider.getClass(), false);
    }
+*/
 
    protected void addExceptionMapper(Class<? extends ExceptionMapper> providerClass, boolean isBuiltin)
    {

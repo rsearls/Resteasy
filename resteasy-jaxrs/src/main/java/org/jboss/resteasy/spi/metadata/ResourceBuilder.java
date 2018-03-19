@@ -175,14 +175,14 @@ public class ResourceBuilder
          parameter.defaultValue = defaultValue;
          return (T)this;
       }
-
-      public T cookieParam(String name)
-      {
-         parameter.paramType = Parameter.ParamType.COOKIE_PARAM;
-         parameter.paramName = name;
-         return (T)this;
-      }
-
+      /* @Deprecated // tuning-openjdk
+            public T cookieParam(String name)
+            {
+               parameter.paramType = Parameter.ParamType.COOKIE_PARAM;
+               parameter.paramName = name;
+               return (T)this;
+            }
+      */
       public T formParam(String name)
       {
          parameter.paramType = Parameter.ParamType.FORM_PARAM;
@@ -473,13 +473,13 @@ public class ResourceBuilder
          locator.returnType = type;
          return (T)this;
       }
-
-      public T genericReturnType(Type type)
-      {
-         locator.genericReturnType = type;
-         return (T)this;
-      }
-
+      /* @Deprecated // tuning-openjdk
+            public T genericReturnType(Type type)
+            {
+               locator.genericReturnType = type;
+               return (T)this;
+            }
+      */
       public T returnType(GenericType type)
       {
          locator.returnType = type.getRawType();

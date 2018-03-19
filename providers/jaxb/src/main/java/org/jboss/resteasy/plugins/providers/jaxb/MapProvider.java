@@ -110,13 +110,13 @@ public class MapProvider implements MessageBodyReader<Object>, MessageBodyWriter
       }
       return false;
    }
-
+/* @Deprecated // tuning-openjdk
    public Object getJAXBObject(JAXBContextFinder finder, MediaType mediaType, Class<?> clazz, Element element) throws JAXBException
    {
       JAXBContext ctx = finder.findCachedContext(clazz, mediaType, null);
       return ctx.createUnmarshaller().unmarshal(element);
    }
-
+*/
 
    public Object readFrom(Class<Object> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, String> httpHeaders, InputStream entityStream) throws IOException, WebApplicationException
    {
@@ -311,22 +311,22 @@ public class MapProvider implements MessageBodyReader<Object>, MessageBodyWriter
          throw new JAXBMarshalException(e);
       }
    }
-
-   public boolean isDisableExternalEntities()
-   {
-      return disableExternalEntities;
-   }
-
+   /* @Deprecated // tuning-openjdk
+      public boolean isDisableExternalEntities()
+      {
+         return disableExternalEntities;
+      }
+   */
    public void setDisableExternalEntities(boolean disableExternalEntities)
    {
       this.disableExternalEntities = disableExternalEntities;
    }
-
-   public boolean isEnableSecureProcessingFeature()
-   {
-      return enableSecureProcessingFeature;
-   }
-
+   /* @Deprecated // tuning-openjdk
+      public boolean isEnableSecureProcessingFeature()
+      {
+         return enableSecureProcessingFeature;
+      }
+   */
    public void setEnableSecureProcessingFeature(boolean enableSecureProcessingFeature)
    {
       this.enableSecureProcessingFeature = enableSecureProcessingFeature;

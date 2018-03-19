@@ -52,28 +52,28 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class ResourceMethodInvoker implements ResourceInvoker, JaxrsInterceptorRegistryListener
 {
-   protected MethodInjector methodInjector;
-   protected InjectorFactory injector;
-   protected ResourceFactory resource;
-   protected ResteasyProviderFactory parentProviderFactory;
-   protected ResteasyProviderFactory resourceMethodProviderFactory;
-   protected ResourceMethod method;
-   protected Annotation[] methodAnnotations;
-   protected ContainerRequestFilter[] requestFilters;
-   protected ContainerResponseFilter[] responseFilters;
-   protected WriterInterceptor[] writerInterceptors;
-   protected ConcurrentHashMap<String, AtomicLong> stats = new ConcurrentHashMap<String, AtomicLong>();
-   protected GeneralValidator validator;
-   protected boolean isValidatable;
-   protected boolean methodIsValidatable;
+   private final MethodInjector methodInjector;
+   private final InjectorFactory injector;
+   private final ResourceFactory resource;
+   private final ResteasyProviderFactory parentProviderFactory;
+   private ResteasyProviderFactory resourceMethodProviderFactory;
+   private final ResourceMethod method;
+   private final Annotation[] methodAnnotations;
+   private ContainerRequestFilter[] requestFilters;
+   private ContainerResponseFilter[] responseFilters;
+   private WriterInterceptor[] writerInterceptors;
+   private final ConcurrentHashMap<String, AtomicLong> stats = new ConcurrentHashMap<String, AtomicLong>();
+   private GeneralValidator validator;
+   private boolean isValidatable;
+   private boolean methodIsValidatable;
    @SuppressWarnings("rawtypes")
-   protected AsyncResponseProvider asyncResponseProvider;
+   private final AsyncResponseProvider asyncResponseProvider;
    @SuppressWarnings("rawtypes")
-   AsyncStreamProvider asyncStreamProvider;
-   protected boolean isSse;
-   protected ResourceInfo resourceInfo;
+   private AsyncStreamProvider asyncStreamProvider;
+   private boolean isSse;
+   private final ResourceInfo resourceInfo;
 
-   protected boolean expectsBody;
+   private final boolean expectsBody;
 
 
 
@@ -259,11 +259,12 @@ public class ResourceMethodInvoker implements ResourceInvoker, JaxrsInterceptorR
    }
 
 
-
-   public ContainerRequestFilter[] getRequestFilters()
-   {
-      return requestFilters;
-   }
+   /* @Deprecated // tuning-openjdk
+      public ContainerRequestFilter[] getRequestFilters()
+      {
+         return requestFilters;
+      }
+   */
 
    public ContainerResponseFilter[] getResponseFilters()
    {
@@ -323,7 +324,7 @@ public class ResourceMethodInvoker implements ResourceInvoker, JaxrsInterceptorR
       Object rtn = invokeOnTargetDryRun(request, response, target);
       return rtn;
    }
-   
+
    public BuiltResponse invoke(HttpRequest request, HttpResponse response, Object target)
    {
       request.setAttribute(ResourceMethodInvoker.class.getName(), this);
@@ -337,7 +338,7 @@ public class ResourceMethodInvoker implements ResourceInvoker, JaxrsInterceptorR
       BuiltResponse rtn = invokeOnTarget(request, response, target);
       return rtn;
    }
-   
+
    protected Object invokeOnTargetDryRun(HttpRequest request, HttpResponse response, Object target)
    {
       ResteasyProviderFactory.pushContext(ResourceInfo.class, resourceInfo);  // we don't pop so writer interceptors can get at this
@@ -649,9 +650,10 @@ public class ResourceMethodInvoker implements ResourceInvoker, JaxrsInterceptorR
    {
 	 return isSse;
    }
-
+/* @Deprecated // tuning-openjdk
    public void markMethodAsAsync()
    {
       method.markAsynchronous();
    }
+   */
 }
