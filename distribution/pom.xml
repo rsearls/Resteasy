@@ -173,11 +173,13 @@
             <artifactId>resteasy-vertx</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- rls
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-legacy</artifactId>
             <version>${project.version}</version>
         </dependency>
+        -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-validator-provider-11</artifactId>

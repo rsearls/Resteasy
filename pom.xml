@@ -100,7 +100,9 @@
                 <module>resteasy-jaxrs</module>
                 <module>resteasy-jaxrs-services</module>
                 <module>resteasy-client</module>
+                <!-- rls
                 <module>resteasy-legacy</module>
+                -->
                 <module>providers</module>
                 <module>resteasy-bom</module>
                 <module>resteasy-cache</module>
