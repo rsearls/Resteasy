@@ -21,13 +21,13 @@
             <artifactId>arquillian-utils</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+<!-- rls
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-legacy</artifactId>
             <version>${version.resteasy.testsuite}</version>
         </dependency>
-
+-->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxb-provider</artifactId>

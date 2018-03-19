@@ -70,10 +70,14 @@
             <modules>
                 <module>arquillian-utils</module>
                 <module>unit-tests</module>
+                <!-- rls
                 <module>legacy-integration-tests</module>
+                -->
                 <module>integration-tests</module>
                 <module>integration-tests-spring</module>
+                <!-- TODO rls TMP
                 <module>microprofile-tck</module>
+                -->
             </modules>
         </profile>
         <!-- Forward compatibility: use EAP 7.0.0.GA and newer Client from CP stream (e.g. client from RESTEasy delivered by EAP 7.0.2 -->
