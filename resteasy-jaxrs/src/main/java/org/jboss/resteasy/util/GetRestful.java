@@ -54,6 +54,7 @@ public class GetRestful
     * @param clazz
     * @return list of class and interfaces that have jax-rs annotations
     */
+   /* @Deprecated // tuning-openjdk
    public static Class getSubResourceClass(Class clazz)
    {
       // check class & superclasses for JAX-RS annotations
@@ -71,7 +72,7 @@ public class GetRestful
       }
       return null;
    }
-
+*/
    /**
     * Given a class, search itself and implemented interfaces for jax-rs annotations.
     *

@@ -33,16 +33,16 @@ public class MultivaluedTreeMap<K, V> implements MultivaluedMap<K, V>, Serializa
    {
       map = new TreeMap<K, List<V>>(keyComparator);
    }
-
-   public MultivaluedTreeMap(Map<K, V> map)
-   {
-      this();
-      for (K key : map.keySet())
+   /* @Deprecated // tuning-openjdk
+      public MultivaluedTreeMap(Map<K, V> map)
       {
-         add(key, map.get(key));
+         this();
+         for (K key : map.keySet())
+         {
+            add(key, map.get(key));
+         }
       }
-   }
-
+   */
    public void add(K key, V value)
    {
       List<V> list = getOrCreate(key);

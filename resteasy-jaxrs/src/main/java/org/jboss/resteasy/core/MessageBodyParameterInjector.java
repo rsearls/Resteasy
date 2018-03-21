@@ -109,7 +109,7 @@ public class MessageBodyParameterInjector implements ValueInjector, JaxrsInterce
               .getServerReaderInterceptorRegistry().postMatch(
                       declaringClass, target);
    }
-
+/* @Deprecated // tuning-openjdk
    public boolean isFormData(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType)
    {
       if (mediaType.isWildcardType() || mediaType.isWildcardSubtype() ||
@@ -122,7 +122,7 @@ public class MessageBodyParameterInjector implements ValueInjector, JaxrsInterce
       if (params.getActualTypeArguments().length != 2) return false;
       return params.getActualTypeArguments()[0].equals(String.class) && params.getActualTypeArguments()[1].equals(String.class);
    }
-
+*/
 
    public Object inject(HttpRequest request, HttpResponse response)
    {

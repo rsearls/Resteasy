@@ -414,12 +414,12 @@ public class ResteasyUriInfo implements UriInfo
    {
       return encodedMatchedPaths;
    }
-
+/* @Deprecated // tuning-openjdk
    public void popMatchedPath()
    {
       encodedMatchedPaths.remove(0);
    }
-
+*/
 
    public void pushMatchedURI(String encoded)
    {

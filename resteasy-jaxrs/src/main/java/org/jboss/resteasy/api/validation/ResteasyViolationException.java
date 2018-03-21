@@ -196,13 +196,13 @@ public class ResteasyViolationException extends ConstraintViolationException
    {
       return getViolations().size();
    }
-   
-   public List<List<ResteasyConstraintViolation>> getViolationLists()
-   {
-      convertViolations();
-      return violationLists;
-   }
-   
+   /* @Deprecated // tuning-openjdk
+      public List<List<ResteasyConstraintViolation>> getViolationLists()
+      {
+         convertViolations();
+         return violationLists;
+      }
+    */
    public String toString()
    {
       convertViolations();
@@ -299,39 +299,39 @@ public class ResteasyViolationException extends ConstraintViolationException
       violationLists.add(parameterViolations);
       violationLists.add(returnValueViolations);
    }
-   
-   protected int getField(int start, String line)
-   {
-      int beginning = line.indexOf('[', start);
-      if (beginning == -1)
-      {
-         throw new RuntimeException(Messages.MESSAGES.exceptionHasInvalidFormat(line));
-      }
-      int index = beginning;
-      int bracketCount = 1;
-      while (++index < line.length())
-      {
-         char c = line.charAt(index);
-         if (c == '[')
-         {
-            bracketCount++;
-         }
-         else if (c == ']')
-         {
-            bracketCount--;
-         }
-         if (bracketCount == 0)
-         {
-            break;
-         }
-      }
-      if (bracketCount != 0)
-      {
-         throw new RuntimeException(Messages.MESSAGES.exceptionHasInvalidFormat(line));
-      }
-      return index;
-   }
-   
+   /* @Deprecated // tuning-openjdk
+     protected int getField(int start, String line)
+     {
+        int beginning = line.indexOf('[', start);
+        if (beginning == -1)
+        {
+           throw new RuntimeException(Messages.MESSAGES.exceptionHasInvalidFormat(line));
+        }
+        int index = beginning;
+        int bracketCount = 1;
+        while (++index < line.length())
+        {
+           char c = line.charAt(index);
+           if (c == '[')
+           {
+              bracketCount++;
+           }
+           else if (c == ']')
+           {
+              bracketCount--;
+           }
+           if (bracketCount == 0)
+           {
+              break;
+           }
+        }
+        if (bracketCount != 0)
+        {
+           throw new RuntimeException(Messages.MESSAGES.exceptionHasInvalidFormat(line));
+        }
+        return index;
+     }
+   */
    protected void checkSuppressPath()
    {
       ResteasyConfiguration context = ResteasyProviderFactory.getContextData(ResteasyConfiguration.class);
@@ -452,11 +452,12 @@ public class ResteasyViolationException extends ConstraintViolationException
          this.type = type;
          this.subtype = subtype;
       }
-      
+ /* @Deprecated // tuning-openjdk
       public MediaType toMediaType()
       {
          return new MediaType(type, subtype, parameters);
       }
+  */
    }
    
    static protected List<CloneableMediaType> toCloneableMediaTypeList(List<MediaType> list)

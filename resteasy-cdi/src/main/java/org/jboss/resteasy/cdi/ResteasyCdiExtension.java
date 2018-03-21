@@ -129,6 +129,7 @@ public class ResteasyCdiExtension implements Extension
     * @param event
     * @param beanManager
     */
+   /* @Deprecated // tuning-openjdk
    public <T extends Application> void observeApplications(@Observes ProcessAnnotatedType<T> event, BeanManager beanManager)
    {
        setBeanManager(beanManager);
@@ -140,7 +141,7 @@ public class ResteasyCdiExtension implements Extension
            event.setAnnotatedType(wrapAnnotatedType(annotatedType, applicationScopedLiteral));
        }
    }
-
+*/
    protected <T> AnnotatedType<T> wrapAnnotatedType(AnnotatedType<T> type, Annotation scope)
    {
       if (Utils.isScopeDefined(type, beanManager))

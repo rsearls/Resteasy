@@ -78,9 +78,10 @@ public class MultipartFormDataOutput extends MultipartOutput
       addFormDataMap(key, part);
       return part;
    }   
-
+/* @Deprecated // tuning-openjdk
    public Map<String, OutputPart> getFormData()
    {
       return formData;
    }
+   */
 }

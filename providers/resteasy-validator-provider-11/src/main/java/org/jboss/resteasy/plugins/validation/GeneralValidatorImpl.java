@@ -406,7 +406,7 @@ public class GeneralValidatorImpl implements GeneralValidatorCDI
       }
       return false;
    }
-   
+  /* @Deprecated // tuning-openjdk
    static protected String convertArrayToString(Object o)
    {
       String result = null;
@@ -427,7 +427,7 @@ public class GeneralValidatorImpl implements GeneralValidatorCDI
       }
       return result;
    }
-   
+ */
    /**
     * Returns a super method, if any, of a method in a class.
     * Here, the "super" relationship is reflexive.  That is, a method

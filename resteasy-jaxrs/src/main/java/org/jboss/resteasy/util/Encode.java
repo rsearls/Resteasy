@@ -391,12 +391,12 @@ public class Encode
       result = encodeNonCodes(result);
       return result;
    }
-
-   public static String encodeFragmentAsIs(String nameOrValue)
-   {
-      return encodeFromArray(nameOrValue, queryNameValueEncoding, true);
-   }
-
+   /* @Deprecated // tuning-openjdk
+      public static String encodeFragmentAsIs(String nameOrValue)
+      {
+         return encodeFromArray(nameOrValue, queryNameValueEncoding, true);
+      }
+   */
    protected static String encodeFromArray(String segment, String[] encodingMap, boolean encodePercent)
    {
       StringBuilder result = new StringBuilder();

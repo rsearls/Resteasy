@@ -37,12 +37,12 @@ public class PKCS7SignatureInput<T>
    public PKCS7SignatureInput()
    {
    }
-
+/* @Deprecated // tuning-openjdk
    public PKCS7SignatureInput(CMSSignedData data)
    {
       this.data = data;
    }
-
+*/
    /**
     * Base64 encoded pks bytes
     *
@@ -67,6 +67,7 @@ public class PKCS7SignatureInput<T>
     *
     * @param bytes
     */
+ /* @Deprecated // tuning-openjdk
    public PKCS7SignatureInput(byte[] bytes)
    {
       try
@@ -78,7 +79,7 @@ public class PKCS7SignatureInput<T>
          throw new RuntimeException(e);
       }
    }
-
+*/
 
 
 

@@ -53,30 +53,30 @@ public class ListenerBootstrap extends ConfigurationBootstrap
       }
       return deployment;
    }
-
-   public static URL[] findWebInfLibClasspaths(ServletContext servletContext)
-   {
-      ArrayList<URL> list = new ArrayList<URL>();
-      Set libJars = servletContext.getResourcePaths("/WEB-INF/lib");
-      if (libJars == null)
+   /* @Deprecated // tuning-openjdk
+      public static URL[] findWebInfLibClasspaths(ServletContext servletContext)
       {
-         URL[] empty = {};
-         return empty;
-      }
-      for (Object jar : libJars)
-      {
-         try
+         ArrayList<URL> list = new ArrayList<URL>();
+         Set libJars = servletContext.getResourcePaths("/WEB-INF/lib");
+         if (libJars == null)
          {
-            list.add(servletContext.getResource((String) jar));
+            URL[] empty = {};
+            return empty;
          }
-         catch (MalformedURLException e)
+         for (Object jar : libJars)
          {
-            throw new RuntimeException(e);
+            try
+            {
+               list.add(servletContext.getResource((String) jar));
+            }
+            catch (MalformedURLException e)
+            {
+               throw new RuntimeException(e);
+            }
          }
+         return list.toArray(new URL[list.size()]);
       }
-      return list.toArray(new URL[list.size()]);
-   }
-
+   */
    @Override
    public Set<String> getParameterNames()
    {

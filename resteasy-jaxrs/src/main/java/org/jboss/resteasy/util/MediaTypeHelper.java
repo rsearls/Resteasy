@@ -64,14 +64,14 @@ public class MediaTypeHelper
       }
       return mediaTypes.length != 0 ? mediaTypes : null;
    }
-
-   public static float getQ(MediaType type)
-   {
-      float rtn = getQWithParamInfo(type);
-      if (rtn == 2.0F) return 1.0F;
-      return rtn;
-   }
-
+   /* @Deprecated // tuning-openjdk
+      public static float getQ(MediaType type)
+      {
+         float rtn = getQWithParamInfo(type);
+         if (rtn == 2.0F) return 1.0F;
+         return rtn;
+      }
+   */
    public static float getQWithParamInfo(MediaType type)
    {
       if (type.getParameters() != null)
@@ -184,12 +184,12 @@ public class MediaTypeHelper
    {
       return COMPARATOR.compare(one, two);
    }
-
-   public static boolean sameWeight(MediaType one, MediaType two)
-   {
-      return COMPARATOR.compare(one, two) == 0;
-   }
-
+   /* @Deprecated // tuning-openjdk
+      public static boolean sameWeight(MediaType one, MediaType two)
+      {
+         return COMPARATOR.compare(one, two) == 0;
+      }
+   */
    public static void sortByWeight(List<MediaType> types)
    {
       if (types == null || types.size() <= 1) return;
@@ -227,7 +227,7 @@ public class MediaTypeHelper
       }
       return types;
    }
-
+/* @Deprecated // tuning-openjdk
    public static boolean equivalent(MediaType m1, MediaType m2)
    {
       if (m1 == m2) return true;
@@ -237,7 +237,8 @@ public class MediaTypeHelper
 
       return equivalentParams(m1, m2);
    }
-
+*/
+/* @Deprecated // tuning-openjdk
    public static boolean equivalentParams(MediaType m1, MediaType m2)
    {
       Map<String, String> params1 = m1.getParameters();
@@ -266,7 +267,7 @@ public class MediaTypeHelper
       }
       return true;
    }
-   
+ */
    public static boolean isTextLike(MediaType mediaType)
    {
       return "text".equalsIgnoreCase(mediaType.getType())

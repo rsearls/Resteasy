@@ -25,12 +25,12 @@ public class SetterParameter extends Parameter
    {
       return setter;
    }
-
-   public Method getAnnotatedMethod()
-   {
-      return annotatedMethod;
-   }
-
+   /* @Deprecated // tuning-openjdk
+      public Method getAnnotatedMethod()
+      {
+         return annotatedMethod;
+      }
+   */
    @Override
    public AccessibleObject getAccessibleObject()
    {

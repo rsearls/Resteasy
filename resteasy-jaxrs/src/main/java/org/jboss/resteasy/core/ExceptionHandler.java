@@ -35,12 +35,12 @@ public class ExceptionHandler
       this.providerFactory = providerFactory;
       this.unwrappedExceptions = unwrappedExceptions;
    }
-
+/* @Deprecated // tuning-openjdk
    public boolean isMapperExecuted()
    {
       return mapperExecuted;
    }
-
+*/
    /**
     * If there exists an Exception mapper for exception, execute it, otherwise, do NOT recurse up class hierarchy
     * of exception.

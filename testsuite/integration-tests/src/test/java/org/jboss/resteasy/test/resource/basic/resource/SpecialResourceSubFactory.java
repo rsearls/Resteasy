@@ -7,6 +7,6 @@ import javax.ws.rs.ext.MessageBodyReader;
 
 public class SpecialResourceSubFactory extends ResteasyProviderFactory {
     public MediaTypeMap<SortedKey<MessageBodyReader>> getMBRMap() {
-        return serverMessageBodyReaders;
+        return getServerMessageBodyReaders();
     }
 }

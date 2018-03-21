@@ -56,12 +56,12 @@ public class ResourceMethodRegistry implements Registry
       this.providerFactory = providerFactory;
       this.resourceBuilder = providerFactory.getResourceBuilder();
    }
-
-   public boolean isWiderMatching()
-   {
-      return widerMatching;
-   }
-
+   /* @Deprecated // tuning-openjdk
+      public boolean isWiderMatching()
+      {
+         return widerMatching;
+      }
+   */
    public void setWiderMatching(boolean widerMatching)
    {
       this.widerMatching = widerMatching;

@@ -1030,12 +1030,12 @@ public class ResteasyUriBuilder extends UriBuilder
    {
       return port;
    }
-
-   public String getUserInfo()
-   {
-      return userInfo;
-   }
-
+   /* @Deprecated // tuning-openjdk
+      public String getUserInfo()
+      {
+         return userInfo;
+      }
+   */
    public String getPath()
    {
       return path;

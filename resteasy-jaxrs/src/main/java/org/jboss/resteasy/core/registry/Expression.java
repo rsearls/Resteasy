@@ -112,12 +112,12 @@ public abstract class Expression implements Comparable<Expression>
    {
       return regex;
    }
-
-   public String getPathExpression()
-   {
-      return pathExpression;
-   }
-
+   /* @Deprecated // tuning-openjdk
+      public String getPathExpression()
+      {
+         return pathExpression;
+      }
+   */
    public Pattern getPattern()
    {
       return pattern;
