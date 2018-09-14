@@ -45,7 +45,9 @@ import org.jboss.resteasy.spi.interception.PreProcessInterceptor;
 import org.jboss.resteasy.spi.metadata.ResourceBuilder;
 import org.jboss.resteasy.spi.metadata.ResourceClassProcessor;
 import org.jboss.resteasy.util.FeatureContextDelegate;
+import org.jboss.resteasy.util.JaxrsAnnotations;
 import org.jboss.resteasy.util.PickConstructor;
+import org.jboss.resteasy.util.ResteasyIndex;
 import org.jboss.resteasy.util.ThreadLocalStack;
 import org.jboss.resteasy.util.Types;
 
@@ -273,6 +275,16 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
 
    protected ResourceBuilder resourceBuilder;
 
+   // todo rls added
+   protected ResteasyIndex resteasyIndex = null;
+
+   public void setResteasyIndex(ResteasyIndex resteasyIndex) {
+      this.resteasyIndex = resteasyIndex;
+   }
+   public ResteasyIndex getResteasyIndex() {
+      return this.resteasyIndex;
+   }
+// todo rls added
 
    public ResteasyProviderFactory()
    {
@@ -1737,14 +1749,21 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
 
       if (isA(provider, ParamConverterProvider.class, contracts))
       {
-         ParamConverterProvider paramConverterProvider = (ParamConverterProvider) injectedInstance(provider);
+         boolean isProviderClass = true;
+         ParamConverterProvider paramConverterProvider = null;
+         if (isProviderClass) {
+            paramConverterProvider = (ParamConverterProvider) injectedInstance(provider);
+         } else {
+            paramConverterProvider = (ParamConverterProvider) (Object)provider;
+         }
+         // orig ParamConverterProvider paramConverterProvider = (ParamConverterProvider) injectedInstance(provider);
          injectProperties(provider);
          if (sortedParamConverterProviders == null)
          {
             sortedParamConverterProviders = Collections.synchronizedSortedSet(new TreeSet<>(parent.getSortedParamConverterProviders()));
          }
-         int priority = getPriority(priorityOverride, contracts, ParamConverterProvider.class, provider);
-         sortedParamConverterProviders.add(new ExtSortedKey<>(null, paramConverterProvider, provider, priority, isBuiltin));
+         int priority = getPriority(priorityOverride, contracts, ParamConverterProvider.class, provider.getClass());
+         sortedParamConverterProviders.add(new ExtSortedKey<>(null, paramConverterProvider, provider.getClass(), priority, isBuiltin));
          paramConverterProviders = null;
          newContracts.put(ParamConverterProvider.class, priority);
       }
@@ -1752,8 +1771,18 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
       {
          try
          {
-            int priority = getPriority(priorityOverride, contracts, MessageBodyReader.class, provider);
-            addMessageBodyReader(provider, priority, isBuiltin);
+            int priority = getPriority(priorityOverride, contracts, MessageBodyReader.class, provider.getClass());
+            // rls testing start
+            boolean isProviderClass = true;
+            MessageBodyReader reader = null;
+            if (isProviderClass) {
+               reader = createProviderInstance((Class<? extends MessageBodyReader>)provider);
+            } else {
+               reader = (MessageBodyReader)(Object)provider;
+            }
+            addMessageBodyReader(reader, priority, isBuiltin);
+            // rls test end
+            // orig addMessageBodyReader(provider, priority, isBuiltin);
             newContracts.put(MessageBodyReader.class, priority);
          }
          catch (Exception e)
@@ -2070,6 +2099,8 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
       }
       if (isA(provider, DynamicFeature.class, contracts))
       {
+         resteasyIndex.getAnnotationInClass(provider.getClass(), JaxrsAnnotations.CONSTRAINEDTO.getDotName());
+
          ConstrainedTo constrainedTo = (ConstrainedTo) provider.getAnnotation(ConstrainedTo.class);
          int priority = getPriority(priorityOverride, contracts, DynamicFeature.class, provider);
          if (constrainedTo != null && constrainedTo.value() == RuntimeType.SERVER)

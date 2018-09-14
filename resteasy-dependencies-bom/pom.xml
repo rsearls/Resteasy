@@ -90,6 +90,7 @@
         <version.io.reactivex.rxjava2-rxjava>2.1.5</version.io.reactivex.rxjava2-rxjava>
         <version.org.reactivestreams>1.0.2</version.org.reactivestreams>
         <version.org.hibernate.validator>6.0.10.Final</version.org.hibernate.validator>
+        <version.jandex>2.0.5.Final</version.jandex>
     </properties>
 
     <distributionManagement>
@@ -796,6 +797,11 @@
                 <groupId>io.reactivex.rxjava2</groupId>
                 <artifactId>rxjava</artifactId>
                 <version>${version.io.reactivex.rxjava2-rxjava}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss</groupId>
+                <artifactId>jandex</artifactId>
+                <version>${version.jandex}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

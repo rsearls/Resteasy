@@ -40,6 +40,7 @@ import org.jboss.resteasy.test.cdi.util.UtilityProducer;
 import org.jboss.resteasy.utils.PortProviderUtil;
 import org.jboss.resteasy.utils.TestUtil;
 import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -83,6 +84,7 @@ public class InterceptorTest {
                 .addClasses(InterceptorClassInterceptorStereotype.class, InterceptorClassMethodInterceptorStereotype.class, InterceptorStereotyped.class)
                 .addClasses(InterceptorLifecycleBinding.class, InterceptorPostConstructInterceptor.class, InterceptorPreDestroyInterceptor.class)
                 .addAsWebInfResource(InterceptorTest.class.getPackage(), "interceptorBeans.xml", "beans.xml");
+        war.as(ZipExporter.class).exportTo(new java.io.File("/tmp/foo/" + war.getName()), true); // rls debug
         return war;
     }
 

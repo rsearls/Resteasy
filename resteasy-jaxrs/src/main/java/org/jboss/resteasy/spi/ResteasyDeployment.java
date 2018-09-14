@@ -14,13 +14,12 @@ import org.jboss.resteasy.plugins.server.resourcefactory.JndiComponentResourceFa
 import org.jboss.resteasy.resteasy_jaxrs.i18n.LogMessages;
 import org.jboss.resteasy.resteasy_jaxrs.i18n.Messages;
 import org.jboss.resteasy.util.GetRestful;
+import org.jboss.resteasy.util.ResteasyIndex;
 
-import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Configurable;
 import javax.ws.rs.core.Configuration;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.Providers;
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
@@ -29,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.jboss.jandex.Index;
 
 /**
  * This class is used to configure and initialize the core components of RESTEasy.
@@ -80,9 +80,14 @@ public class ResteasyDeployment
    protected ThreadLocalResteasyProviderFactory threadLocalProviderFactory;
    protected String paramMapping;
 
+   private ResteasyIndex resteasyIndex = new ResteasyIndex();  //todo change location of this. rls
+
    @SuppressWarnings(value = "unchecked")
    public void start()
    {
+      // todo check the index was created rls
+      Index index = resteasyIndex.generateIndex(this);
+
       try
       {
          startInternal();
@@ -98,8 +103,12 @@ public class ResteasyDeployment
    {
       // it is very important that each deployment create their own provider factory
       // this allows each WAR to have their own set of providers 
-      if (providerFactory == null) providerFactory = new ResteasyProviderFactory();
+      if (providerFactory == null) {
+         providerFactory = new ResteasyProviderFactory();
+      }
       providerFactory.setRegisterBuiltins(registerBuiltin);
+
+      providerFactory.setResteasyIndex(resteasyIndex);   // todo rls
 
       if (deploymentSensitiveFactoryEnabled)
       {
@@ -108,7 +117,8 @@ public class ResteasyDeployment
          // and still be able to call ResteasyProviderFactory.getInstance()
          if (!(providerFactory instanceof ThreadLocalResteasyProviderFactory))
          {
-            if (ResteasyProviderFactory.peekInstance() == null || !(ResteasyProviderFactory.peekInstance() instanceof ThreadLocalResteasyProviderFactory))
+            if (ResteasyProviderFactory.peekInstance() == null ||
+                    !(ResteasyProviderFactory.peekInstance() instanceof ThreadLocalResteasyProviderFactory))
             {
 
                threadLocalProviderFactory = new ThreadLocalResteasyProviderFactory(providerFactory);
