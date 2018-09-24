@@ -125,16 +125,19 @@ public class ResteasyIndex {
       return index;
    }
 
-   public void getAnnotationInClass(Class providerClass, DotName annotationDotName) {
-      List<AnnotationInstance> annotations = index.getAnnotations(annotationDotName);
-
-      DotName classDotName = DotName.createSimple(providerClass.getName());
+   public AnnotationInstance getAnnotationInClass(String className, DotName annotationDotName)
+   {
+      AnnotationInstance annotationInstance = null;
+      DotName classDotName = DotName.createSimple(className);
       ClassInfo classInfo = index.getClassByName(classDotName);
       if (classInfo != null) {
          Map<DotName, List<AnnotationInstance>> annotationMap = classInfo.annotations();
          List<AnnotationInstance> aInstanceList = annotationMap.get((DotName)annotationDotName);
-         String xxx = "";
+         if (aInstanceList != null && !aInstanceList.isEmpty()) {
+            annotationInstance = aInstanceList.get(0);
+         }
       }
+      return annotationInstance;
    }
 
    private void testIndex(Index index) {

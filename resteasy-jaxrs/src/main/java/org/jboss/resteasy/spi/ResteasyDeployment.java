@@ -80,13 +80,13 @@ public class ResteasyDeployment
    protected ThreadLocalResteasyProviderFactory threadLocalProviderFactory;
    protected String paramMapping;
 
-   private ResteasyIndex resteasyIndex = new ResteasyIndex();  //todo change location of this. rls
+   //private ResteasyIndex resteasyIndex = new ResteasyIndex();  //todo change location of this. rls
 
    @SuppressWarnings(value = "unchecked")
    public void start()
    {
       // todo check the index was created rls
-      Index index = resteasyIndex.generateIndex(this);
+      //Index index = resteasyIndex.generateIndex(this);
 
       try
       {
@@ -108,7 +108,7 @@ public class ResteasyDeployment
       }
       providerFactory.setRegisterBuiltins(registerBuiltin);
 
-      providerFactory.setResteasyIndex(resteasyIndex);   // todo rls
+      //providerFactory.setResteasyIndex(resteasyIndex);   // todo rls
 
       if (deploymentSensitiveFactoryEnabled)
       {

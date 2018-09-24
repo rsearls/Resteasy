@@ -274,9 +274,9 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
    protected Map<Class<?>, Class<? extends RxInvokerProvider<?>>> reactiveClasses;
 
    protected ResourceBuilder resourceBuilder;
-
+/***
    // todo rls added
-   protected ResteasyIndex resteasyIndex = null;
+   //protected ResteasyIndex resteasyIndex = null;
 
    public void setResteasyIndex(ResteasyIndex resteasyIndex) {
       this.resteasyIndex = resteasyIndex;
@@ -284,7 +284,7 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
    public ResteasyIndex getResteasyIndex() {
       return this.resteasyIndex;
    }
-// todo rls added
+// todo rls added ***/
 
    public ResteasyProviderFactory()
    {
@@ -2099,7 +2099,8 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
       }
       if (isA(provider, DynamicFeature.class, contracts))
       {
-         resteasyIndex.getAnnotationInClass(provider.getClass(), JaxrsAnnotations.CONSTRAINEDTO.getDotName());
+         //resteasyIndex.getAnnotationInClass(provider.getName(), JaxrsAnnotations.CONSTRAINEDTO.getDotName());
+         //resteasyIndex.getAnnotationInClass(provider.getName(), JaxrsAnnotations.PROVIDER.getDotName());
 
          ConstrainedTo constrainedTo = (ConstrainedTo) provider.getAnnotation(ConstrainedTo.class);
          int priority = getPriority(priorityOverride, contracts, DynamicFeature.class, provider);
@@ -2200,10 +2201,12 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
          injectProperties(provider);
          if (sortedParamConverterProviders == null)
          {
-            sortedParamConverterProviders = Collections.synchronizedSortedSet(new TreeSet<>(parent.getSortedParamConverterProviders()));
+            sortedParamConverterProviders = Collections.synchronizedSortedSet(
+                    new TreeSet<>(parent.getSortedParamConverterProviders()));
          }
          int priority = getPriority(priorityOverride, contracts, ParamConverterProvider.class, provider.getClass());
-         sortedParamConverterProviders.add(new ExtSortedKey<>(null, (ParamConverterProvider) provider, provider.getClass(), priority, builtIn));
+         sortedParamConverterProviders.add(new ExtSortedKey<>(null, (ParamConverterProvider)
+                 provider, provider.getClass(), priority, builtIn));
          paramConverterProviders = null;
          newContracts.put(ParamConverterProvider.class, priority);
       }
@@ -3219,5 +3222,706 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
    public boolean isReactive(Class<?> clazz)
    {
       return reactiveClasses.keySet().contains(clazz);
+   }
+
+   /*************************** rls testing ***********************************/
+   public void xregisterProvider(Class provider,
+                                 Integer priorityOverride,
+                                 boolean isBuiltin,
+                                 Map<Class<?>, Integer> contracts)
+   {
+      registerProviderConsolidated(provider, contracts, priorityOverride, isBuiltin, true);
+   }
+   public void xregisterProviderInstance(Object provider,
+                                        Map<Class<?>, Integer> contracts,
+                                        Integer priorityOverride,
+                                        boolean isBuiltin)
+   {
+      registerProviderConsolidated(provider.getClass(), contracts, priorityOverride,
+              isBuiltin, false);
+   }
+
+   private boolean checkPreExists(Class provider)
+   {
+      for (Object registered : getInstances())
+      {
+         if (registered.getClass() == provider)
+         {
+            LogMessages.LOGGER.providerClassAlreadyRegistered(provider.getName());
+            return true;
+         }
+      }
+
+      if (getClasses().contains(provider))
+      {
+         LogMessages.LOGGER.providerClassAlreadyRegistered(provider.getName());
+         return true;
+      }
+      return false;
+   }
+   public void registerProviderConsolidated(Class provider,
+                                            Map<Class<?>, Integer> contracts,
+                                            Integer priorityOverride,
+                                            boolean isBuiltin,
+                                            boolean isRequiresClassProcessing)
+   {
+      /***********
+      if (getClasses().contains(provider))
+      {
+         LogMessages.LOGGER.providerClassAlreadyRegistered(provider.getName());
+         return;
+      }
+      for (Object registered : getInstances())
+      {
+         if (registered.getClass() == provider)
+         {
+            LogMessages.LOGGER.providerClassAlreadyRegistered(provider.getName());
+            return;
+         }
+      }
+      ************/
+      if (checkPreExists(provider)) {
+         return;
+      }
+
+      Map<Class<?>, Integer> newContracts = new HashMap<Class<?>, Integer>();
+
+      if (isA(provider, ParamConverterProvider.class, contracts))
+      {
+         //boolean isProviderClass = true;
+         ParamConverterProvider paramConverterProvider = null;
+         if (isRequiresClassProcessing) {
+            paramConverterProvider = (ParamConverterProvider) injectedInstance(provider);
+         } else {
+            paramConverterProvider = (ParamConverterProvider)(Object)provider;
+         }
+         // orig ParamConverterProvider paramConverterProvider = (ParamConverterProvider) injectedInstance(provider);
+         injectProperties(provider);
+         if (sortedParamConverterProviders == null)
+         {
+            sortedParamConverterProviders = Collections.synchronizedSortedSet(
+                    new TreeSet<>(parent.getSortedParamConverterProviders()));
+         }
+         int priority = getPriority(priorityOverride, contracts, ParamConverterProvider.class,
+                 provider.getClass());
+         sortedParamConverterProviders.add(new ExtSortedKey<>(null, paramConverterProvider,
+                 provider.getClass(), priority, isBuiltin));
+         paramConverterProviders = null;
+         newContracts.put(ParamConverterProvider.class, priority);
+      }
+      if (isA(provider, MessageBodyReader.class, contracts))
+      {
+         try
+         {
+            int priority = getPriority(priorityOverride, contracts, MessageBodyReader.class, provider.getClass());
+            // rls testing start
+            //boolean isProviderClass = true;
+            MessageBodyReader reader = null;
+            if (isRequiresClassProcessing) {
+               reader = createProviderInstance((Class<? extends MessageBodyReader>)provider);
+            } else {
+               reader = (MessageBodyReader)(Object)provider;
+            }
+            addMessageBodyReader(reader, priority, isBuiltin);
+            // rls test end
+            // orig addMessageBodyReader(provider, priority, isBuiltin);
+            newContracts.put(MessageBodyReader.class, priority);
+         }
+         catch (Exception e)
+         {
+            throw new RuntimeException(Messages.MESSAGES.unableToInstantiateMessageBodyReader(), e);
+         }
+      }
+      if (isA(provider, MessageBodyWriter.class, contracts))
+      {
+         try
+         {
+            int priority = getPriority(priorityOverride, contracts, MessageBodyWriter.class, provider);
+            MessageBodyWriter writer = null;
+            if (isRequiresClassProcessing) {
+               writer = createProviderInstance((Class<? extends MessageBodyWriter>) provider);
+            } else {
+               writer = (MessageBodyWriter)(Object)provider;
+            }
+            addMessageBodyWriter(writer, provider.getClass(), priority, isBuiltin);
+            newContracts.put(MessageBodyWriter.class, priority);
+         }
+         catch (Exception e)
+         {
+            throw new RuntimeException(Messages.MESSAGES.unableToInstantiateMessageBodyWriter(), e);
+         }
+      }
+      if (isA(provider, ExceptionMapper.class, contracts))
+      {
+         try
+         {
+            ExceptionMapper exceptionMapper = null;
+            if (isRequiresClassProcessing) {
+               exceptionMapper = createProviderInstance((Class<? extends ExceptionMapper>)provider);
+            } else {
+               exceptionMapper = (ExceptionMapper) (Object)provider;
+            }
+
+            addExceptionMapper(exceptionMapper, isBuiltin);
+            //newContracts.put(ExceptionMapper.class,
+            //        getPriority(priorityOverride, contracts, ExceptionMapper.class, provider));
+            int priority = getPriority(priorityOverride, contracts, ExceptionMapper.class, provider);
+            newContracts.put(ExceptionMapper.class, priority);
+         }
+         catch (Exception e)
+         {
+            throw new RuntimeException(Messages.MESSAGES.unableToInstantiateExceptionMapper(), e);
+         }
+      }
+
+      if (isA(provider, ClientExceptionMapper.class, contracts))
+      {
+         try
+         {
+            int priority = 0;
+            ClientExceptionMapper clientExceptionMapper = null;
+            if (isRequiresClassProcessing) {
+               clientExceptionMapper = createProviderInstance((Class<? extends ClientExceptionMapper<?>>)provider);
+               priority = getPriority(priorityOverride, contracts, ClientExceptionMapper.class, provider);
+            } else {
+               clientExceptionMapper = (ClientExceptionMapper)(Object)provider;
+            }
+
+            addClientExceptionMapper(clientExceptionMapper);
+            newContracts.put(ClientExceptionMapper.class, priority);
+         }
+         catch (Exception e)
+         {
+            throw new RuntimeException(Messages.MESSAGES.unableToInstantiateClientExceptionMapper(), e);
+         }
+      }
+      if (isA(provider, AsyncResponseProvider.class, contracts))
+      {
+         try
+         {
+            AsyncResponseProvider asyncResponseProvider = null;
+            if (isRequiresClassProcessing) {
+               asyncResponseProvider = createProviderInstance((Class<? extends AsyncResponseProvider>)provider);
+            } else {
+               asyncResponseProvider = (AsyncResponseProvider)(Object)provider;
+            }
+            addAsyncResponseProvider(asyncResponseProvider);
+            int priority = getPriority(priorityOverride, contracts, AsyncResponseProvider.class, provider.getClass());
+            newContracts.put(AsyncResponseProvider.class, priority);
+            //newContracts.put(AsyncResponseProvider.class, getPriority(priorityOverride, contracts, AsyncResponseProvider.class, provider));
+         }
+         catch (Exception e)
+         {
+            throw new RuntimeException(Messages.MESSAGES.unableToInstantiateAsyncResponseProvider(), e);
+         }
+      }
+      if (isA(provider, AsyncClientResponseProvider.class, contracts))
+      {
+         try
+         {
+            AsyncClientResponseProvider asyncClientResponseProvider = null;
+            if (isRequiresClassProcessing) {
+               asyncClientResponseProvider = createProviderInstance((Class<? extends AsyncClientResponseProvider>)provider);
+            } else {
+               asyncClientResponseProvider = (AsyncClientResponseProvider)(Object)provider;
+            }
+            addAsyncClientResponseProvider(asyncClientResponseProvider);
+            newContracts.put(AsyncClientResponseProvider.class,
+                    getPriority(priorityOverride, contracts, AsyncClientResponseProvider.class, provider));
+         }
+         catch (Exception e)
+         {
+            throw new RuntimeException(Messages.MESSAGES.unableToInstantiateAsyncClientResponseProvider(), e);
+         }
+      }
+      if (isA(provider, AsyncStreamProvider.class, contracts))
+      {
+         try
+         {
+            AsyncStreamProvider asyncStreamProvider = null;
+            if (isRequiresClassProcessing) {
+               asyncStreamProvider = createProviderInstance((Class<? extends AsyncStreamProvider>)provider);
+            } else {
+               asyncStreamProvider = (AsyncStreamProvider)(Object)provider;
+            }
+            addAsyncStreamProvider(asyncStreamProvider);
+            newContracts.put(AsyncStreamProvider.class,
+                    getPriority(priorityOverride, contracts, AsyncStreamProvider.class, provider));
+         }
+         catch (Exception e)
+         {
+            throw new RuntimeException(Messages.MESSAGES.unableToInstantiateAsyncStreamProvider(), e);
+         }
+      }
+      if (isA(provider, ClientRequestFilter.class, contracts))
+      {
+         if (clientRequestFilterRegistry == null)
+         {
+            clientRequestFilterRegistry = parent.getClientRequestFilterRegistry().clone(this);
+         }
+         int priority = getPriority(priorityOverride, contracts, ClientRequestFilter.class, provider);
+         if (isRequiresClassProcessing)
+         {
+            clientRequestFilterRegistry.registerClass(provider, priority);
+         } else {
+            clientRequestFilterRegistry.registerSingleton((ClientRequestFilter)(Object)provider, priority);
+         }
+         newContracts.put(ClientRequestFilter.class, priority);
+
+         { // code maintained for backward compatibility for jaxrs-legacy code
+            if (clientRequestFilters == null)
+            {
+               clientRequestFilters = parent.getClientRequestFilters().clone(this);
+            }
+            if (isRequiresClassProcessing)
+            {
+               clientRequestFilters.registerClass(provider, priority);
+            } else {
+               clientRequestFilters.registerSingleton((ClientRequestFilter)(Object)provider, priority);
+            }
+         }
+
+      }
+      if (isA(provider, ClientResponseFilter.class, contracts))
+      {
+         if (clientResponseFilters == null)
+         {
+            clientResponseFilters = parent.getClientResponseFilters().clone(this);
+         }
+         int priority = getPriority(priorityOverride, contracts, ClientResponseFilter.class, provider);
+         if (isRequiresClassProcessing)
+         {
+            clientResponseFilters.registerClass(provider, priority);
+         } else {
+            clientResponseFilters.registerSingleton((ClientResponseFilter)(Object)provider, priority);
+         }
+         newContracts.put(ClientResponseFilter.class, priority);
+      }
+      if (isA(provider, ClientExecutionInterceptor.class, contracts))
+      {
+         if (clientExecutionInterceptorRegistry == null)
+         {
+            clientExecutionInterceptorRegistry = parent.getClientExecutionInterceptorRegistry().cloneTo(this);
+         }
+         if (isRequiresClassProcessing)
+         {
+            clientExecutionInterceptorRegistry.register(provider);
+         } else {
+            clientExecutionInterceptorRegistry.register((ClientExecutionInterceptor)(Object)provider);
+         }
+         newContracts.put(ClientExecutionInterceptor.class, 0);
+      }
+      if (isA(provider, PreProcessInterceptor.class, contracts))
+      {
+         if (containerRequestFilterRegistry == null)
+         {
+            containerRequestFilterRegistry = parent.getContainerRequestFilterRegistry().clone(this);
+         }
+         if (isRequiresClassProcessing)
+         {
+            containerRequestFilterRegistry.registerLegacy(provider);
+         } else {
+            containerRequestFilterRegistry.registerLegacy((PreProcessInterceptor)(Object)provider);
+         }
+         newContracts.put(PreProcessInterceptor.class, 0);
+      }
+      if (isA(provider, PostProcessInterceptor.class, contracts))
+      {
+         if (containerResponseFilterRegistry == null)
+         {
+            containerResponseFilterRegistry = parent.getContainerResponseFilterRegistry().clone(this);
+         }
+         if (isRequiresClassProcessing)
+         {
+            containerResponseFilterRegistry.registerLegacy(provider);
+         } else {
+            containerResponseFilterRegistry.registerLegacy((PostProcessInterceptor)(Object)provider);
+         }
+         newContracts.put(PostProcessInterceptor.class, 0);
+      }
+      if (isA(provider, ContainerRequestFilter.class, contracts))
+      {
+         if (containerRequestFilterRegistry == null)
+         {
+            containerRequestFilterRegistry = parent.getContainerRequestFilterRegistry().clone(this);
+         }
+         int priority = getPriority(priorityOverride, contracts, ContainerRequestFilter.class, provider);
+         if (isRequiresClassProcessing)
+         {
+            containerRequestFilterRegistry.registerClass(provider, priority);
+         } else {
+            containerRequestFilterRegistry.registerSingleton((ContainerRequestFilter)(Object)provider, priority);
+         }
+         newContracts.put(ContainerRequestFilter.class, priority);
+      }
+      if (isA(provider, ContainerResponseFilter.class, contracts))
+      {
+         if (containerResponseFilterRegistry == null)
+         {
+            containerResponseFilterRegistry = parent.getContainerResponseFilterRegistry().clone(this);
+         }
+         int priority = getPriority(priorityOverride, contracts, ContainerResponseFilter.class, provider);
+         if (isRequiresClassProcessing)
+         {
+            containerResponseFilterRegistry.registerClass(provider, priority);
+         } else {
+            containerResponseFilterRegistry.registerSingleton((ContainerResponseFilter)(Object)provider, priority);
+         }
+         newContracts.put(ContainerResponseFilter.class, priority);
+      }
+      if (isA(provider, ReaderInterceptor.class, contracts))
+      {
+         ConstrainedTo constrainedTo = (ConstrainedTo) provider.getAnnotation(ConstrainedTo.class);
+         int priority = getPriority(priorityOverride, contracts, ReaderInterceptor.class, provider);
+         if (constrainedTo != null && constrainedTo.value() == RuntimeType.SERVER)
+         {
+            if (serverReaderInterceptorRegistry == null)
+            {
+               serverReaderInterceptorRegistry = parent.getServerReaderInterceptorRegistry().clone(this);
+            }
+            if (isRequiresClassProcessing)
+            {
+               serverReaderInterceptorRegistry.registerClass(provider, priority);
+            } else {
+               serverReaderInterceptorRegistry.registerSingleton((ReaderInterceptor)(Object)provider, priority);
+            }
+         }
+         if (constrainedTo != null && constrainedTo.value() == RuntimeType.CLIENT)
+         {
+            if (clientReaderInterceptorRegistry == null)
+            {
+               clientReaderInterceptorRegistry = parent.getClientReaderInterceptorRegistry().clone(this);
+            }
+            if (isRequiresClassProcessing)
+            {
+               clientReaderInterceptorRegistry.registerClass(provider, priority);
+            } else {
+               clientReaderInterceptorRegistry.registerSingleton((ReaderInterceptor)(Object)provider, priority);
+            }
+         }
+         if (constrainedTo == null)
+         {
+            if (serverReaderInterceptorRegistry == null)
+            {
+               serverReaderInterceptorRegistry = parent.getServerReaderInterceptorRegistry().clone(this);
+            }
+            if (isRequiresClassProcessing)
+            {
+               serverReaderInterceptorRegistry.registerClass(provider, priority);
+            } else {
+               serverReaderInterceptorRegistry.registerSingleton((ReaderInterceptor)(Object)provider, priority);
+            }
+            if (clientReaderInterceptorRegistry == null)
+            {
+               clientReaderInterceptorRegistry = parent.getClientReaderInterceptorRegistry().clone(this);
+            }
+            if (isRequiresClassProcessing)
+            {
+               clientReaderInterceptorRegistry.registerClass(provider, priority);
+            } else {
+               clientReaderInterceptorRegistry.registerSingleton((ReaderInterceptor)(Object)provider, priority);
+            }
+         }
+         newContracts.put(ReaderInterceptor.class, priority);
+      }
+      if (isA(provider, WriterInterceptor.class, contracts))
+      {
+         ConstrainedTo constrainedTo = (ConstrainedTo) provider.getAnnotation(ConstrainedTo.class);
+         int priority = getPriority(priorityOverride, contracts, WriterInterceptor.class, provider);
+         if (constrainedTo != null && constrainedTo.value() == RuntimeType.SERVER)
+         {
+            if (serverWriterInterceptorRegistry == null)
+            {
+               serverWriterInterceptorRegistry = parent.getServerWriterInterceptorRegistry().clone(this);
+            }
+            if (isRequiresClassProcessing)
+            {
+               serverWriterInterceptorRegistry.registerClass(provider, priority);
+            } else {
+               serverWriterInterceptorRegistry.registerSingleton((WriterInterceptor)(Object)provider, priority);
+            }
+         }
+         if (constrainedTo != null && constrainedTo.value() == RuntimeType.CLIENT)
+         {
+            if (clientWriterInterceptorRegistry == null)
+            {
+               clientWriterInterceptorRegistry = parent.getClientWriterInterceptorRegistry().clone(this);
+            }
+            if (isRequiresClassProcessing)
+            {
+               clientWriterInterceptorRegistry.registerClass(provider, priority);
+            } else {
+               clientWriterInterceptorRegistry.registerSingleton((WriterInterceptor)(Object)provider, priority);
+            }
+         }
+         if (constrainedTo == null)
+         {
+            if (serverWriterInterceptorRegistry == null)
+            {
+               serverWriterInterceptorRegistry = parent.getServerWriterInterceptorRegistry().clone(this);
+            }
+            if (isRequiresClassProcessing)
+            {
+               serverWriterInterceptorRegistry.registerClass(provider, priority);
+            } else {
+               serverWriterInterceptorRegistry.registerSingleton((WriterInterceptor)(Object)provider, priority);
+            }
+            if (clientWriterInterceptorRegistry == null)
+            {
+               clientWriterInterceptorRegistry = parent.getClientWriterInterceptorRegistry().clone(this);
+            }
+            if (isRequiresClassProcessing)
+            {
+               clientWriterInterceptorRegistry.registerClass(provider, priority);
+            } else {
+               clientWriterInterceptorRegistry.registerSingleton((WriterInterceptor)(Object)provider, priority);
+            }
+         }
+         newContracts.put(WriterInterceptor.class, priority);
+      }
+      if (isA(provider, MessageBodyWriterInterceptor.class, contracts))
+      {
+         if (provider.isAnnotationPresent(ServerInterceptor.class))
+         {
+            if (serverWriterInterceptorRegistry == null)
+            {
+               serverWriterInterceptorRegistry = parent.getServerWriterInterceptorRegistry().clone(this);
+            }
+            if (isRequiresClassProcessing)
+            {
+               serverWriterInterceptorRegistry.registerLegacy(provider);
+            } else {
+               serverWriterInterceptorRegistry.registerLegacy((MessageBodyWriterInterceptor)(Object)provider);
+            }
+         }
+         if (provider.isAnnotationPresent(ClientInterceptor.class))
+         {
+            if (clientWriterInterceptorRegistry == null)
+            {
+               clientWriterInterceptorRegistry = parent.getClientWriterInterceptorRegistry().clone(this);
+            }
+            if (isRequiresClassProcessing)
+            {
+               clientWriterInterceptorRegistry.registerLegacy(provider);
+            } else {
+               clientWriterInterceptorRegistry.registerLegacy((MessageBodyWriterInterceptor)(Object)provider);
+            }
+         }
+         if (!provider.isAnnotationPresent(ServerInterceptor.class) && !provider.isAnnotationPresent(ClientInterceptor.class))
+         {
+            throw new RuntimeException(Messages.MESSAGES.interceptorClassMustBeAnnotated());
+         }
+         newContracts.put(MessageBodyWriterInterceptor.class, 0);
+
+      }
+      if (isA(provider, MessageBodyReaderInterceptor.class, contracts))
+      {
+         if (provider.isAnnotationPresent(ServerInterceptor.class))
+         {
+            if (serverReaderInterceptorRegistry == null)
+            {
+               serverReaderInterceptorRegistry = parent.getServerReaderInterceptorRegistry().clone(this);
+            }
+            if (isRequiresClassProcessing)
+            {
+               serverReaderInterceptorRegistry.registerLegacy(provider);
+            } else {
+               serverReaderInterceptorRegistry.registerLegacy((MessageBodyReaderInterceptor)(Object)provider);
+            }
+         }
+         if (provider.isAnnotationPresent(ClientInterceptor.class))
+         {
+            if (clientReaderInterceptorRegistry == null)
+            {
+               clientReaderInterceptorRegistry = parent.getClientReaderInterceptorRegistry().clone(this);
+            }
+            if (isRequiresClassProcessing)
+            {
+               clientReaderInterceptorRegistry.registerLegacy(provider);
+            } else {
+               clientReaderInterceptorRegistry.registerLegacy((MessageBodyReaderInterceptor)(Object)provider);
+            }
+         }
+         if (!provider.isAnnotationPresent(ServerInterceptor.class) && !provider.isAnnotationPresent(ClientInterceptor.class))
+         {
+            if (isRequiresClassProcessing)
+            {
+               throw new RuntimeException(Messages.MESSAGES.interceptorClassMustBeAnnotated());
+            } else {
+               throw new RuntimeException(Messages.MESSAGES.interceptorClassMustBeAnnotatedWithClass(provider));
+            }
+         }
+         newContracts.put(MessageBodyReaderInterceptor.class, 0);
+
+      }
+      if (isA(provider, ContextResolver.class, contracts))
+      {
+         try
+         {
+            ContextResolver writer = null;
+            if (isRequiresClassProcessing) {
+               writer = createProviderInstance((Class<? extends ContextResolver>)provider);
+               addContextResolver(writer, isBuiltin);
+            } else {
+               writer = (ContextResolver)(Object)provider;
+               addContextResolver(writer, false);
+            }
+            //addContextResolver(provider, isBuiltin);
+            int priority = getPriority(priorityOverride, contracts, ContextResolver.class, provider);
+            newContracts.put(ContextResolver.class, priority);
+         }
+         catch (Exception e)
+         {
+            throw new RuntimeException(Messages.MESSAGES.unableToInstantiateContextResolver(), e);
+         }
+      }
+      if (isA(provider, StringConverter.class, contracts))
+      {
+         int priority = 0;
+         StringConverter writer = null;
+         if (isRequiresClassProcessing) {
+            writer = createProviderInstance((Class<? extends StringConverter>)provider);
+            priority = getPriority(priorityOverride, contracts, StringConverter.class, provider);
+         } else {
+            writer = (StringConverter)(Object)provider;
+         }
+         addStringConverter(writer);
+         newContracts.put(StringConverter.class, priority);
+      }
+      if (isA(provider, StringParameterUnmarshaller.class, contracts))
+      {
+         addStringParameterUnmarshaller(provider);
+         int priority = getPriority(priorityOverride, contracts, StringParameterUnmarshaller.class, provider);
+         newContracts.put(StringParameterUnmarshaller.class, priority);
+      }
+      if (isA(provider, InjectorFactory.class, contracts))
+      {
+         try
+         {
+            if (isRequiresClassProcessing)
+            {
+               this.injectorFactory = (InjectorFactory) provider.newInstance();
+            } else {
+               this.injectorFactory = (InjectorFactory)(Object)provider;
+            }
+            newContracts.put(InjectorFactory.class, 0);
+         }
+         catch (Exception e)
+         {
+            throw new RuntimeException(e);
+         }
+      }
+      if (isA(provider, DynamicFeature.class, contracts))
+      {
+         ConstrainedTo constrainedTo = (ConstrainedTo) provider.getAnnotation(ConstrainedTo.class);
+         int priority = getPriority(priorityOverride, contracts, DynamicFeature.class, provider);
+         if (constrainedTo != null && constrainedTo.value() == RuntimeType.SERVER)
+         {
+            if (serverDynamicFeatures == null)
+            {
+               serverDynamicFeatures = new CopyOnWriteArraySet<DynamicFeature>(parent.getServerDynamicFeatures());
+            }
+            if (isRequiresClassProcessing)
+            {
+               serverDynamicFeatures.add((DynamicFeature) injectedInstance(provider));
+            } else {
+               serverDynamicFeatures.add((DynamicFeature)(Object)provider);
+            }
+         }
+         if (constrainedTo != null && constrainedTo.value() == RuntimeType.CLIENT)
+         {
+            if (clientDynamicFeatures == null)
+            {
+               clientDynamicFeatures = new CopyOnWriteArraySet<DynamicFeature>(parent.getClientDynamicFeatures());
+            }
+            if (isRequiresClassProcessing)
+            {
+               clientDynamicFeatures.add((DynamicFeature) injectedInstance(provider));
+            } else {
+               clientDynamicFeatures.add((DynamicFeature)(Object)provider);
+            }
+         }
+         if (constrainedTo == null)
+         {
+            if (serverDynamicFeatures == null)
+            {
+               serverDynamicFeatures = new CopyOnWriteArraySet<DynamicFeature>(parent.getServerDynamicFeatures());
+            }
+            if (isRequiresClassProcessing)
+            {
+               serverDynamicFeatures.add((DynamicFeature) injectedInstance(provider));
+            } else {
+               serverDynamicFeatures.add((DynamicFeature)(Object)provider);
+            }
+            if (clientDynamicFeatures == null)
+            {
+               clientDynamicFeatures = new CopyOnWriteArraySet<DynamicFeature>(parent.getClientDynamicFeatures());
+            }
+            if (isRequiresClassProcessing)
+            {
+               clientDynamicFeatures.add((DynamicFeature) injectedInstance(provider));
+            } else {
+               clientDynamicFeatures.add((DynamicFeature)(Object)provider);
+            }
+         }
+         newContracts.put(DynamicFeature.class, priority);
+      }
+      if (isA(provider, Feature.class, contracts))
+      {
+         ConstrainedTo constrainedTo = (ConstrainedTo) provider.getAnnotation(ConstrainedTo.class);
+         int priority = getPriority(priorityOverride, contracts, Feature.class, provider);
+         Feature feature = null;
+         if (isRequiresClassProcessing)
+         {
+            feature = injectedInstance((Class<? extends Feature>) provider);
+         } else {
+            feature = (Feature)(Object)provider;
+         }
+         if (constrainedTo == null || constrainedTo.value() == getRuntimeType()) {
+            if (feature.configure(new FeatureContextDelegate(this)))
+            {
+               enabledFeatures.add(feature);
+            }
+         }
+         if (isRequiresClassProcessing)
+         {
+            featureClasses.add(provider);
+         } else {
+            featureInstances.add(provider);
+         }
+         newContracts.put(Feature.class, priority);
+      }
+
+      if (isRequiresClassProcessing)
+      {
+         if (isA(provider, RxInvokerProvider.class, contracts))
+         {
+            int priority = getPriority(priorityOverride, contracts, RxInvokerProvider.class, provider);
+            newContracts.put(RxInvokerProvider.class, priority);
+            Class<?> clazz = Types.getTemplateParameterOfInterface(provider, RxInvokerProvider.class);
+            clazz = Types.getTemplateParameterOfInterface(clazz, RxInvoker.class);
+            if (clazz != null)
+            {
+               reactiveClasses.put(clazz, provider);
+            }
+         }
+      }
+
+      if (isA(provider, ResourceClassProcessor.class, contracts))
+      {
+         int priority = getPriority(priorityOverride, contracts, ResourceClassProcessor.class, provider);
+         ResourceClassProcessor processor = null;
+         if (isRequiresClassProcessing) {
+            processor = createProviderInstance((Class<ResourceClassProcessor>)provider);
+            providerClasses.add(provider);
+         } else {
+            processor = (ResourceClassProcessor)(Object)provider;
+            providerInstances.add(processor);
+         }
+         addResourceClassProcessor(processor, priority);
+         newContracts.put(ResourceClassProcessor.class, priority);
+      }
+      //providerClasses.add(provider);
+      getClassContracts().put(provider, newContracts);
    }
 }
