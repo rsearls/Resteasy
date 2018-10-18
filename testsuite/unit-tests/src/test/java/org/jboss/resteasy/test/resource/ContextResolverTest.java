@@ -5,7 +5,9 @@ import org.jboss.resteasy.test.resource.resource.ContextResolver1;
 import org.jboss.resteasy.test.resource.resource.ContextResolver2;
 import org.jboss.resteasy.test.resource.resource.ContextResolver3;
 import org.jboss.resteasy.test.resource.resource.ContextResolver4;
+import org.jboss.resteasy.test.resource.resource.ContextResolver4A;
 import org.jboss.resteasy.test.resource.resource.ContextResolver5;
+import org.jboss.resteasy.test.resource.resource.ContextResolver5A;
 import org.jboss.resteasy.test.resource.resource.ContextResolver6;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -13,6 +15,8 @@ import org.junit.Test;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.ContextResolver;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @tpSubChapter Resource
@@ -55,4 +59,43 @@ public class ContextResolverTest {
                 factory.getContextResolver(Double.class, MediaType.APPLICATION_ATOM_XML_TYPE));
     }
 
+    /**
+     * @tpTestDetails Demonstrate ContextResolvers with priority settings.
+     * @tpSince RESTEasy 4.0.0
+     */
+    @Test
+    public void testContextResolverPriority() {
+        ResteasyProviderFactory factory = ResteasyProviderFactory.getInstance();
+        // add resolvers with priority set
+        factory.registerProvider(ContextResolver4A.class);
+        factory.registerProvider(ContextResolver5A.class);
+
+        List<String> resultsList = new ArrayList<>();
+        List<ContextResolver> resolverList = factory.getContextResolvers(String.class, MediaType.TEXT_PLAIN_TYPE);
+        for (ContextResolver cr: resolverList) {
+            String r = (String)cr.getContext(float.class);
+            if (r != null)
+            {
+                resultsList.add(r);
+            }
+        }
+        Assert.assertEquals("test 1: 5 results were not found", resultsList.size(), 5);
+        Assert.assertEquals("Value 5 not first in list", resultsList.get(0), "5");
+        Assert.assertEquals("Value 5A not second in list", resultsList.get(1), "5A");
+
+        resolverList.clear();
+        resultsList.clear();
+
+        resolverList = factory.getContextResolvers(String.class, MediaType.APPLICATION_ATOM_XML_TYPE);
+        for (ContextResolver cr: resolverList) {
+            String r = (String)cr.getContext(float.class);
+            if (r != null)
+            {
+                resultsList.add(r);
+            }
+        }
+        Assert.assertEquals("test 2: 2 results were not found", resultsList.size(), 2);
+        Assert.assertEquals("Value 4 not first in list", resultsList.get(0), "4");
+        Assert.assertEquals("Value 4A not second in list", resultsList.get(1), "4A");
+    }
 }
