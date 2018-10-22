@@ -257,7 +257,7 @@ public class ExceptionHandler
    }
 
 
-   public Response handleException(HttpRequest request, Throwable e) {
+   public Response ORIGhandleException(HttpRequest request, Throwable e) {
       Response jaxrsResponse = null;
       RESTEasyTracingLogger logger = RESTEasyTracingLogger.getInstance(request);
 
@@ -306,5 +306,75 @@ public class ExceptionHandler
 
       LogMessages.LOGGER.unknownException(request.getHttpMethod(), request.getUri().getPath(), e);
       throw new UnhandledException(e);
+   }
+
+   public Response handleException(HttpRequest request, Throwable e) {
+
+      Response jaxrsResponse = null;
+      RESTEasyTracingLogger logger = RESTEasyTracingLogger.getInstance(request);
+
+      // lookup mapper on class name of exception
+      jaxrsResponse = executeExactExceptionMapper(e, logger);
+      if (jaxrsResponse == null)
+      {
+         if (e instanceof WebApplicationException)
+         {
+            /*
+             * If the response property of the exception does not
+             * contain an entity and an exception mapping provider
+             * (see section 4.4) is available for
+             * WebApplicationException an implementation MUST use the
+             * provider to create a new Response instance, otherwise
+             * the response property is used directly.
+             */
+            WebApplicationException wae = (WebApplicationException) e;
+            if (wae.getResponse() != null && wae.getResponse().getEntity() != null)
+            {
+               //Response response = wae.getResponse();
+               //return response;
+               jaxrsResponse = wae.getResponse();
+            } else
+            {
+               // look at exception's subClass tree for possible mappers
+               jaxrsResponse = executeExceptionMapper(e, logger);
+               if (jaxrsResponse == null)
+               {
+                  jaxrsResponse = handleWebApplicationException((WebApplicationException) e);
+               }
+            }
+         } else if (e instanceof Failure)
+         {
+            // known exceptions that extend from Failure
+            if (e instanceof WriterException)
+            {
+               jaxrsResponse = handleWriterException(request, (WriterException) e, logger);
+            } else if (e instanceof ReaderException)
+            {
+               jaxrsResponse = handleReaderException(request, (ReaderException) e, logger);
+            } else
+            {
+               jaxrsResponse = executeExceptionMapper(e, logger);
+               if (jaxrsResponse == null)
+               {
+                  jaxrsResponse = handleFailure(request, (Failure) e);
+               }
+            }
+         } else
+         {
+            if (e instanceof ApplicationException)
+            {
+               jaxrsResponse = handleApplicationException(request, (ApplicationException) e, logger);
+            } else
+            {
+               jaxrsResponse = executeExceptionMapper(e, logger);
+            }
+         }
+      }
+
+      if (jaxrsResponse == null) {
+         LogMessages.LOGGER.unknownException(request.getHttpMethod(), request.getUri().getPath(), e);
+         throw new UnhandledException(e);
+      }
+      return jaxrsResponse;
    }
 }
