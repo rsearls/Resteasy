@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/spring-test-async.xml" })
 @DirtiesContext
-@Ignore
+// rls @Ignore
 public class AsynchSpringTest
 {
    private static CountDownLatch latch;
@@ -73,7 +73,7 @@ public class AsynchSpringTest
 //                  ResteasyDeployment.class).values().iterator().next();
 //      dispatcher = (AsynchronousDispatcher)deployment.getDispatcher();
 //   }
-
+/***
    @Test
    public void testOneway() throws Exception
    {
@@ -88,7 +88,7 @@ public class AsynchSpringTest
       Assert.assertTrue(latch.await(2, TimeUnit.SECONDS));
       response.close();
    }
-   
+  ***/
    @Test
    public void testAsynch() throws Exception
    {
@@ -103,7 +103,7 @@ public class AsynchSpringTest
          String jobUrl = response.getHeaderString(HttpHeaders.LOCATION);
 //         System.out.println("JOB: " + jobUrl);
          response.close();
-         
+   /***
          Builder jobBuilder = client.target(jobUrl).request();
          response = jobBuilder.get();
          Assert.assertEquals(HttpServletResponse.SC_ACCEPTED, response.getStatus());
@@ -131,8 +131,9 @@ public class AsynchSpringTest
          response = jobBuilder.get();
          Assert.assertEquals(HttpServletResponse.SC_GONE, response.getStatus());
          response.close();
+         ***/
       }
-
+/***
       {
          dispatcher.setMaxCacheSize(1);
          latch = new CountDownLatch(1);
@@ -197,5 +198,6 @@ public class AsynchSpringTest
          Assert.assertEquals(HttpServletResponse.SC_GONE, response.getStatus());
          response.close();
       }
+      ***/
    }
 }
