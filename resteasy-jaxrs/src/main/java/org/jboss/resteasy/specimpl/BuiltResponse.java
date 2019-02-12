@@ -1,15 +1,24 @@
 package org.jboss.resteasy.specimpl;
 
 import org.jboss.resteasy.core.Headers;
+import org.jboss.resteasy.core.interception.AbstractReaderInterceptorContext;
+import org.jboss.resteasy.core.interception.ClientReaderInterceptorContext;
 import org.jboss.resteasy.plugins.delegates.LocaleDelegate;
+import org.jboss.resteasy.plugins.providers.sse.EventInput;
 import org.jboss.resteasy.resteasy_jaxrs.i18n.Messages;
 import org.jboss.resteasy.spi.HeaderValueProcessor;
 import org.jboss.resteasy.spi.LinkHeaders;
+import org.jboss.resteasy.spi.MarshalledEntity;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.jboss.resteasy.util.CaseInsensitiveMap;
 import org.jboss.resteasy.util.DateUtil;
+import org.jboss.resteasy.util.HttpHeaderNames;
 import org.jboss.resteasy.util.HttpResponseCodes;
+import org.jboss.resteasy.util.InputStreamToByteArray;
+import org.jboss.resteasy.util.ReadFromStream;
+import org.jboss.resteasy.util.Types;
 
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.GenericType;
@@ -19,8 +28,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ReaderInterceptor;
 
+import java.io.ByteArrayInputStream;
+import java.io.FilterInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.util.ArrayList;
@@ -49,6 +65,10 @@ public class BuiltResponse extends Response
    protected Type genericType;
    protected HeaderValueProcessor processor;
    protected volatile boolean isClosed;
+   protected InputStream is;
+   protected byte[] bufferedEntity;
+   protected volatile boolean streamRead;
+   protected volatile boolean streamFullyRead;
 
    public BuiltResponse()
    {
@@ -245,11 +265,227 @@ public class BuiltResponse extends Response
       return readEntity((Class<T>) entityType.getRawType(), entityType.getType(), null);
    }
 
-   public <T> T readEntity(Class<T> type, Type genericType, Annotation[] anns)
-   {
-      throw new IllegalStateException(Messages.MESSAGES.entityNotBackedByInputStream());
+   public <T> T readEntity(Class<T> type, Type genericType, Annotation[] anns) {
+      abortIfClosed();
+      if (entity != null) {
+         if (type.isInstance((this.entity))) {
+            return (T) entity;
+         } else if (entity instanceof InputStream) {
+            setInputStream((InputStream) entity);
+            entity = null;
+         } else if (bufferedEntity == null) {
+            throw new RuntimeException(Messages.MESSAGES.entityAlreadyRead(entity.getClass()));
+         } else {
+            entity = null;
+         }
+      }
+
+      if (entity == null) {
+         if (status == HttpResponseCodes.SC_NO_CONTENT) {
+            return null;
+         }
+
+         try {
+            entity = readFrom(type, genericType, getMediaType(), anns);
+            if (entity == null || (entity != null
+                    && !InputStream.class.isInstance(entity)
+                    && !Reader.class.isInstance(entity)
+                    && bufferedEntity == null)) {
+               try {
+                  if (!EventInput.class.isInstance(entity)) {
+                     close();
+                  }
+               } catch (Exception ignored) {
+               }
+            }
+         } catch (RuntimeException e) {
+            try {
+               close();
+            } catch (Exception ignored) {
+
+            }
+            throw e;
+         }
+      }
+      return (T) entity;
    }
 
+   // this is synchronized in conjunction with finalize to protect against premature finalize called by the GC
+   protected synchronized <T> Object readFrom(Class<T> type, Type genericType,
+                                              MediaType media, Annotation[] annotations)
+   {
+      Type useGeneric = genericType == null ? type : genericType;
+      Class<?> useType = type;
+      media = media == null ? MediaType.WILDCARD_TYPE : media;
+      annotations = annotations == null ? this.annotations : annotations;
+      boolean isMarshalledEntity = false;
+      if (type.equals(MarshalledEntity.class))
+      {
+         isMarshalledEntity = true;
+         ParameterizedType param = (ParameterizedType) useGeneric;
+         useGeneric = param.getActualTypeArguments()[0];
+         useType = Types.getRawType(useGeneric);
+      }
+
+      Object obj = null;
+      try
+      {
+         InputStream is = getEntityStream();
+         if (is == null)
+         {
+            throw new IllegalStateException(Messages.MESSAGES.inputStreamWasEmpty());
+         }
+         if (isMarshalledEntity)
+         {
+            is = new InputStreamToByteArray(is);
+
+         }
+
+         ResteasyProviderFactory providerFactory = ResteasyProviderFactory.getInstance();
+         ReaderInterceptor[] readerInterceptors = providerFactory
+                 .getServerReaderInterceptorRegistry()
+                 .postMatch(null, null);
+
+         final Object finalObj;
+         AbstractReaderInterceptorContext context = new ClientReaderInterceptorContext(
+                 readerInterceptors, providerFactory, useType,
+                 useGeneric, annotations, media, getStringHeaders(), is,
+                 new HashMap<String, Object>());
+
+         finalObj = context.proceed();
+         obj = finalObj;
+
+         if (isMarshalledEntity)
+         {
+            InputStreamToByteArray isba = (InputStreamToByteArray) is;
+            final byte[] bytes = isba.toByteArray();
+            return new MarshalledEntity<Object>()
+            {
+               @Override
+               public byte[] getMarshalledBytes()
+               {
+                  return bytes;
+               }
+
+               @Override
+               public Object getEntity()
+               {
+                  return finalObj;
+               }
+            };
+         }
+         else
+         {
+            return finalObj;
+         }
+
+      }
+      catch (ProcessingException pe)
+      {
+         throw pe;
+      }
+      catch (Exception ex)
+      {
+         throw new ProcessingException(ex);
+      }
+   }
+
+   protected InputStream getEntityStream()
+   {
+      if (bufferedEntity != null) return new ByteArrayInputStream(bufferedEntity);
+      if (isClosed()) throw new ProcessingException(Messages.MESSAGES.streamIsClosed());
+      InputStream is = getInputStream();
+      return is != null ? new InputStreamWrapper(is, this) : null;
+   }
+
+   protected void setInputStream(InputStream is)
+   {
+      this.is = is;
+   }
+
+   protected InputStream getInputStream()
+   {
+      if (is == null && entity != null && entity instanceof InputStream) {
+         is = (InputStream) entity;
+      }
+      return is;
+   }
+
+   private static class InputStreamWrapper extends FilterInputStream {
+
+      private BuiltResponse response;
+
+      protected InputStreamWrapper(final InputStream in, final BuiltResponse response) {
+         super(in);
+         this.response = response;
+      }
+
+      public int read() throws IOException
+      {
+         return checkEOF(super.read());
+      }
+
+      public int read(byte[] b) throws IOException
+      {
+         return checkEOF(super.read(b));
+      }
+
+      public int read(byte[] b, int off, int len) throws IOException
+      {
+         return checkEOF(super.read(b, off, len));
+      }
+
+      private int checkEOF(int v)
+      {
+         response.streamRead=true;
+         if (v < 0)
+         {
+            response.streamFullyRead = true;
+         }
+         return v;
+      }
+
+      @Override
+      public void close() throws IOException {
+         super.close();
+         this.response.close();
+      }
+   }
+
+   protected void resetEntity()
+   {
+      entity = null;
+      bufferedEntity = null;
+      streamFullyRead = false;
+   }
+
+   public void releaseConnection() throws IOException
+   {
+      releaseConnection(false);
+   }
+
+   public void releaseConnection(boolean consumeInputStream) throws IOException
+   {
+      try
+      {
+         if (is != null)
+         {
+            if (consumeInputStream)
+            {
+               while (is.read() > 0)
+               {
+               }
+            }
+            is.close();
+            is = null;
+         }
+      }
+      catch (IOException e)
+      {
+
+      }
+
+   }
 
    @Override
    public boolean hasEntity()
@@ -262,8 +498,29 @@ public class BuiltResponse extends Response
    public boolean bufferEntity()
    {
       abortIfClosed();
-      // no-op
-      return false;
+
+      if (bufferedEntity != null) return true;
+      if (streamRead) return false;
+      InputStream is = getInputStream();
+      if (is == null) return false;
+      try
+      {
+         bufferedEntity = ReadFromStream.readFromStream(1024, is);
+      }
+      catch (IOException e)
+      {
+         throw new ProcessingException(e);
+      }
+      finally
+      {
+         try {
+            releaseConnection();
+         }
+         catch (IOException e) {
+            throw new ProcessingException(e);
+         }
+      }
+      return true;
    }
 
    public boolean isClosed()
@@ -271,9 +528,12 @@ public class BuiltResponse extends Response
       return isClosed;
    }
 
-   public void abortIfClosed()
-   {
-      if (isClosed()) throw new IllegalStateException(Messages.MESSAGES.responseIsClosed());
+   public void abortIfClosed() {
+      if (bufferedEntity == null) {
+         if (isClosed()) {
+            throw new IllegalStateException(Messages.MESSAGES.responseIsClosed());
+         }
+      }
    }
 
    @Override

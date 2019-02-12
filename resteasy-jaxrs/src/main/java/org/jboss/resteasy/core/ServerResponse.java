@@ -1,6 +1,10 @@
 package org.jboss.resteasy.core;
 
+import org.jboss.resteasy.resteasy_jaxrs.i18n.Messages;
 import org.jboss.resteasy.specimpl.BuiltResponse;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
@@ -28,5 +32,11 @@ public class ServerResponse extends BuiltResponse
       this.setEntityClass(response.getEntityClass());
       this.setGenericType(response.getGenericType());
       this.setReasonPhrase(response.getReasonPhrase());
+   }
+
+   @Override
+   public <T> T readEntity(Class<T> type, Type genericType, Annotation[] anns)
+   {
+      throw new IllegalStateException(Messages.MESSAGES.entityNotBackedByInputStream());
    }
 }

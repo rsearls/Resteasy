@@ -7,6 +7,7 @@ import org.jboss.resteasy.core.Headers;
 import org.jboss.resteasy.core.interception.ContainerResponseContextImpl;
 import org.jboss.resteasy.plugins.interceptors.encoding.MessageSanitizerContainerResponseFilter;
 import org.jboss.resteasy.specimpl.BuiltResponse;
+import org.jboss.resteasy.specimpl.BuiltResponseEntityNotBacked;
 import org.jboss.resteasy.util.HttpResponseCodes;
 import org.junit.Assert;
 import org.junit.Test;
@@ -42,7 +43,8 @@ public class MessageSanitizerMediaTypeTest {
    void doTestMessageSanitizerMediaType(Object mediaType) throws Exception {
       Headers<Object> headers = new Headers<Object>();
       headers.add("Content-Type", mediaType);
-      BuiltResponse response = new BuiltResponse(HttpResponseCodes.SC_BAD_REQUEST, "", headers, input, null);
+      BuiltResponseEntityNotBacked response = new BuiltResponseEntityNotBacked(
+              HttpResponseCodes.SC_BAD_REQUEST,"", headers, input, null);
       ContainerResponseContext responseContext = new TestContainerResponseContext(response);
       MessageSanitizerContainerResponseFilter filter = new MessageSanitizerContainerResponseFilter();
       filter.filter(null, responseContext);
