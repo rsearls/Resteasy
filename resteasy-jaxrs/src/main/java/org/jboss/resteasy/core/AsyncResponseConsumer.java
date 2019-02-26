@@ -23,6 +23,7 @@ import org.jboss.resteasy.plugins.providers.sse.SseConstants;
 import org.jboss.resteasy.plugins.providers.sse.SseImpl;
 import org.jboss.resteasy.resteasy_jaxrs.i18n.Messages;
 import org.jboss.resteasy.specimpl.BuiltResponse;
+import org.jboss.resteasy.specimpl.BuiltResponseEntityNotBacked;
 import org.jboss.resteasy.specimpl.MultivaluedTreeMap;
 import org.jboss.resteasy.spi.AsyncResponseProvider;
 import org.jboss.resteasy.spi.AsyncStreamProvider;
@@ -164,7 +165,6 @@ public abstract class AsyncResponseConsumer
    protected BuiltResponse createResponse(Object entity, HttpRequest httpRequest)
    {
       BuiltResponse builtResponse = null;
-      MediaType mediaType = null;
       if (entity == null)
       {
          builtResponse = (BuiltResponse) Response.noContent().build();
@@ -178,7 +178,8 @@ public abstract class AsyncResponseConsumer
          Response r = (Response) entity;
          Headers<Object> metadata = new Headers<Object>();
          metadata.putAll(r.getMetadata());
-         builtResponse = new BuiltResponse(r.getStatus(), r.getStatusInfo().getReasonPhrase(), metadata, r.getEntity(),  method.getMethodAnnotations());
+         builtResponse = new BuiltResponseEntityNotBacked(r.getStatus(), r.getStatusInfo().getReasonPhrase(),
+                 metadata, r.getEntity(),  method.getMethodAnnotations());
       }
       else
       {

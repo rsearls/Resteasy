@@ -173,8 +173,7 @@ public class ClientResponseWithEntityTest {
          }
          try
          {
-            response.getEntity();
-            Assert.fail("An IllegalStateException was expected.");
+            Assert.assertNotNull("Entity should not be null", response.getEntity());
          }
          catch (Exception e)
          {
