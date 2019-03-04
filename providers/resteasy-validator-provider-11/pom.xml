@@ -7,7 +7,7 @@
         <version>4.0.0-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
   </parent>
-  <artifactId>resteasy-validator-provider-11</artifactId>
+   <artifactId>resteasy-validator-provider-11</artifactId>
   <packaging>jar</packaging>
   <name>RESTEasy Validator Provider BV 1.1</name>
   <url>http://maven.apache.org</url>
