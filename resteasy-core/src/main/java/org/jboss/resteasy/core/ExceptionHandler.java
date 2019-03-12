@@ -255,6 +255,7 @@ public class ExceptionHandler
          {
             builder.type(MediaType.TEXT_HTML).entity(e.getMessage());
          }
+
          Response resp = builder.build();
          return resp;
       }
