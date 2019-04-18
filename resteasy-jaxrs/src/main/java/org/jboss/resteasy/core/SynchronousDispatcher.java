@@ -37,6 +37,7 @@ import org.jboss.resteasy.spi.ResteasyAsynchronousContext;
 import org.jboss.resteasy.spi.ResteasyConfiguration;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.jboss.resteasy.spi.UnhandledException;
+import org.jboss.resteasy.spi.statistics.StatisticsController;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
@@ -232,6 +233,11 @@ public class SynchronousDispatcher implements Dispatcher
             {
                // we're probably clearing it twice but still required
                clearContextData();
+               //rls test only start
+               StatisticsController sc = providerFactory.getStatisticsController();
+               String results = sc.getStatistics();
+               String here="";
+               //rls test only end
             }
          });
       }

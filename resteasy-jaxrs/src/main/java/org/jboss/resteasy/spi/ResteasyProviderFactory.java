@@ -110,6 +110,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicReference;
+import org.jboss.resteasy.spi.statistics.StatisticsController;
+import org.jboss.resteasy.statistics.StatisticsControllerImpl;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
@@ -284,6 +286,7 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
    protected Map<Class<?>, Class<? extends RxInvokerProvider<?>>> reactiveClasses;
 
    protected ResourceBuilder resourceBuilder;
+   private StatisticsControllerImpl statisticsController = new StatisticsControllerImpl();
 
 
    public ResteasyProviderFactory()
@@ -3171,5 +3174,9 @@ public class ResteasyProviderFactory extends RuntimeDelegate implements Provider
    public boolean isReactive(Class<?> clazz)
    {
       return reactiveClasses.keySet().contains(clazz);
+   }
+
+   public StatisticsController getStatisticsController() {
+      return statisticsController;
    }
 }
