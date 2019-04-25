@@ -73,4 +73,12 @@ public class JsonBindingResource {
    public Cat repeater(Cat cat) {
       return cat;
    }
+
+   @Path("get/boolean")
+   @GET
+   @Produces("application/json")
+   public Boolean getBoolean() {
+      return Boolean.FALSE;
+   }
+
 }
