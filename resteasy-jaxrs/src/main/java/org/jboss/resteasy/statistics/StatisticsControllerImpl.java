@@ -14,7 +14,7 @@ public class StatisticsControllerImpl implements StatisticsController {
       // use all no-op methods
    };
 
-   boolean isEnabled = true; // false;
+   boolean isEnabled = false;
    List<ResourceInvoker> registry = new ArrayList<>();
 
    @Override
@@ -49,30 +49,5 @@ public class StatisticsControllerImpl implements StatisticsController {
       for (ResourceInvoker invoker : registry) {
          invoker.getMethodStatisticsLogger().reset();
       }
-   }
-
-   @Override
-   public String getStatistics() {
-      if (isEnabled) {
-        return getStats();
-      }
-      return null;
-   }
-
-   private String getStats() {
-      StringBuilder sb = new StringBuilder();
-      for(ResourceInvoker invoker : registry) {
-         MethodStatisticsLogger msl = invoker.getMethodStatisticsLogger();
-         sb.append(invoker.getMethod().getName() + "\n");
-         long cnt = msl.getInvocationCnt();
-         sb.append("    invocation cnt: " + cnt + "\n");
-         if (cnt > 0) {
-            sb.append("    invocation failure cnt: " + msl.getFailedInvocationCnt() + "\n");
-            sb.append("    average execution time: " + msl.getAvgExecutionTime() + "\n");
-            sb.append("    total execution time: " + msl.getTotalExecutionTime() + "\n");
-         }
-         //sb.append("\n");
-      }
-      return sb.toString();
    }
 }

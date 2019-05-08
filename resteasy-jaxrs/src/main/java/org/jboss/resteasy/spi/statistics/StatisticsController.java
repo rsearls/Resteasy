@@ -6,5 +6,4 @@ public interface StatisticsController {
    void register(ResourceInvoker invoker);
    void setEnabled(boolean b);
    void reset();
-   String getStatistics();
 }
