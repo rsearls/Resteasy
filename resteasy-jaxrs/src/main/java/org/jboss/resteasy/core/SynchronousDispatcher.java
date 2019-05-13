@@ -452,6 +452,7 @@ public class SynchronousDispatcher implements Dispatcher
       catch (Exception e)
       {
          //logger.error("invoke() failed mapping exception", e);
+         invoker.getMethodStatisticsLogger().incFailureCnt();
          writeException(request, response, e, t->{});
          return;
       }
