@@ -62,7 +62,7 @@ public class MethodStatisticsLoggerImpl implements MethodStatisticsLogger {
 
    @Override
    public long getAvgExecutionTime() {
-      long avgExecTime;
+      long avgExecTime = -1;
 
       try
       {
@@ -71,7 +71,11 @@ public class MethodStatisticsLoggerImpl implements MethodStatisticsLogger {
             avgExecTime = totalExecutionTime / invocationCnt;
          }
       } catch (Exception e) {
-         avgExecTime = -1;
+
+         if (invocationCnt == 0 && totalExecutionTime == 0)
+         {
+            avgExecTime = 0;
+         }
       }
       return avgExecTime;
    }
