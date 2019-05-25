@@ -57,6 +57,7 @@ public class CorsFiltersTest {
       singletons.add(CorsFilter.class);
       // Arquillian in the deployment and use of PortProviderUtil
       war.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(new ReflectPermission("suppressAccessChecks"),
+            //new FilePermission("/home/rsearls/j1/wildfly/dist/target/wildfly-17.0.0.Beta1-SNAPSHOT/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxrs/main/resteasy-client-4.1.0-SNAPSHOT.jar", "read"),
             new LoggingPermission("control", ""),
             new PropertyPermission("arquillian.*", "read"),
             new PropertyPermission("node", "read"),

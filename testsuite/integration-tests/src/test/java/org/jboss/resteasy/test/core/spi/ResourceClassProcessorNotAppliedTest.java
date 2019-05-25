@@ -52,6 +52,7 @@ public class ResourceClassProcessorNotAppliedTest {
       war.addClass(PortProviderUtil.class);
       war.addClass(ResourceClassProcessorNotAppliedImplementation.class);
       war.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(
+            //new FilePermission("/home/rsearls/j1/wildfly/dist/target/wildfly-17.0.0.Beta1-SNAPSHOT/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxrs/main/resteasy-client-4.1.0-SNAPSHOT.jar", "read"),
             new SocketPermission(PortProviderUtil.getHost(), "connect,resolve"),
             new PropertyPermission("org.jboss.resteasy.port", "read"),
             new RuntimePermission("getenv.RESTEASY_PORT"),

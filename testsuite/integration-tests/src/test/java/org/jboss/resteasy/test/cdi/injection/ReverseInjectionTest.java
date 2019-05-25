@@ -150,6 +150,8 @@ public class ReverseInjectionTest extends AbstractInjectionTestBase {
             .addAsResource(ReverseInjectionTest.class.getPackage(), "persistence.xml", "META-INF/persistence.xml");
       // Arquillian in the deployment
       war.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(new ReflectPermission("suppressAccessChecks"),
+            //new FilePermission("/home/rsearls/j1/wildfly/dist/target/wildfly-17.0.0.Beta1-SNAPSHOT/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxrs/main/resteasy-client-4.1.0-SNAPSHOT.jar", "read"),
+            new RuntimePermission("getClassLoader"),
             new LoggingPermission("control", ""),
             new PropertyPermission("arquillian.*", "read"),
             new PropertyPermission("ipv6", "read"),

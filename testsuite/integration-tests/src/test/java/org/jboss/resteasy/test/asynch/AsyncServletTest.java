@@ -4,9 +4,8 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
-import javax.ws.rs.client.ClientBuilder;
-import org.jboss.resteasy.test.asynch.resource.AsyncServletResource;
 import org.jboss.resteasy.spi.HttpResponseCodes;
+import org.jboss.resteasy.test.asynch.resource.AsyncServletResource;
 import org.jboss.resteasy.utils.PortProviderUtil;
 import org.jboss.resteasy.utils.TestUtil;
 import org.jboss.shrinkwrap.api.Archive;
@@ -17,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
 
 
@@ -45,6 +45,12 @@ public class AsyncServletTest {
    @Deployment
    public static Archive<?> createTestArchive() {
       WebArchive war =  TestUtil.prepareArchive(AsyncServletTest.class.getSimpleName());
+/**      war.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(
+         new RuntimePermission("getenv.RESTEASY_BUFFER_EXCEPTION_ENTITY"),
+         new RuntimePermission("getenv.resteasy_buffer_exception_entity"),
+         new RuntimePermission("getenv.resteasy.buffer.exception.entity")
+      ), "permissions.xml");
+      **/
       return TestUtil.finishContainerPrepare(war, null, AsyncServletResource.class);
    }
 

@@ -8,6 +8,7 @@ import org.jboss.resteasy.test.client.ClientTestBase;
 import org.jboss.resteasy.test.interceptor.resource.ClientRequestFilterImpl;
 import org.jboss.resteasy.test.interceptor.resource.ClientResource;
 import org.jboss.resteasy.test.interceptor.resource.CustomTestApp;
+import org.jboss.resteasy.utils.PermissionUtil;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -38,6 +39,11 @@ public class ClientRequestFilterRegistrationTest extends ClientTestBase {
    public static Archive<?> deploy() {
       WebArchive war = ShrinkWrap.create(WebArchive.class, ClientRequestFilterRegistrationTest.class.getSimpleName() + ".war");
       war.addClasses(CustomTestApp.class, ClientRequestFilterImpl.class, ClientResource.class);
+      war.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(
+
+         //new FilePermission("/home/rsearls/j1/wildfly/dist/target/wildfly-17.0.0.Beta1-SNAPSHOT/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxrs/main/resteasy-client-4.1.0-SNAPSHOT.jar", "read"),
+         new RuntimePermission("accessDeclaredMembers")
+         ), "permissions.xml");
       return war;
    }
 

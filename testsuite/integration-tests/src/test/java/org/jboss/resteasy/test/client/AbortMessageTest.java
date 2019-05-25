@@ -52,6 +52,8 @@ public class AbortMessageTest {
    public static Archive<?> deploy() {
       WebArchive war = TestUtil.prepareArchive(AbortMessageTest.class.getSimpleName());
       war.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(
+               //new FilePermission("/home/rsearls/j1/wildfly/dist/target/wildfly-17.0.0.Beta1-SNAPSHOT/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxrs/main/resteasy-client-4.1.0-SNAPSHOT.jar", "read"),
+               new RuntimePermission("getClassLoader"),
                new LoggingPermission("control", ""),
                new RuntimePermission("accessDeclaredMembers")
       ), "permissions.xml");

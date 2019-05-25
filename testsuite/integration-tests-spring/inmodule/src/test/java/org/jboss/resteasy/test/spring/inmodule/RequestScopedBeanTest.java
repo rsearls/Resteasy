@@ -61,6 +61,7 @@ public class RequestScopedBeanTest {
       // "suppressAccessChecks" required for access to arquillian-core.jar
       // remaining permissions needed to run springframework
       archive.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(
+            new RuntimePermission("getenv.spring.liveBeansView.mbeanDomain"),
             new PropertyPermission("arquillian.*", "read"),
             new ReflectPermission("suppressAccessChecks"),
             new RuntimePermission("accessDeclaredMembers"),

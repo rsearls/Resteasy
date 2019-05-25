@@ -7,6 +7,7 @@ import org.jboss.logging.Logger;
 import org.jboss.resteasy.plugins.server.servlet.ResteasyContextParameters;
 import org.jboss.resteasy.test.providers.jackson2.resource.MyEntity;
 import org.jboss.resteasy.test.providers.jackson2.resource.PreferJacksonOverJsonBClientResource;
+import org.jboss.resteasy.utils.PermissionUtil;
 import org.jboss.resteasy.utils.PortProviderUtil;
 import org.jboss.resteasy.utils.TestUtil;
 import org.jboss.shrinkwrap.api.Archive;
@@ -22,6 +23,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
+import java.net.SocketPermission;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,6 +72,11 @@ public class PreferJacksonOverJsonBClientTest {
       contextParams.put(ResteasyContextParameters.RESTEASY_PREFER_JACKSON_OVER_JSONB, useJackson.toString());
       war.setManifest(new StringAsset("Manifest-Version: 1.0\n"
             + "Dependencies: org.jboss.resteasy.resteasy-json-binding-provider services\n"));
+      war.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(
+         //new FilePermission("/home/rsearls/j1/wildfly/dist/target/wildfly-17.0.0.Beta1-SNAPSHOT/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxrs/main/resteasy-client-4.1.0-SNAPSHOT.jar", "read"),
+         new SocketPermission(PortProviderUtil.getHost(), "connect,resolve"),
+         new RuntimePermission("accessDeclaredMembers")
+         ), "permissions.xml");
       return TestUtil.finishContainerPrepare(war, contextParams, PreferJacksonOverJsonBClientResource.class);
    }
 

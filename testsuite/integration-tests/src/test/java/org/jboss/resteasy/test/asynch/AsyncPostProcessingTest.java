@@ -24,6 +24,7 @@ import org.jboss.logging.Logger;
 import javax.ws.rs.core.Response;
 import java.lang.reflect.ReflectPermission;
 import java.net.SocketPermission;
+import java.security.SecurityPermission;
 import java.util.PropertyPermission;
 
 /**
@@ -43,8 +44,18 @@ public class AsyncPostProcessingTest {
       WebArchive war =  TestUtil.prepareArchive(AsyncPostProcessingTest.class.getSimpleName());
       war.addClasses(TestUtil.class, PortProviderUtil.class);
       war.addAsWebInfResource(AsyncPostProcessingTest.class.getPackage(), "AsyncPostProcessingTestWeb.xml", "web.xml");
+      // rls test start
+      //war.addAsManifestResource(AsyncPostProcessingTest.class.getPackage(),
+      //   "AsyncPost_jboss-deployment-structure.xml", "jboss-deployment-structure.xml");
+      //war.setManifest(new StringAsset("Manifest-Version: 1.0\n"
+      //   + "Dependencies: org.jboss.resteasy.resteasy-jaxrs\n"));
+      // rls test end
+
       // Arquillian in the deployment
       war.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(
+            new SecurityPermission("insertProvider"),
+            //new FilePermission("/home/rsearls/j1/wildfly/dist/target/wildfly-17.0.0.Beta1-SNAPSHOT/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxrs/main/resteasy-core-4.1.0-SNAPSHOT.jar", "read"),
+            //new FilePermission("/home/rsearls/j1/wildfly/dist/target/wildfly-17.0.0.Beta1-SNAPSHOT/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxrs/main/resteasy-client-4.1.0-SNAPSHOT.jar", "read"),
             new ReflectPermission("suppressAccessChecks"),
             new PropertyPermission("arquillian.*", "read"),
             new PropertyPermission("ipv6", "read"),

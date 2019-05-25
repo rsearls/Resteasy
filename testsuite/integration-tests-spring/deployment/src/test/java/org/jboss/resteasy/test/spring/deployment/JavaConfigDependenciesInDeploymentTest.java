@@ -55,6 +55,7 @@ public class JavaConfigDependenciesInDeploymentTest {
       // "suppressAccessChecks" required for access to arquillian-core.jar
       // remaining permissions needed to run springframework
       archive.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(
+            new PropertyPermission("org.springframework.cglib.test.stressHashCodes", "read"),
             new PropertyPermission("arquillian.*", "read"),
             new PropertyPermission("cglib.debugLocation", "read"),
             new RuntimePermission("accessClassInPackage.sun.reflect.annotation"),

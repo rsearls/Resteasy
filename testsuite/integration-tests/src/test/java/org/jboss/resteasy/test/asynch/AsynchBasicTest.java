@@ -63,7 +63,10 @@ public class AsynchBasicTest {
          contextParam.put("resteasy.async.job.service.max.job.results", maxSize);
       }
       // Arquillian in the deployment
-      war.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(new ReflectPermission("suppressAccessChecks"),
+      war.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(
+            new RuntimePermission("getClassLoader"),
+            //new FilePermission("/home/rsearls/j1/wildfly/dist/target/wildfly-17.0.0.Beta1-SNAPSHOT/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxrs/main/resteasy-client-4.1.0-SNAPSHOT.jar", "read"),
+            new ReflectPermission("suppressAccessChecks"),
             new LoggingPermission("control", ""),
             new PropertyPermission("arquillian.*", "read"),
             new PropertyPermission("ipv6", "read"),

@@ -50,6 +50,7 @@ public class ClientDynamicFeaturesTest {
             ClientDynamicFeaturesServerFeature1.class);
       // Arquillian in the deployment
       war.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(
+            new RuntimePermission("getClassLoader"),
             new ReflectPermission("suppressAccessChecks"),
             new RuntimePermission("accessDeclaredMembers"),
             new PropertyPermission("arquillian.*", "read")), "permissions.xml");

@@ -41,8 +41,11 @@ public class ClientBuilderTest {
       war.addClass(NotForForwardCompatibility.class);
       // Arquillian in the deployment and use of TestUtil
       war.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(new ReflectPermission("suppressAccessChecks"),
+            //new FilePermission("/home/rsearls/j1/wildfly/dist/target/wildfly-17.0.0.Beta1-SNAPSHOT/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxrs/main/resteasy-client-4.1.0-SNAPSHOT.jar", "read"),
+            new RuntimePermission("getClassLoader"),
+            new PropertyPermission("jboss.server.base.dir", "read"),
             new FilePermission(TestUtil.getStandaloneDir(DEFAULT_CONTAINER_QUALIFIER) + File.separator + "log" +
-                  File.separator + "server.log", "read"),
+                File.separator + "server.log", "read"),
             new LoggingPermission("control", ""),
             new PropertyPermission("arquillian.*", "read"),
             new PropertyPermission("jboss.home.dir", "read"),

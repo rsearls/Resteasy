@@ -46,6 +46,7 @@ public class AnotherPublisherResponseNoStreamTest {
       war.setManifest(new StringAsset("Manifest-Version: 1.0\n"
          + "Dependencies: org.jboss.resteasy.resteasy-rxjava2 services, org.reactivestreams\n"));
       war.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(
+              //new FilePermission("/home/rsearls/j1/wildfly/dist/target/wildfly-17.0.0.Beta1-SNAPSHOT/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxrs/main/resteasy-client-4.1.0-SNAPSHOT.jar", "read"),
               new RuntimePermission("modifyThread"),
               new SocketPermission(PortProviderUtil.getHost(), "connect,resolve"),
               new PropertyPermission("arquillian.*", "read"),
