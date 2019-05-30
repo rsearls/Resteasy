@@ -95,10 +95,14 @@
             </activation>
             <modules>
                 <module>arquillian-utils</module>
+
                 <module>unit-tests</module>
                 <module>integration-tests</module>
                 <module>integration-tests-spring</module>
                 <module>microprofile-tck</module>
+                <!-- rls tmp
+                <module>integration-testsuite-embedded</module>
+                -->
             </modules>
         </profile>
         <!-- Forward compatibility: use EAP 7.0.0.GA and newer Client from CP stream (e.g. client from RESTEasy delivered by EAP 7.0.2 -->
@@ -394,6 +398,20 @@
                 </plugins>
             </build>
         </profile>
+        <!-- rls test start -->
+        <profile>
+            <id>rr-jdk-http</id>
+            <activation>
+                <property>
+                    <name>!forward.compatibility</name>
+                </property>
+            </activation>
+            <modules>
+                <module>arquillian-utils</module>
+                <module>integration-testsuite-embedded</module>
+            </modules>
+        </profile>
+        <!-- rls test end -->
     </profiles>
 
 </project>
