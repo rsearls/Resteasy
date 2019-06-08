@@ -1,6 +1,6 @@
 package org.jboss.resteasy.test;
 
-import org.jboss.resteasy.plugins.server.sun.http.SunHttpJaxrsServer;
+import org.jboss.resteasy.plugins.server.sun.http.SUNHttpJaxrsServer;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ public class PortAssigningTest
    @Test
    public void testZeroPort() throws Exception {
       //given
-      SunHttpJaxrsServer server = new SunHttpJaxrsServer();
+      SUNHttpJaxrsServer server = new SUNHttpJaxrsServer();
       server.setPort(0);
 
       //when

@@ -9,7 +9,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
-import org.jboss.resteasy.plugins.server.netty.NettyContainer;
+import org.jboss.resteasy.plugins.server.netty.NETTYJaxrsServer;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -39,11 +39,14 @@ public class SubresourceClassInjectionTest {
       }
    }
 
+   static NETTYJaxrsServer server;
    static Client client;
 
    @BeforeClass
    public static void setup() throws Exception {
-      NettyContainer.start().getRegistry().addPerRequestResource(SubresourceClassInjectionTest.Resource.class);
+      server = new NETTYJaxrsServer();
+      server.getDeployment().getRegistry().addPerRequestResource(SubresourceClassInjectionTest.Resource.class);
+      server.start();
       client = ClientBuilder.newClient();
    }
 
@@ -54,7 +57,7 @@ public class SubresourceClassInjectionTest {
       } catch (Exception e) {
 
       }
-      NettyContainer.stop();
+      server.stop();
    }
 
    @Test

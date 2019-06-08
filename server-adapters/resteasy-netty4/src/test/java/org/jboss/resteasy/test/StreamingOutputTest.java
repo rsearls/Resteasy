@@ -1,7 +1,7 @@
 package org.jboss.resteasy.test;
 
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
-import org.jboss.resteasy.plugins.server.netty.NettyContainer;
+import org.jboss.resteasy.plugins.server.netty.NETTYJaxrsServer;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -80,10 +80,14 @@ public class StreamingOutputTest
 
    }
 
+   static NETTYJaxrsServer server;
+
    @BeforeClass
    public static void setup() throws Exception
    {
-      NettyContainer.start().getRegistry().addPerRequestResource(Resteasy1029Netty4StreamingOutput.class);
+      server = new NETTYJaxrsServer();
+      server.getDeployment().getRegistry().addPerRequestResource(Resteasy1029Netty4StreamingOutput.class);
+      server.start();
       client = ((ResteasyClientBuilder)ClientBuilder.newBuilder()).connectionPoolSize(10).build();
    }
 
@@ -91,7 +95,7 @@ public class StreamingOutputTest
    public static void end() throws Exception
    {
       client.close();
-      NettyContainer.stop();
+      server.stop();
    }
 
    static boolean pass = false;

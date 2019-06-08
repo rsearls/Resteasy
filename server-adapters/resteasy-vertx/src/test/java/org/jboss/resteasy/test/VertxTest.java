@@ -1,7 +1,7 @@
 package org.jboss.resteasy.test;
 
 import org.jboss.resteasy.client.jaxrs.internal.ClientInvocation;
-import org.jboss.resteasy.plugins.server.vertx.VertxContainer;
+import org.jboss.resteasy.plugins.server.vertx.VERTXJaxrsServer;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -123,10 +123,14 @@ public class VertxTest
 
    static Client client;
 
+   private static VERTXJaxrsServer server;
+
    @BeforeClass
    public static void setup() throws Exception
    {
-      VertxContainer.start().getRegistry().addPerRequestResource(Resource.class);
+      server = new VERTXJaxrsServer();
+      server.getDeployment().getRegistry().addPerRequestResource(Resource.class);
+      server.start();
       client = ClientBuilder.newClient();
    }
 
@@ -140,7 +144,7 @@ public class VertxTest
       {
 
       }
-      VertxContainer.stop();
+      server.stop();
    }
 
    @Test

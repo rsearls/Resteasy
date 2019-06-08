@@ -16,7 +16,7 @@ import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.HttpVersion;
-import org.jboss.resteasy.plugins.server.netty.NettyContainer;
+import org.jboss.resteasy.plugins.server.netty.NETTYJaxrsServer;
 import org.jboss.resteasy.util.HttpHeaderNames;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -35,17 +35,20 @@ public class RESTEASY1323Test
    static String BASE_URI = generateURL("");
 
    static final int REQUEST_TIMEOUT = 6000;
+   static NETTYJaxrsServer server;
 
    @BeforeClass
    public static void setupSuite() throws Exception
    {
-      NettyContainer.start().getRegistry().addSingletonResource(new AsyncJaxrsResource());
+      server = new NETTYJaxrsServer();
+      server.getDeployment().getRegistry().addSingletonResource(new AsyncJaxrsResource());
+      server.start();
    }
 
    @AfterClass
    public static void tearDownSuite() throws Exception
    {
-      NettyContainer.stop();
+      server.stop();
    }
 
    @Before

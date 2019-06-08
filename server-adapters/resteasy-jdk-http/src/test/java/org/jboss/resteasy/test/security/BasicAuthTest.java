@@ -38,9 +38,9 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.jboss.resteasy.client.jaxrs.engines.ApacheHttpClient43Engine;
 import org.jboss.resteasy.client.jaxrs.engines.HttpContextProvider;
+import org.jboss.resteasy.plugins.server.sun.http.SUNHttpJaxrsServer;
 import org.jboss.resteasy.spi.Dispatcher;
 import org.jboss.resteasy.plugins.server.embedded.SimpleSecurityDomain;
-import org.jboss.resteasy.plugins.server.sun.http.HttpServerContainer;
 import org.jboss.resteasy.test.TestPortProvider;
 import org.jboss.resteasy.spi.HttpResponseCodes;
 import org.junit.AfterClass;
@@ -139,6 +139,8 @@ public class BasicAuthTest
 
    }
 
+   private static SUNHttpJaxrsServer server;
+
    @BeforeClass
    public static void before() throws Exception
    {
@@ -147,15 +149,21 @@ public class BasicAuthTest
       String[] basic = {"user"};
       domain.addUser("bill", "password", roles);
       domain.addUser("mo", "password", basic);
-      dispatcher = HttpServerContainer.start("", domain).getDispatcher();
+      server = new SUNHttpJaxrsServer()
+         .setRootResourcePath("")
+         .setSecurityDomain(domain);
+      server.getDeployment().setSecurityEnabled(true);
+      dispatcher = server.getDeployment().getDispatcher();
       dispatcher.getRegistry().addPerRequestResource(BaseResource.class);
       dispatcher.getRegistry().addPerRequestResource(BaseResource2.class);
+      server.start();
+
    }
 
    @AfterClass
    public static void after() throws Exception
    {
-      HttpServerContainer.stop();
+      server.stop();
    }
 
    @Test

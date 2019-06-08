@@ -18,7 +18,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.client.jaxrs.internal.ClientInvocation;
-import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
+import org.jboss.resteasy.plugins.server.undertow.UNDERTOWJaxrsServer;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -26,7 +26,7 @@ import org.junit.Test;
 
 public class HeadContentLengthTest
 {
-   private static UndertowJaxrsServer server;
+   private static UNDERTOWJaxrsServer server;
 
    @Path("/test")
    public static class Resource
@@ -54,7 +54,7 @@ public class HeadContentLengthTest
    @BeforeClass
    public static void init() throws Exception
    {
-      server = new UndertowJaxrsServer().start();
+      server = new UNDERTOWJaxrsServer().start();
    }
 
    @AfterClass
@@ -66,7 +66,8 @@ public class HeadContentLengthTest
    @Test
    public void testHeadContentLength() throws Exception
    {
-      server.deploy(MyApp.class);
+      server.getDeployment().setApplicationClass(MyApp.class.getName());
+      server.deploy();
       Client client = ClientBuilder.newClient();
       WebTarget target = client.target(generateURL("/base/test"));
       Response getResponse = target.request().buildGet().invoke();

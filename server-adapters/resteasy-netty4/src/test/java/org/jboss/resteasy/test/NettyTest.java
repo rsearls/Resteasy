@@ -27,7 +27,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.jboss.resteasy.client.jaxrs.internal.ClientInvocation;
-import org.jboss.resteasy.plugins.server.netty.NettyContainer;
+import org.jboss.resteasy.plugins.server.netty.NETTYJaxrsServer;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -113,11 +113,14 @@ public class NettyTest
       }
    }
 
+   static NETTYJaxrsServer server;
    static Client client;
    @BeforeClass
    public static void setup() throws Exception
    {
-      NettyContainer.start().getRegistry().addPerRequestResource(Resource.class);
+      server = new NETTYJaxrsServer();
+      server.getDeployment().getRegistry().addPerRequestResource(Resource.class);
+      server.start();
       client = ClientBuilder.newClient();
    }
 
@@ -132,7 +135,7 @@ public class NettyTest
       {
 
       }
-      NettyContainer.stop();
+      server.stop();
    }
 
    @Test

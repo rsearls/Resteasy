@@ -6,7 +6,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
 
-import org.jboss.resteasy.plugins.server.netty.NettyContainer;
+import org.jboss.resteasy.plugins.server.netty.NETTYJaxrsServer;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.AfterClass;
@@ -28,17 +28,20 @@ public class JaxrsAsyncTest
    static Client client;
 
    static final int REQUEST_TIMEOUT = 1000;
+   static NETTYJaxrsServer server;
 
    @BeforeClass
    public static void setupSuite() throws Exception
    {
-      NettyContainer.start().getRegistry().addSingletonResource(new AsyncJaxrsResource());
+      server = new NETTYJaxrsServer();
+      server.getDeployment().getRegistry().addSingletonResource(new AsyncJaxrsResource());
+      server.start();
    }
 
    @AfterClass
    public static void tearDownSuite() throws Exception
    {
-      NettyContainer.stop();
+      server.stop();
    }
 
    @Before

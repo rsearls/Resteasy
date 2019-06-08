@@ -13,7 +13,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
-import org.jboss.resteasy.plugins.server.netty.NettyContainer;
+import org.jboss.resteasy.plugins.server.netty.NETTYJaxrsServer;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -37,12 +37,15 @@ public class Expect100Test
       }
    }
 
+   static NETTYJaxrsServer server;
    static Client client;
 
    @BeforeClass
    public static void setup() throws Exception
    {
-      NettyContainer.start().getRegistry().addPerRequestResource(Resource.class);
+      server = new NETTYJaxrsServer();
+      server.getDeployment().getRegistry().addPerRequestResource(Resource.class);
+      server.start();
       client = ClientBuilder.newClient();
    }
 
@@ -50,7 +53,7 @@ public class Expect100Test
    public static void end() throws Exception
    {
       client.close();
-      NettyContainer.stop();
+      server.stop();
    }
 
    @Test

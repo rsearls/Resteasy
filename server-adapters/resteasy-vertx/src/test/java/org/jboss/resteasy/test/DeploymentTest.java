@@ -18,7 +18,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Context;
 
-import org.jboss.resteasy.plugins.server.vertx.VertxContainer;
+import org.jboss.resteasy.plugins.server.vertx.VERTXJaxrsServer;
 import org.jboss.resteasy.plugins.server.vertx.VertxRequestHandler;
 import org.jboss.resteasy.plugins.server.vertx.VertxResteasyDeployment;
 import org.junit.Assert;
@@ -55,7 +55,10 @@ public class DeploymentTest
    @Test
    public void testPerInstance() throws Exception
    {
-      VertxContainer.start().getRegistry().addPerInstanceResource(Resource.class);
+      VERTXJaxrsServer server = new VERTXJaxrsServer();
+      VertxResteasyDeployment deployment = (VertxResteasyDeployment)server.getDeployment();
+      deployment.getRegistry().addPerInstanceResource(Resource.class);
+      server.start();
       try
       {
          Set<String> results = new HashSet<>();
@@ -79,7 +82,7 @@ public class DeploymentTest
       {
          try
          {
-            VertxContainer.stop();
+            server.stop();
          } catch (Exception ignore)
          {
          }
