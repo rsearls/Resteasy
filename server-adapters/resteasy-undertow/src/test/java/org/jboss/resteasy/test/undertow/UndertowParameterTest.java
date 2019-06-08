@@ -17,8 +17,7 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
-import org.jboss.resteasy.core.ResteasyDeploymentImpl;
-import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
+import org.jboss.resteasy.plugins.server.undertow.UNDERTOWJaxrsServer;
 import org.jboss.resteasy.spi.ResteasyDeployment;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -33,7 +32,7 @@ import org.junit.Test;
 public class UndertowParameterTest {
 
    private static Client client;
-   private static UndertowJaxrsServer server;
+   private static UNDERTOWJaxrsServer server;
    private static Map<String, String> contextParams = new HashMap<String, String>();
    private static Map<String, String> initParams = new HashMap<String, String>();
 
@@ -97,17 +96,21 @@ public class UndertowParameterTest {
    @BeforeClass
    public static void beforeClass() throws Exception
    {
-      server = new UndertowJaxrsServer().start();
-      ResteasyDeployment deployment = new ResteasyDeploymentImpl();
+      server = new UNDERTOWJaxrsServer().start();
+      // todo rls ResteasyDeployment deployment = new ResteasyDeploymentImpl();
+      ResteasyDeployment deployment = server.getDeployment();
       deployment.setDeploymentSensitiveFactoryEnabled(true);
       deployment.setApplication(new TestApp());
-      deployment.start();
+      //todo rls deployment.start();
       contextParams.put("contextKey1", "contextValue1");
       contextParams.put("contextKey2", "contextValue2");
       initParams.put("initKey1", "initValue1");
       initParams.put("initKey2", "initValue2");
       initParams.put("resteasy.servlet.context.deployment", "false");
-      server.deploy(deployment, "/", contextParams, initParams);
+      server.getContextParams().putAll(contextParams);
+      server.getInitParams().putAll(initParams);
+      // tod rls server.deploy(deployment, "/", contextParams, initParams);
+      server.deploy(deployment, "/");
       client = ClientBuilder.newClient();
    }
 

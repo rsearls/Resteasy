@@ -3,7 +3,7 @@ package org.jboss.resteasy.test.undertow;
 import static io.undertow.Handlers.resource;
 import io.undertow.server.handlers.resource.FileResourceManager;
 import io.undertow.servlet.api.DeploymentInfo;
-import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
+import org.jboss.resteasy.plugins.server.undertow.UNDERTOWJaxrsServer;
 import org.jboss.resteasy.test.TestPortProvider;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -29,7 +29,7 @@ import java.util.Set;
  */
 public class UndertowTest
 {
-   private static UndertowJaxrsServer server;
+   private static UNDERTOWJaxrsServer server;
 
    @Path("/test")
    public static class Resource
@@ -57,7 +57,7 @@ public class UndertowTest
    @BeforeClass
    public static void init() throws Exception
    {
-      server = new UndertowJaxrsServer().start();
+      server = new UNDERTOWJaxrsServer().start();
    }
 
    @AfterClass
@@ -69,7 +69,8 @@ public class UndertowTest
    @Test
    public void testApplicationPath() throws Exception
    {
-      server.deploy(MyApp.class);
+      server.getDeployment().setApplicationClass(MyApp.class.getName());
+      server.deploy();
       Client client = ClientBuilder.newClient();
       String val = client.target(TestPortProvider.generateURL("/base/test")).request().get(String.class);
       Assert.assertEquals("hello world", val);
@@ -79,7 +80,9 @@ public class UndertowTest
    @Test
    public void testApplicationContext() throws Exception
    {
-      server.deploy(MyApp.class, "/root");
+      server.getDeployment().setApplicationClass(MyApp.class.getName());
+      server.deploy(server.getDeployment(), "/root");
+      server.deploy();
       Client client = ClientBuilder.newClient();
       String val = client.target(TestPortProvider.generateURL("/root/test")).request().get(String.class);
       Assert.assertEquals("hello world", val);
@@ -89,7 +92,8 @@ public class UndertowTest
    @Test
    public void testDeploymentInfo() throws Exception
    {
-      DeploymentInfo di = server.undertowDeployment(MyApp.class);
+      server.getDeployment().setApplicationClass(MyApp.class.getName());
+      DeploymentInfo di = server.getDeploymentInfo(server.getDeployment());
       di.setContextPath("/di");
       di.setDeploymentName("DI");
       server.deploy(di);
@@ -110,12 +114,12 @@ public class UndertowTest
       writer.close();
 
       server.addResourcePrefixPath( "/index.html", resource( new FileResourceManager( staticFile, 0L ) ) );
-      server.deploy( MyApp.class );
+      server.getDeployment().setApplicationClass(MyApp.class.getName());
+      server.deploy();
       Client client = ClientBuilder.newClient();
       String val = client.target( TestPortProvider.generateURL( "/index.html" ) ).request().get( String.class );
       Assert.assertEquals( staticFileContent, val );
       client.close();
    }
-
 
 }

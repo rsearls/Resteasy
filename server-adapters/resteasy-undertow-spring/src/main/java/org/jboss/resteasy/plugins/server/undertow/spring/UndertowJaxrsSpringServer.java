@@ -3,12 +3,12 @@ package org.jboss.resteasy.plugins.server.undertow.spring;
 
 import io.undertow.servlet.api.DeploymentInfo;
 import io.undertow.servlet.api.ServletInfo;
-import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
+import org.jboss.resteasy.plugins.server.undertow.UNDERTOWJaxrsServer;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import static io.undertow.servlet.Servlets.servlet;
 
-public class UndertowJaxrsSpringServer extends UndertowJaxrsServer {
+public class UndertowJaxrsSpringServer extends UNDERTOWJaxrsServer {
 
    public static final String SERVLET_NAME = "ResteasyServlet";
 

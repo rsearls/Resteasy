@@ -142,6 +142,14 @@ public class UNDERTOWJaxrsServer implements EMBEDDEDJaxrsServer<UNDERTOWJaxrsSer
       this.deployment = (ResteasyDeploymentImpl) deployment;
       return this;
    }
+   public DeploymentInfo getDeploymentInfo(ResteasyDeployment restDeployment) {
+      String mapping = checkApplicationPath (restDeployment);
+      ResteasyDeployment deployment = checkAppDeployment(restDeployment);
+      DeploymentInfo di = undertowDeployment(deployment, mapping);
+      di.setClassLoader(restDeployment.getClass().getClassLoader());
+      return di;
+   }
+
    /**
     * Creates a web deployment for your ResteasyDeployent so you can set up things like security constraints
     * You'd call this method, add your servlet security constraints, then call deploy(DeploymentInfo)
@@ -177,9 +185,7 @@ public class UNDERTOWJaxrsServer implements EMBEDDEDJaxrsServer<UNDERTOWJaxrsSer
 
       return  new DeploymentInfo()
               .addServletContextAttribute(ResteasyDeployment.class.getName(), deployment)
-              .addServlet(
-                      resteasyServlet
-                         );
+              .addServlet(resteasyServlet);
    }
 
    /**
@@ -195,7 +201,7 @@ public class UNDERTOWJaxrsServer implements EMBEDDEDJaxrsServer<UNDERTOWJaxrsSer
    // todo used internally
    public DeploymentInfo undertowDeployment(ResteasyDeployment deployment)
    {
-      return undertowDeployment(deployment, resteasy_servlet_mapping_prefix);
+      return undertowDeployment(deployment, "/");
    }
 
    /**

@@ -12,7 +12,9 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.ext.Provider;
 
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
+import org.jboss.resteasy.core.ResteasyDeploymentImpl;
+import org.jboss.resteasy.plugins.server.undertow.UNDERTOWJaxrsServer;
+import org.jboss.resteasy.spi.ResteasyDeployment;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ArchivePath;
 import org.jboss.shrinkwrap.api.Node;
@@ -75,15 +77,19 @@ public class UndertowTestRunner extends BlockJUnit4ClassRunner
    @Override
    public void run(RunNotifier notifier)
    {
-      UndertowJaxrsServer server = new UndertowJaxrsServer().start(Undertow.builder()
+      UNDERTOWJaxrsServer server = new UNDERTOWJaxrsServer().start(Undertow.builder()
             .addHttpListener(8080, "localhost"));
-      server.deploy(new Application() {
+
+      ResteasyDeployment deployment = new ResteasyDeploymentImpl();
+      deployment.setApplication(new Application() {
          @Override
          public Set<Class<?>> getClasses()
          {
             return classes;
          }
-      }, super.getTestClass().getJavaClass().getSimpleName());
+      });
+      server.deploy(deployment, super.getTestClass().getJavaClass().getSimpleName());
+
       try
       {
          super.run(notifier);

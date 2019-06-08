@@ -14,7 +14,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
-import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
+import org.jboss.resteasy.plugins.server.undertow.UNDERTOWJaxrsServer;
 import org.jboss.resteasy.test.TestPortProvider;
 import org.jboss.resteasy.test.nextgen.wadl.resources.BasicResource;
 import org.jboss.resteasy.test.nextgen.wadl.resources.issues.RESTEASY1246;
@@ -30,7 +30,7 @@ import org.junit.Test;
  */
 public class WADLUndertowContainerTest {
 
-   private UndertowJaxrsServer server;
+   private UNDERTOWJaxrsServer server;
 
    @Test
    public void basicTest() throws Exception {
@@ -128,7 +128,7 @@ public class WADLUndertowContainerTest {
 
    @Before
    public void before() throws Exception {
-      server = new UndertowJaxrsServer().start();
+      server = new UNDERTOWJaxrsServer().start();
    }
 
    @After
