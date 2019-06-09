@@ -18,7 +18,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.core.ResteasyDeploymentImpl;
-import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
+import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsSERVER;
 import org.jboss.resteasy.spi.ResteasyDeployment;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -33,7 +33,7 @@ import org.junit.Test;
 public class UndertowParameterTest {
 
    private static Client client;
-   private static UndertowJaxrsServer server;
+   private static UndertowJaxrsSERVER server;
    private static Map<String, String> contextParams = new HashMap<String, String>();
    private static Map<String, String> initParams = new HashMap<String, String>();
 
@@ -97,7 +97,7 @@ public class UndertowParameterTest {
    @BeforeClass
    public static void beforeClass() throws Exception
    {
-      server = new UndertowJaxrsServer().start();
+      server = new UndertowJaxrsSERVER().start();
       ResteasyDeployment deployment = new ResteasyDeploymentImpl();
       deployment.setDeploymentSensitiveFactoryEnabled(true);
       deployment.setApplication(new TestApp());
@@ -107,7 +107,11 @@ public class UndertowParameterTest {
       initParams.put("initKey1", "initValue1");
       initParams.put("initKey2", "initValue2");
       initParams.put("resteasy.servlet.context.deployment", "false");
-      server.deploy(deployment, "/", contextParams, initParams);
+      server.setContextParams(contextParams)
+         .setInitParams(initParams)
+         .setRootResourcePath("/")
+         .deploy(deployment);
+      // tpdo rls server.deploy(deployment, "/", contextParams, initParams);
       client = ClientBuilder.newClient();
    }
 

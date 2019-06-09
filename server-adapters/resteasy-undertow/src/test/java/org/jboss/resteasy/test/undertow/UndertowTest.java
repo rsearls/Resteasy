@@ -3,7 +3,7 @@ package org.jboss.resteasy.test.undertow;
 import static io.undertow.Handlers.resource;
 import io.undertow.server.handlers.resource.FileResourceManager;
 import io.undertow.servlet.api.DeploymentInfo;
-import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
+import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsSERVER;
 import org.jboss.resteasy.test.TestPortProvider;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -29,7 +29,7 @@ import java.util.Set;
  */
 public class UndertowTest
 {
-   private static UndertowJaxrsServer server;
+   private static UndertowJaxrsSERVER server;
 
    @Path("/test")
    public static class Resource
@@ -57,7 +57,7 @@ public class UndertowTest
    @BeforeClass
    public static void init() throws Exception
    {
-      server = new UndertowJaxrsServer().start();
+      server = new UndertowJaxrsSERVER().start();
    }
 
    @AfterClass
