@@ -63,13 +63,6 @@ public class VERTXJaxrsServer implements EMBEDDEDJaxrsServer<VERTXJaxrsServer>
    public VERTXJaxrsServer start()
    {
       serverHelper.checkDeployment(deployment);
-      /***
-      if (deployment == null) {
-         throw new IllegalArgumentException("A ResteasyDeployment object required");
-      } else if (deployment.getRegistry() == null) {
-         deployment.start();
-      }
-***/
       setRootResourcePath(serverHelper.checkContextPath(
          serverHelper.checkAppDeployment(deployment)));
 

@@ -18,7 +18,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.core.ResteasyDeploymentImpl;
-import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsSERVER;
+import org.jboss.resteasy.plugins.server.undertow.UNDERTOWJaxrsServer;
 import org.jboss.resteasy.spi.ResteasyDeployment;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -33,7 +33,7 @@ import org.junit.Test;
 public class UndertowParameterTest {
 
    private static Client client;
-   private static UndertowJaxrsSERVER server;
+   private static UNDERTOWJaxrsServer server;
    private static Map<String, String> contextParams = new HashMap<String, String>();
    private static Map<String, String> initParams = new HashMap<String, String>();
 
@@ -97,7 +97,7 @@ public class UndertowParameterTest {
    @BeforeClass
    public static void beforeClass() throws Exception
    {
-      server = new UndertowJaxrsSERVER().start();
+      server = new UNDERTOWJaxrsServer().start();
       ResteasyDeployment deployment = new ResteasyDeploymentImpl();
       deployment.setDeploymentSensitiveFactoryEnabled(true);
       deployment.setApplication(new TestApp());

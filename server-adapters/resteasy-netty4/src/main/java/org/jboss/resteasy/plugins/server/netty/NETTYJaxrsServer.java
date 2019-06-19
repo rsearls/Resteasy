@@ -49,9 +49,9 @@ public class NETTYJaxrsServer implements EMBEDDEDJaxrsServer<NETTYJaxrsServer>
 {
    protected ServerBootstrap bootstrap = new ServerBootstrap();
    protected String hostname = null;
-   protected int configuredPort = PortProvider.getPort(); //orig value  8080;
+   protected int configuredPort = PortProvider.getPort();
    protected int runtimePort = -1;
-   protected ResteasyDeployment deployment; // = new ResteasyDeploymentImpl();
+   protected ResteasyDeployment deployment;
    protected String root = "";
    protected SecurityDomain domain;
    private EventLoopGroup eventLoopGroup;
@@ -83,13 +83,7 @@ public class NETTYJaxrsServer implements EMBEDDEDJaxrsServer<NETTYJaxrsServer>
    @Override
    public NETTYJaxrsServer start() {
       serverHelper.checkDeployment(deployment);
-      /***
-      if (deployment == null) {
-         throw new IllegalArgumentException("A ResteasyDeployment object required");
-      } else if (deployment.getRegistry() == null) {
-         deployment.start();
-      }
-***/
+
       eventLoopGroup = new NioEventLoopGroup(ioWorkerCount);
       eventExecutor = new NioEventLoopGroup(executorThreadCount);
       //deployment.start();
@@ -99,16 +93,6 @@ public class NETTYJaxrsServer implements EMBEDDEDJaxrsServer<NETTYJaxrsServer>
          setRootResourcePath(appPath);
       }
 
-      /*******
-      if (deployment.getApplication() != null) {
-         ApplicationPath appPath = deployment.getApplication().getClass().getAnnotation(ApplicationPath.class);
-         if (appPath != null && (root == null || "".equals(root))) {
-            // annotation is present and original root is not set
-            String path = appPath.value();
-            setRootResourcePath(path);
-         }
-      }
-      ********/
       // Configure the server.
       bootstrap.group(eventLoopGroup)
          .channel(NioServerSocketChannel.class)
@@ -149,7 +133,6 @@ public class NETTYJaxrsServer implements EMBEDDEDJaxrsServer<NETTYJaxrsServer>
       if (deployment == null)
       {
          deployment = new ResteasyDeploymentImpl();
-         //deployment.start();
       }
       return deployment;
    }
@@ -389,29 +372,4 @@ public class NETTYJaxrsServer implements EMBEDDEDJaxrsServer<NETTYJaxrsServer>
       channelPipeline.addLast(eventExecutor, new RequestHandler(dispatcher));
    }
 
-   /***
-   private ResteasyDeployment checkAppDeployment(ResteasyDeployment deployment) {
-
-      ResteasyDeployment appDeployment = deployment;
-      ApplicationPath appPath = null;
-      if (deployment.getApplicationClass() != null) {
-         try
-         {
-            Class clazz = Class.forName(deployment.getApplicationClass());
-            appPath = (ApplicationPath)clazz.getAnnotation(ApplicationPath.class);
-
-         } catch (ClassNotFoundException e) {
-            // todo how to handle
-         }
-      } else if (deployment.getApplication() != null) {
-         appPath = deployment.getApplication().getClass().getAnnotation(ApplicationPath.class);
-      }
-
-      if (appPath != null && (root == null || "".equals(root))) {
-         setRootResourcePath(appPath.value());
-      }
-
-      return appDeployment;
-   }
-   ****/
 }

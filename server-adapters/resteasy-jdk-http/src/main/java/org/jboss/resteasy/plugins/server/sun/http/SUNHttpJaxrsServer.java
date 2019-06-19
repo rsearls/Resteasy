@@ -21,7 +21,7 @@ public class SUNHttpJaxrsServer implements EMBEDDEDJaxrsServer<SUNHttpJaxrsServe
 {
    protected HttpContextBuilder context = new HttpContextBuilder();
    protected HttpServer httpServer;
-   protected int configuredPort = PortProvider.getPort(); // orig value 8080;
+   protected int configuredPort = PortProvider.getPort();
    protected int runtimePort = -1;
    protected ResteasyDeployment deployment;
    private EmbeddedServerHelper serverHelper = new EmbeddedServerHelper();
@@ -36,13 +36,6 @@ public class SUNHttpJaxrsServer implements EMBEDDEDJaxrsServer<SUNHttpJaxrsServe
    public SUNHttpJaxrsServer start()
    {
       serverHelper.checkDeployment(deployment);
-      /***
-      if (deployment == null) {
-         throw new IllegalArgumentException("A ResteasyDeployment object required");
-      } else if (deployment.getRegistry() == null) {
-         deployment.start();
-      }
-      ***/
       setRootResourcePath(serverHelper.checkContextPath(
          serverHelper.checkAppDeployment(deployment)));
 
