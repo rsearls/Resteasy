@@ -7,23 +7,22 @@ import io.undertow.servlet.api.DeploymentInfo;
 import io.undertow.servlet.api.DeploymentManager;
 import io.undertow.servlet.api.ServletContainer;
 import io.undertow.servlet.api.ServletInfo;
-
+import org.jboss.resteasy.core.ResteasyDeploymentImpl;
 import org.jboss.resteasy.plugins.server.embedded.EMBEDDEDJaxrsServer;
 import org.jboss.resteasy.plugins.server.embedded.SecurityDomain;
-import org.jboss.resteasy.util.PortProvider;
-import org.jboss.resteasy.core.ResteasyDeploymentImpl;
 import org.jboss.resteasy.plugins.server.servlet.HttpServlet30Dispatcher;
 import org.jboss.resteasy.spi.ResteasyDeployment;
+import org.jboss.resteasy.util.EmbeddedServerHelper;
+import org.jboss.resteasy.util.PortProvider;
 
 import javax.servlet.ServletException;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
-
-import static io.undertow.servlet.Servlets.servlet;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import static io.undertow.servlet.Servlets.servlet;
 
 
 /**
@@ -48,16 +47,19 @@ public class UndertowJaxrsSERVER implements EMBEDDEDJaxrsServer<UndertowJaxrsSER
    private int port = PortProvider.getPort();
    private String hostname = "localhost";
    private String rootResourcePath;
+   private EmbeddedServerHelper serverHelper = new EmbeddedServerHelper();
 
    @Override
    public UndertowJaxrsSERVER deploy() {
-
+      serverHelper.checkDeployment(resteasyDeployment);
+ /***
       if (resteasyDeployment == null) {
          throw new IllegalArgumentException("A ResteasyDeployment object required");
       }
-
-      ResteasyDeployment deployment = checkAppDeployment(resteasyDeployment);
-      return deploy(deployment, checkContextPath(rootResourcePath),
+***/
+      //  ResteasyDeployment deployment = checkAppDeployment(resteasyDeployment);
+      ResteasyDeployment deployment = resteasyDeployment;  // tmp
+      return deploy(deployment, serverHelper.checkContextPath(rootResourcePath),
          resteasyDeployment.getClass().getClassLoader());
    }
 
@@ -113,46 +115,36 @@ public class UndertowJaxrsSERVER implements EMBEDDEDJaxrsServer<UndertowJaxrsSER
       // no-op; does not apply to undertow setup
       return this;
    }
-
-
-   private ResteasyDeployment checkAppDeployment(ResteasyDeployment deployment) {
+/****
+   // private ResteasyDeployment checkAppDeployment(ResteasyDeployment deployment) {
+   private String checkAppDeployment(ResteasyDeployment deployment) {
 
       ResteasyDeployment appDeployment = deployment;
-      // Check if user started ResteasyDeployment.  Check of Application
-      // Undertow needs ResteasyDeployment not to be started when Application class specified.
-      if (appDeployment.getRegistry() == null)
+
+      ApplicationPath appPath = null;
+      if (deployment.getApplicationClass() != null)
       {
-         boolean isApplicationClassPresent = false;
-         ApplicationPath appPath = null;
-         if (deployment.getApplicationClass() != null) {
-            isApplicationClassPresent = true;
-            try
-            {
-               Class clazz = Class.forName(deployment.getApplicationClass());
-               appPath = (ApplicationPath)clazz.getAnnotation(ApplicationPath.class);
-
-            } catch (ClassNotFoundException e) {
-               // todo how to handle
-            }
-         } else if (deployment.getApplication() != null) {
-            isApplicationClassPresent = true;
-            appPath = deployment.getApplication().getClass().getAnnotation(ApplicationPath.class);
-         }
-
-         if (isApplicationClassPresent)
+         try
          {
-            // Applications require a ResteasyDeployment that has not been started
-            appDeployment = new ResteasyDeploymentImpl();
-            appDeployment.merge(deployment);
-            appDeployment.setApplicationClass(deployment.getApplicationClass());
-            appDeployment.setApplication(deployment.getApplication());
+            Class clazz = Class.forName(deployment.getApplicationClass());
+            appPath = (ApplicationPath) clazz.getAnnotation(ApplicationPath.class);
 
-            setRootResourcePath(appPath.value());
+         } catch (ClassNotFoundException e)
+         {
+            // todo how to handle
          }
+      } else if (deployment.getApplication() != null)
+      {
+         appPath = deployment.getApplication().getClass().getAnnotation(ApplicationPath.class);
       }
-      return appDeployment;
-   }
 
+      String aPath = null;
+      if (appPath != null){
+         aPath = appPath.value();
+      }
+      return aPath;
+   }
+*****/
 
    /*************************************************************************/
 
@@ -160,7 +152,7 @@ public class UndertowJaxrsSERVER implements EMBEDDEDJaxrsServer<UndertowJaxrsSER
       ResteasyDeployment deployment = new ResteasyDeploymentImpl();
       deployment.setApplication(application);
       return deploy(deployment,
-         checkAppPath(application.getClass().getAnnotation(ApplicationPath.class)),
+         serverHelper.checkAppPath(application.getClass().getAnnotation(ApplicationPath.class)),
          application.getClass().getClassLoader());
    }
 
@@ -168,7 +160,7 @@ public class UndertowJaxrsSERVER implements EMBEDDEDJaxrsServer<UndertowJaxrsSER
       ResteasyDeployment deployment = new ResteasyDeploymentImpl();
       deployment.setApplicationClass(application.getName());
       return deploy(deployment,
-         checkAppPath(application.getAnnotation(ApplicationPath.class)),
+         serverHelper.checkAppPath(application.getAnnotation(ApplicationPath.class)),
          deployment.getClass().getClassLoader());
    }
 
@@ -176,7 +168,7 @@ public class UndertowJaxrsSERVER implements EMBEDDEDJaxrsServer<UndertowJaxrsSER
                                      String contextPath) {
       ResteasyDeployment deployment = new ResteasyDeploymentImpl();
       deployment.setApplicationClass(application.getName());
-      return deploy(deployment, checkContextPath(contextPath),
+      return deploy(deployment, serverHelper.checkContextPath(contextPath),
          deployment.getClass().getClassLoader());
    }
 
@@ -225,7 +217,7 @@ public class UndertowJaxrsSERVER implements EMBEDDEDJaxrsServer<UndertowJaxrsSER
     */
    public DeploymentInfo undertowDeployment(ResteasyDeployment deployment, String mappingPrefix)
    {
-      String mapping = checkContextPath(mappingPrefix);
+      String mapping = serverHelper.checkContextPath(mappingPrefix);
       if (!mapping.endsWith("/")) {
          mapping += "/";
       }
@@ -248,7 +240,7 @@ public class UndertowJaxrsSERVER implements EMBEDDEDJaxrsServer<UndertowJaxrsSER
 
    public DeploymentInfo undertowDeployment(ResteasyDeployment deployment)
    {
-      return undertowDeployment(deployment, "/");
+      return undertowDeployment(deployment, serverHelper.checkAppDeployment(deployment));
    }
 
    public DeploymentInfo undertowDeployment(Class<? extends Application> application)
@@ -256,7 +248,7 @@ public class UndertowJaxrsSERVER implements EMBEDDEDJaxrsServer<UndertowJaxrsSER
       ResteasyDeployment deployment = new ResteasyDeploymentImpl();
       deployment.setApplicationClass(application.getName());
       DeploymentInfo di = undertowDeployment (deployment,
-         checkAppPath(application.getAnnotation(ApplicationPath.class)));
+         serverHelper.checkAppPath(application.getAnnotation(ApplicationPath.class)));
       di.setClassLoader(application.getClassLoader());
       return di;
    }
@@ -277,8 +269,7 @@ public class UndertowJaxrsSERVER implements EMBEDDEDJaxrsServer<UndertowJaxrsSER
 
    public UndertowJaxrsSERVER deploy(ResteasyDeployment deployment)
    {
-      //return deploy(deployment, "/", deployment.getClass().getClassLoader());
-      return deploy(deployment, checkContextPath(rootResourcePath),
+      return deploy(deployment, serverHelper.checkContextPath(rootResourcePath),
          deployment.getClass().getClassLoader());
    }
 
@@ -339,7 +330,7 @@ public class UndertowJaxrsSERVER implements EMBEDDEDJaxrsServer<UndertowJaxrsSER
       this.initParams = initParams;
       return this;
    }
-
+/***
    private String checkAppPath(ApplicationPath appPath) {
       if (appPath != null) {
          return appPath.value();
@@ -355,4 +346,5 @@ public class UndertowJaxrsSERVER implements EMBEDDEDJaxrsServer<UndertowJaxrsSER
       }
       return contextPath;
    }
+*****/
 }

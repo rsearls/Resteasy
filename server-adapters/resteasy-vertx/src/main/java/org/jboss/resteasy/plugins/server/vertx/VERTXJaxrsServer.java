@@ -1,13 +1,5 @@
 package org.jboss.resteasy.plugins.server.vertx;
 
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
@@ -18,10 +10,19 @@ import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.json.JsonObject;
+import org.jboss.resteasy.plugins.server.embedded.EMBEDDEDJaxrsServer;
 import org.jboss.resteasy.plugins.server.embedded.SecurityDomain;
 import org.jboss.resteasy.spi.ResteasyDeployment;
-import org.jboss.resteasy.plugins.server.embedded.EMBEDDEDJaxrsServer;
+import org.jboss.resteasy.util.EmbeddedServerHelper;
 import org.jboss.resteasy.util.PortProvider;
+
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * An HTTP server that sends back the content of the received HTTP request
@@ -43,6 +44,7 @@ public class VERTXJaxrsServer implements EMBEDDEDJaxrsServer<VERTXJaxrsServer>
    protected String root = "";
    protected SecurityDomain domain;
    private String deploymentID;
+   private EmbeddedServerHelper serverHelper = new EmbeddedServerHelper();
    // default no idle timeout.
 
    public VERTXJaxrsServer() {
@@ -60,11 +62,16 @@ public class VERTXJaxrsServer implements EMBEDDEDJaxrsServer<VERTXJaxrsServer>
    @Override
    public VERTXJaxrsServer start()
    {
+      serverHelper.checkDeployment(deployment);
+      /***
       if (deployment == null) {
          throw new IllegalArgumentException("A ResteasyDeployment object required");
       } else if (deployment.getRegistry() == null) {
          deployment.start();
       }
+***/
+      setRootResourcePath(serverHelper.checkContextPath(
+         serverHelper.checkAppDeployment(deployment)));
 
       vertx = Vertx.vertx(vertxOptions);
       //deployment.start();
@@ -129,7 +136,6 @@ public class VERTXJaxrsServer implements EMBEDDEDJaxrsServer<VERTXJaxrsServer>
    public ResteasyDeployment getDeployment() {
       if(deployment == null) {
          deployment = new VertxResteasyDeployment();
-         //deployment.start();
       }
       return deployment;
    }

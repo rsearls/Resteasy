@@ -17,23 +17,20 @@ import io.netty.handler.ssl.SniHandler;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.concurrent.EventExecutor;
-
 import org.jboss.resteasy.core.ResteasyDeploymentImpl;
 import org.jboss.resteasy.core.SynchronousDispatcher;
+import org.jboss.resteasy.plugins.server.embedded.EMBEDDEDJaxrsServer;
 import org.jboss.resteasy.plugins.server.embedded.SecurityDomain;
 import org.jboss.resteasy.spi.ResteasyDeployment;
+import org.jboss.resteasy.util.EmbeddedServerHelper;
+import org.jboss.resteasy.util.PortProvider;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
-import javax.ws.rs.ApplicationPath;
-
 import java.net.InetSocketAddress;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import org.jboss.resteasy.plugins.server.embedded.EMBEDDEDJaxrsServer;
-import org.jboss.resteasy.util.PortProvider;
 
 import static org.jboss.resteasy.plugins.server.netty.RestEasyHttpRequestDecoder.Protocol.HTTP;
 import static org.jboss.resteasy.plugins.server.netty.RestEasyHttpRequestDecoder.Protocol.HTTPS;
@@ -74,6 +71,7 @@ public class NETTYJaxrsServer implements EMBEDDEDJaxrsServer<NETTYJaxrsServer>
    private Map<ChannelOption, Object> channelOptions = Collections.emptyMap();
    private Map<ChannelOption, Object> childChannelOptions = Collections.emptyMap();
    private List<ChannelHandler> httpChannelHandlers = Collections.emptyList();
+   private EmbeddedServerHelper serverHelper = new EmbeddedServerHelper();
 
    @Override
    public NETTYJaxrsServer deploy() {
@@ -84,16 +82,24 @@ public class NETTYJaxrsServer implements EMBEDDEDJaxrsServer<NETTYJaxrsServer>
    @SuppressWarnings("unchecked")
    @Override
    public NETTYJaxrsServer start() {
+      serverHelper.checkDeployment(deployment);
+      /***
       if (deployment == null) {
          throw new IllegalArgumentException("A ResteasyDeployment object required");
       } else if (deployment.getRegistry() == null) {
          deployment.start();
       }
-
+***/
       eventLoopGroup = new NioEventLoopGroup(ioWorkerCount);
       eventExecutor = new NioEventLoopGroup(executorThreadCount);
       //deployment.start();
       // dynamically set the root path (the user can rewrite it by calling setRootResourcePath)
+      String appPath = serverHelper.checkAppDeployment(deployment);
+      if (appPath != null && (root == null || "".equals(root))) {
+         setRootResourcePath(appPath);
+      }
+
+      /*******
       if (deployment.getApplication() != null) {
          ApplicationPath appPath = deployment.getApplication().getClass().getAnnotation(ApplicationPath.class);
          if (appPath != null && (root == null || "".equals(root))) {
@@ -102,6 +108,7 @@ public class NETTYJaxrsServer implements EMBEDDEDJaxrsServer<NETTYJaxrsServer>
             setRootResourcePath(path);
          }
       }
+      ********/
       // Configure the server.
       bootstrap.group(eventLoopGroup)
          .channel(NioServerSocketChannel.class)
@@ -178,7 +185,11 @@ public class NETTYJaxrsServer implements EMBEDDEDJaxrsServer<NETTYJaxrsServer>
    public NETTYJaxrsServer setRootResourcePath(String rootResourcePath)
    {
       root = rootResourcePath;
-      if (root != null && root.equals("/")) root = "";
+      if (root != null && root.equals("/")) {
+         root = "";
+      } else if (!root.startsWith("/")) {
+         root = "/" + root;
+      }
       return this;
    }
 
@@ -378,4 +389,29 @@ public class NETTYJaxrsServer implements EMBEDDEDJaxrsServer<NETTYJaxrsServer>
       channelPipeline.addLast(eventExecutor, new RequestHandler(dispatcher));
    }
 
+   /***
+   private ResteasyDeployment checkAppDeployment(ResteasyDeployment deployment) {
+
+      ResteasyDeployment appDeployment = deployment;
+      ApplicationPath appPath = null;
+      if (deployment.getApplicationClass() != null) {
+         try
+         {
+            Class clazz = Class.forName(deployment.getApplicationClass());
+            appPath = (ApplicationPath)clazz.getAnnotation(ApplicationPath.class);
+
+         } catch (ClassNotFoundException e) {
+            // todo how to handle
+         }
+      } else if (deployment.getApplication() != null) {
+         appPath = deployment.getApplication().getClass().getAnnotation(ApplicationPath.class);
+      }
+
+      if (appPath != null && (root == null || "".equals(root))) {
+         setRootResourcePath(appPath.value());
+      }
+
+      return appDeployment;
+   }
+   ****/
 }

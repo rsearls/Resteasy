@@ -1,9 +1,10 @@
 package org.jboss.resteasy.plugins.server.sun.http;
 
-import org.jboss.resteasy.plugins.server.embedded.EMBEDDEDJaxrsServer;
 import com.sun.net.httpserver.HttpServer;
+import org.jboss.resteasy.plugins.server.embedded.EMBEDDEDJaxrsServer;
 import org.jboss.resteasy.plugins.server.embedded.SecurityDomain;
 import org.jboss.resteasy.spi.ResteasyDeployment;
+import org.jboss.resteasy.util.EmbeddedServerHelper;
 import org.jboss.resteasy.util.PortProvider;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class SUNHttpJaxrsServer implements EMBEDDEDJaxrsServer<SUNHttpJaxrsServe
    protected int configuredPort = PortProvider.getPort(); // orig value 8080;
    protected int runtimePort = -1;
    protected ResteasyDeployment deployment;
+   private EmbeddedServerHelper serverHelper = new EmbeddedServerHelper();
 
    @Override
    public SUNHttpJaxrsServer deploy() {
@@ -33,6 +35,17 @@ public class SUNHttpJaxrsServer implements EMBEDDEDJaxrsServer<SUNHttpJaxrsServe
    @Override
    public SUNHttpJaxrsServer start()
    {
+      serverHelper.checkDeployment(deployment);
+      /***
+      if (deployment == null) {
+         throw new IllegalArgumentException("A ResteasyDeployment object required");
+      } else if (deployment.getRegistry() == null) {
+         deployment.start();
+      }
+      ***/
+      setRootResourcePath(serverHelper.checkContextPath(
+         serverHelper.checkAppDeployment(deployment)));
+
       if (httpServer == null)
       {
          try
@@ -62,7 +75,6 @@ public class SUNHttpJaxrsServer implements EMBEDDEDJaxrsServer<SUNHttpJaxrsServe
    public ResteasyDeployment getDeployment() {
       if(deployment == null) {
          deployment = context.getDeployment();
-         //deployment.start();
       }
       return deployment;
    }
@@ -70,6 +82,7 @@ public class SUNHttpJaxrsServer implements EMBEDDEDJaxrsServer<SUNHttpJaxrsServe
    @Override
    public SUNHttpJaxrsServer setDeployment(ResteasyDeployment deployment)
    {
+      this.deployment = deployment;
       this.context.setDeployment(deployment);
       return this;
    }
