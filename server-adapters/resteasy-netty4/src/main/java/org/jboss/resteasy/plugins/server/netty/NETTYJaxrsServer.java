@@ -86,7 +86,7 @@ public class NETTYJaxrsServer implements EMBEDDEDJaxrsServer<NETTYJaxrsServer>
 
       eventLoopGroup = new NioEventLoopGroup(ioWorkerCount);
       eventExecutor = new NioEventLoopGroup(executorThreadCount);
-      //deployment.start();
+
       // dynamically set the root path (the user can rewrite it by calling setRootResourcePath)
       String appPath = serverHelper.checkAppDeployment(deployment);
       if (appPath != null && (root == null || "".equals(root))) {

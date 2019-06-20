@@ -36,8 +36,13 @@ public class SUNHttpJaxrsServer implements EMBEDDEDJaxrsServer<SUNHttpJaxrsServe
    public SUNHttpJaxrsServer start()
    {
       serverHelper.checkDeployment(deployment);
-      setRootResourcePath(serverHelper.checkContextPath(
-         serverHelper.checkAppDeployment(deployment)));
+
+      String aPath = serverHelper.checkAppDeployment(deployment);
+      if (aPath == null) {
+         aPath = context.getPath();
+      }
+
+      setRootResourcePath(serverHelper.checkContextPath(aPath));
 
       if (httpServer == null)
       {

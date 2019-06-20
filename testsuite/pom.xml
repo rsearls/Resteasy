@@ -103,7 +103,7 @@
                 </property>
             </activation>
             <modules>
-                <module>integration-testsuite-embedded</module>
+                <module>integration-tests-embedded</module>
             </modules>
         </profile>
         <profile>
