@@ -2,7 +2,7 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <modelVersion>4.0.0</modelVersion>
-<!--  -->
+
    <parent>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-testsuite</artifactId>
@@ -20,61 +20,24 @@
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <maven.compiler.source>1.8</maven.compiler.source>
       <maven.compiler.target>1.8</maven.compiler.target>
-      <junit.jupiter.version>5.0.0</junit.jupiter.version>
-      <junit.vintage.version>4.12.0</junit.vintage.version>
-      <junit.platform.version>1.0.0</junit.platform.version>
-
-      <!-- <version.resteasy.testsuite>4.1.0-SNAPSHOT</version.resteasy.testsuite> -->
    </properties>
 
    <dependencies>
-      <!--
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.12</version>
         <scope>test</scope>
       </dependency>
-      -->
 
-      <dependency>
-         <groupId>org.junit.jupiter</groupId>
-         <artifactId>junit-jupiter-engine</artifactId>
-         <version>${junit.jupiter.version}</version>
-         <scope>test</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.junit.vintage</groupId>
-         <artifactId>junit-vintage-engine</artifactId>
-         <version>${junit.vintage.version}</version>
-         <scope>test</scope>
-      </dependency>
-      <!--
-          <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-vertx</artifactId>
-            <version>${project.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-core</artifactId>
-            <version>3.6.2</version>
-          </dependency>
-      -->
-      <!-- currently needed for NettyResource  -->
       <dependency>
          <groupId>org.jboss.resteasy</groupId>
          <artifactId>resteasy-netty4</artifactId>
          <version>${version.resteasy.testsuite}</version>
-         <!-- <version>${project.version}</version> -->
       </dependency>
-
-      <!--    -->
       <dependency>
          <groupId>org.jboss.resteasy</groupId>
          <artifactId>resteasy-undertow</artifactId>
          <version>${version.resteasy.testsuite}</version>
-         <!-- <version>${project.version}</version> -->
       </dependency>
 
       <!-- needed for test ResteasyJdkHttpTest -->
@@ -82,14 +45,12 @@
          <groupId>org.jboss.resteasy</groupId>
          <artifactId>resteasy-jdk-http</artifactId>
          <version>${version.resteasy.testsuite}</version>
-         <!-- <version>${project.version}</version> -->
       </dependency>
 
       <dependency>
          <groupId>org.jboss.resteasy</groupId>
          <artifactId>resteasy-core-spi</artifactId>
          <version>${version.resteasy.testsuite}</version>
-         <!-- <version>${project.version}</version> -->
          <exclusions>
             <exclusion>
                <groupId>org.eclipse.microprofile.config</groupId>
@@ -101,44 +62,36 @@
          <groupId>org.jboss.resteasy</groupId>
          <artifactId>resteasy-core</artifactId>
          <version>${version.resteasy.testsuite}</version>
-         <!-- <version>${project.version}</version> -->
       </dependency>
       <dependency>
          <groupId>org.jboss.resteasy</groupId>
          <artifactId>resteasy-client</artifactId>
          <version>${version.resteasy.testsuite}</version>
-         <!-- <version>${project.version}</version> -->
       </dependency>
       <dependency>
          <groupId>org.jboss.spec.javax.servlet</groupId>
          <artifactId>jboss-servlet-api_4.0_spec</artifactId>
-          <!-- <version>1.0.0.Final</version> -->
          <scope>test</scope>
       </dependency>
       <dependency>
          <groupId>org.jboss.spec.javax.annotation</groupId>
          <artifactId>jboss-annotations-api_1.3_spec</artifactId>
-         <!--<version>1.0.1.Final</version> -->
       </dependency>
       <dependency>
          <groupId>org.jboss.spec.javax.ws.rs</groupId>
          <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
-         <!-- <version>1.0.2.Final</version> -->
       </dependency>
       <dependency>
          <groupId>org.jboss.logging</groupId>
          <artifactId>jboss-logging</artifactId>
-        <!--  <version>3.3.2.Final</version>  -->
       </dependency>
       <dependency>
          <groupId>org.jboss.logging</groupId>
          <artifactId>jboss-logging-annotations</artifactId>
-         <!-- <version>2.1.0.Final</version>  -->
       </dependency>
       <dependency>
          <groupId>org.jboss.logging</groupId>
          <artifactId>jboss-logging-processor</artifactId>
-         <!-- <version>2.1.0.Final</version>  -->
       </dependency>
    </dependencies>
 
@@ -150,16 +103,13 @@
                <groupId>org.jboss.resteasy</groupId>
                <artifactId>resteasy-undertow</artifactId>
                <version>${version.resteasy.testsuite}</version>
-               <!-- <version>${project.version}</version> -->
             </dependency>
          </dependencies>
          <build>
-            <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+            <pluginManagement>
                <plugins>
-                  <!-- runs without but downloads extra archives (mvn verify)      -->
                   <plugin>
                      <artifactId>maven-surefire-plugin</artifactId>
-                     <!-- <version>2.22.1</version> -->
                      <configuration>
                         <!-- since 2.5 -->
                         <!--
@@ -175,21 +125,6 @@
                            </property>
                         </systemProperties>
                         <excludes>
-                           <exclude>**/BasicAuthTest.java</exclude>
-                           <exclude>**/DemoHttpContextTest.java</exclude>
-                           <exclude>**/FilenameTest.java</exclude>
-                           <exclude>**/HeadContentLengthTest.java</exclude>
-                           <exclude>**/HttpContextTest.java</exclude>
-                           <exclude>**/ResteasyJdkHttpTest.java</exclude>
-                           <exclude>**/NettyTest.java</exclude>
-                           <exclude>**/AppTest.java</exclude>
-
-                           <exclude>**/OrigUndertowTest.java</exclude>
-
-                           <exclude>**/UndertowTest.java</exclude>
-                           <!--
-                            <exclude>**/ApplicationTest.java</exclude>
-                           -->
                         </excludes>
                      </configuration>
                   </plugin>
@@ -206,16 +141,13 @@
                <groupId>org.jboss.resteasy</groupId>
                <artifactId>resteasy-netty4</artifactId>
                <version>${version.resteasy.testsuite}</version>
-               <!-- <version>${project.version}</version> -->
             </dependency>
          </dependencies>
          <build>
-            <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+            <pluginManagement>
                <plugins>
-                  <!-- runs without but downloads extra archives (mvn verify)      -->
                   <plugin>
                      <artifactId>maven-surefire-plugin</artifactId>
-                     <!-- <version>2.22.1</version> -->
                      <configuration>
                         <!-- since 2.5 -->
                         <!--
@@ -231,21 +163,6 @@
                            </property>
                         </systemProperties>
                         <excludes>
-                           <exclude>**/BasicAuthTest.java</exclude>
-                           <exclude>**/DemoHttpContextTest.java</exclude>
-                           <exclude>**/FilenameTest.java</exclude>
-                           <exclude>**/HeadContentLengthTest.java</exclude>
-                           <exclude>**/HttpContextTest.java</exclude>
-                           <exclude>**/ResteasyJdkHttpTest.java</exclude>
-                           <exclude>**/NettyTest.java</exclude>
-                           <exclude>**/AppTest.java</exclude>
-
-                           <exclude>**/OrigUndertowTest.java</exclude>
-
-                           <exclude>**/UndertowTest.java</exclude>
-                           <!--
-                            <exclude>**/ApplicationTest.java</exclude>
-                           -->
                         </excludes>
                      </configuration>
                   </plugin>
@@ -261,16 +178,13 @@
                <groupId>org.jboss.resteasy</groupId>
                <artifactId>resteasy-jdk-http</artifactId>
                <version>${version.resteasy.testsuite}</version>
-               <!-- <version>${project.version}</version> -->
             </dependency>
          </dependencies>
          <build>
-            <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+            <pluginManagement>
                <plugins>
-                  <!-- runs without but downloads extra archives (mvn verify)      -->
                   <plugin>
                      <artifactId>maven-surefire-plugin</artifactId>
-                     <!-- <version>2.22.1</version> -->
                      <configuration>
                         <!-- since 2.5 -->
                         <!--
@@ -286,21 +200,6 @@
                            </property>
                         </systemProperties>
                         <excludes>
-                           <exclude>**/BasicAuthTest.java</exclude>
-                           <exclude>**/DemoHttpContextTest.java</exclude>
-                           <exclude>**/FilenameTest.java</exclude>
-                           <exclude>**/HeadContentLengthTest.java</exclude>
-                           <exclude>**/HttpContextTest.java</exclude>
-                           <exclude>**/ResteasyJdkHttpTest.java</exclude>
-                           <exclude>**/NettyTest.java</exclude>
-                           <exclude>**/AppTest.java</exclude>
-
-                           <exclude>**/OrigUndertowTest.java</exclude>
-
-                           <exclude>**/UndertowTest.java</exclude>
-                           <!--
-                            <exclude>**/ApplicationTest.java</exclude>
-                           -->
                         </excludes>
                      </configuration>
                   </plugin>
@@ -317,22 +216,18 @@
                <groupId>org.jboss.resteasy</groupId>
                <artifactId>resteasy-vertx</artifactId>
                <version>${version.resteasy.testsuite}</version>
-               <!-- <version>${project.version}</version> -->
             </dependency>
             <dependency>
                <groupId>io.vertx</groupId>
                <artifactId>vertx-core</artifactId>
-               <!-- <version>3.6.2</version> -->
             </dependency>
 
          </dependencies>
          <build>
-            <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+            <pluginManagement>
                <plugins>
-                  <!-- runs without but downloads extra archives (mvn verify)      -->
                   <plugin>
                      <artifactId>maven-surefire-plugin</artifactId>
-                     <!-- <version>2.22.1</version> -->
                      <configuration>
                         <!-- since 2.5 -->
                         <!--
@@ -348,21 +243,6 @@
                            </property>
                         </systemProperties>
                         <excludes>
-                           <exclude>**/BasicAuthTest.java</exclude>
-                           <exclude>**/DemoHttpContextTest.java</exclude>
-                           <exclude>**/FilenameTest.java</exclude>
-                           <exclude>**/HeadContentLengthTest.java</exclude>
-                           <exclude>**/HttpContextTest.java</exclude>
-                           <exclude>**/ResteasyJdkHttpTest.java</exclude>
-                           <exclude>**/NettyTest.java</exclude>
-                           <exclude>**/AppTest.java</exclude>
-
-                           <exclude>**/OrigUndertowTest.java</exclude>
-
-                           <exclude>**/UndertowTest.java</exclude>
-                           <!--
-                            <exclude>**/ApplicationTest.java</exclude>
-                           -->
                         </excludes>
                      </configuration>
                   </plugin>
@@ -373,49 +253,4 @@
 
    </profiles>
 
-   <build>
-      <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-         <plugins>
-            <!-- runs without but downloads extra archives (mvn verify)      -->
-            <!--    -->
-            <plugin>
-               <artifactId>maven-surefire-plugin</artifactId>
-               <!-- <version>2.22.1</version> -->
-               <configuration>
-                  <!-- since 2.5 -->
-                  <!--
-                  <systemPropertyVariables>
-                    <fileName>${fileName}</fileName>
-                  </systemPropertyVariables>
-                  -->
-                  <!-- deprecated -->
-                  <systemProperties>
-                     <property>
-                        <name>fileName</name>
-                        <value>org.jboss.resteasy.plugins.server.undertow.UNDERTOWJaxrsServer</value>
-                     </property>
-                  </systemProperties>
-                  <excludes>
-                     <exclude>**/BasicAuthTest.java</exclude>
-                     <exclude>**/DemoHttpContextTest.java</exclude>
-                     <exclude>**/FilenameTest.java</exclude>
-                     <exclude>**/HeadContentLengthTest.java</exclude>
-                     <exclude>**/HttpContextTest.java</exclude>
-                     <exclude>**/ResteasyJdkHttpTest.java</exclude>
-                     <exclude>**/NettyTest.java</exclude>
-                     <exclude>**/AppTest.java</exclude>
-
-                     <exclude>**/OrigUndertowTest.java</exclude>
-
-                     <exclude>**/UndertowTest.java</exclude>
-                     <!--
-                      <exclude>**/ApplicationTest.java</exclude>
-                     -->
-                  </excludes>
-               </configuration>
-            </plugin>
-
-         </plugins>
-      </pluginManagement>
-   </build>
 </project>
