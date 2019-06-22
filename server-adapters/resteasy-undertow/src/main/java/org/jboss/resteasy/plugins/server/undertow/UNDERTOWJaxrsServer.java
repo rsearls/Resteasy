@@ -43,7 +43,7 @@ public class UNDERTOWJaxrsServer implements EMBEDDEDJaxrsServer<UNDERTOWJaxrsSer
    protected Map<String, String> contextParams;
    protected Map<String, String> initParams;
 
-   private ResteasyDeployment resteasyDeployment;
+   private ResteasyDeployment deployment;
    private int port = PortProvider.getPort();
    private String hostname = "localhost";
    private String rootResourcePath;
@@ -51,9 +51,9 @@ public class UNDERTOWJaxrsServer implements EMBEDDEDJaxrsServer<UNDERTOWJaxrsSer
 
    @Override
    public UNDERTOWJaxrsServer deploy() {
-      serverHelper.checkDeployment(resteasyDeployment);
-      return deploy(resteasyDeployment, serverHelper.checkContextPath(rootResourcePath),
-         resteasyDeployment.getClass().getClassLoader());
+      serverHelper.checkDeployment(deployment);
+      return deploy(deployment, serverHelper.checkContextPath(rootResourcePath),
+         deployment.getClass().getClassLoader());
    }
 
    @Override
@@ -71,17 +71,21 @@ public class UNDERTOWJaxrsServer implements EMBEDDEDJaxrsServer<UNDERTOWJaxrsSer
    public void stop()
    {
       server.stop();
+
+      if (deployment != null) {
+         deployment.stop();
+      }
    }
 
    public ResteasyDeployment getDeployment() {
-      if (resteasyDeployment == null) {
-         resteasyDeployment = new ResteasyDeploymentImpl();
+      if (deployment == null) {
+         deployment = new ResteasyDeploymentImpl();
       }
-      return resteasyDeployment;
+      return deployment;
    }
    @Override
-   public UNDERTOWJaxrsServer setDeployment(ResteasyDeployment resteasyDeployment) {
-      this.resteasyDeployment = resteasyDeployment;
+   public UNDERTOWJaxrsServer setDeployment(ResteasyDeployment deployment) {
+      this.deployment = deployment;
       return this;
    }
 
@@ -112,32 +116,32 @@ public class UNDERTOWJaxrsServer implements EMBEDDEDJaxrsServer<UNDERTOWJaxrsSer
    /*************************************************************************/
 
    public UNDERTOWJaxrsServer deploy(Application application) {
-      ResteasyDeployment deployment = new ResteasyDeploymentImpl();
-      deployment.setApplication(application);
-      return deploy(deployment,
+      ResteasyDeployment resteasyDeployment = new ResteasyDeploymentImpl();
+      resteasyDeployment.setApplication(application);
+      return deploy(resteasyDeployment,
          serverHelper.checkAppPath(application.getClass().getAnnotation(ApplicationPath.class)),
          application.getClass().getClassLoader());
    }
 
    public UNDERTOWJaxrsServer deploy(Class<? extends Application> application) {
-      ResteasyDeployment deployment = new ResteasyDeploymentImpl();
-      deployment.setApplicationClass(application.getName());
-      return deploy(deployment,
+      ResteasyDeployment resteasyDeployment = new ResteasyDeploymentImpl();
+      resteasyDeployment.setApplicationClass(application.getName());
+      return deploy(resteasyDeployment,
          serverHelper.checkAppPath(application.getAnnotation(ApplicationPath.class)),
-         deployment.getClass().getClassLoader());
+         resteasyDeployment.getClass().getClassLoader());
    }
 
    public UNDERTOWJaxrsServer deploy(Class<? extends Application> application,
                                      String contextPath) {
-      ResteasyDeployment deployment = new ResteasyDeploymentImpl();
-      deployment.setApplicationClass(application.getName());
-      return deploy(deployment, serverHelper.checkContextPath(contextPath),
-         deployment.getClass().getClassLoader());
+      ResteasyDeployment resteasyDeployment = new ResteasyDeploymentImpl();
+      resteasyDeployment.setApplicationClass(application.getName());
+      return deploy(resteasyDeployment, serverHelper.checkContextPath(contextPath),
+         resteasyDeployment.getClass().getClassLoader());
    }
 
-   private UNDERTOWJaxrsServer deploy(ResteasyDeployment deployment,
+   private UNDERTOWJaxrsServer deploy(ResteasyDeployment resteasyDeployment,
                                      String contextPath, ClassLoader clazzLoader) {
-      DeploymentInfo di = undertowDeployment(deployment);
+      DeploymentInfo di = undertowDeployment(resteasyDeployment);
       di.setClassLoader(clazzLoader);
       di.setContextPath(contextPath);
       di.setDeploymentName("Resteasy" + contextPath);
@@ -174,11 +178,11 @@ public class UNDERTOWJaxrsServer implements EMBEDDEDJaxrsServer<UNDERTOWJaxrsSer
     * di.setContextRoot("root");
     * server.deploy(di);
     *
-    * @param deployment
+    * @param resteasyDeployment
     * @param mappingPrefix resteasy.servlet.mapping.prefix
     * @return must be deployed by calling deploy(DeploymentInfo), also does not set context path or deployment name
     */
-   public DeploymentInfo undertowDeployment(ResteasyDeployment deployment, String mappingPrefix)
+   public DeploymentInfo undertowDeployment(ResteasyDeployment resteasyDeployment, String mappingPrefix)
    {
       String mapping = serverHelper.checkContextPath(mappingPrefix);
       if (!mapping.endsWith("/")) {
@@ -197,20 +201,20 @@ public class UNDERTOWJaxrsServer implements EMBEDDEDJaxrsServer<UNDERTOWJaxrsSer
       }
 
       return  new DeploymentInfo()
-              .addServletContextAttribute(ResteasyDeployment.class.getName(), deployment)
+              .addServletContextAttribute(ResteasyDeployment.class.getName(), resteasyDeployment)
               .addServlet(resteasyServlet);
    }
 
-   public DeploymentInfo undertowDeployment(ResteasyDeployment deployment)
+   public DeploymentInfo undertowDeployment(ResteasyDeployment resteasyDeployment)
    {
-      return undertowDeployment(deployment, serverHelper.checkAppDeployment(deployment));
+      return undertowDeployment(resteasyDeployment, serverHelper.checkAppDeployment(resteasyDeployment));
    }
 
    public DeploymentInfo undertowDeployment(Class<? extends Application> application)
    {
-      ResteasyDeployment deployment = new ResteasyDeploymentImpl();
-      deployment.setApplicationClass(application.getName());
-      DeploymentInfo di = undertowDeployment (deployment,
+      ResteasyDeployment resteasyDeployment = new ResteasyDeploymentImpl();
+      resteasyDeployment.setApplicationClass(application.getName());
+      DeploymentInfo di = undertowDeployment (resteasyDeployment,
          serverHelper.checkAppPath(application.getAnnotation(ApplicationPath.class)));
       di.setClassLoader(application.getClassLoader());
       return di;
@@ -230,10 +234,10 @@ public class UNDERTOWJaxrsServer implements EMBEDDEDJaxrsServer<UNDERTOWJaxrsSer
       root.addPrefixPath(path, handler);
    }
 
-   public UNDERTOWJaxrsServer deploy(ResteasyDeployment deployment)
+   public UNDERTOWJaxrsServer deploy(ResteasyDeployment resteasyDeployment)
    {
-      return deploy(deployment, serverHelper.checkContextPath(rootResourcePath),
-         deployment.getClass().getClassLoader());
+      return deploy(resteasyDeployment, serverHelper.checkContextPath(rootResourcePath),
+         resteasyDeployment.getClass().getClassLoader());
    }
 
    /**

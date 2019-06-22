@@ -130,6 +130,10 @@ public class VERTXJaxrsServer implements EMBEDDEDJaxrsServer<VERTXJaxrsServer>
          {
          }
       }
+
+      if (deployment != null) {
+         deployment.stop();
+      }
    }
 
 

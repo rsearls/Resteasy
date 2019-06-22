@@ -126,6 +126,10 @@ public class NETTYJaxrsServer implements EMBEDDEDJaxrsServer<NETTYJaxrsServer>
       runtimePort = -1;
       eventLoopGroup.shutdownGracefully();
       eventExecutor.shutdownGracefully();
+
+      if (deployment != null) {
+         deployment.stop();
+      }
    }
 
    @Override

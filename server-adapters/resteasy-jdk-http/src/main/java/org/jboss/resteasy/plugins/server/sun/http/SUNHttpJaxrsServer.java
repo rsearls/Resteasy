@@ -67,6 +67,10 @@ public class SUNHttpJaxrsServer implements EMBEDDEDJaxrsServer<SUNHttpJaxrsServe
       runtimePort = -1;
       httpServer.stop(0);
       context.cleanup();
+
+      if (deployment != null) {
+         deployment.stop();
+      }
    }
 
    @Override
