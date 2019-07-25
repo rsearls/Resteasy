@@ -9,6 +9,9 @@ import org.jboss.resteasy.spi.ResteasyDeployment;
 import org.jboss.resteasy.util.HttpHeaderNames;
 
 import javax.ws.rs.core.Application;
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -309,7 +312,28 @@ public abstract class ConfigurationBootstrap implements ResteasyConfiguration
 
    public String getParameter(String name)
    {
-      return ResteasyConfigProvider.getConfig().getOptionalValue(name, String.class).orElse(null);
+      String propName = null;
+      if (System.getSecurityManager() == null) {
+         propName = ResteasyConfigProvider.getConfig()
+                 .getOptionalValue(name, String.class)
+                 .orElse(null);
+
+      } else {
+
+         try {
+            propName = AccessController.doPrivileged(new PrivilegedExceptionAction<String>() {
+               @Override
+               public String run() throws Exception {
+                  return ResteasyConfigProvider.getConfig()
+                          .getOptionalValue(name, String.class)
+                          .orElse(null);
+               }
+            });
+         } catch (PrivilegedActionException pae) {
+            throw new RuntimeException(pae);
+         }
+      }
+      return propName;
    }
 
 }

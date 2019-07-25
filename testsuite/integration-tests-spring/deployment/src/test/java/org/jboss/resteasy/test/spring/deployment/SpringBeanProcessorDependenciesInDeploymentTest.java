@@ -102,6 +102,7 @@ public class SpringBeanProcessorDependenciesInDeploymentTest {
       archive.addAsManifestResource(PermissionUtil.createPermissionsXmlAsset(
             new PropertyPermission("arquillian.*", "read"),
             new PropertyPermission("cglib.debugLocation", "read"),
+            new RuntimePermission("getClassLoader"),
             new RuntimePermission("getProtectionDomain"),
             new RuntimePermission("accessClassInPackage.sun.reflect.annotation"),
             new ReflectPermission("suppressAccessChecks"),
