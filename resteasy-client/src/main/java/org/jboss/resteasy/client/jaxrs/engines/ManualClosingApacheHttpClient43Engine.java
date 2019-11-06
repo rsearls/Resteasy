@@ -24,7 +24,9 @@ import org.jboss.resteasy.client.jaxrs.i18n.Messages;
 import org.jboss.resteasy.client.jaxrs.internal.ClientInvocation;
 import org.jboss.resteasy.client.jaxrs.internal.ClientResponse;
 import org.jboss.resteasy.microprofile.config.ResteasyConfigProvider;
+import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.jboss.resteasy.util.CaseInsensitiveMap;
+import org.jboss.resteasy.util.Constants;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -254,6 +256,7 @@ public class ManualClosingApacheHttpClient43Engine implements ApacheHttpClientEn
    @Override
    public Response invoke(Invocation inv)
    {
+      ResteasyProviderFactory.getInstance().property(Constants.USING_HTTPCLIENT, "true");
       ClientInvocation request = (ClientInvocation)inv;
       String uri = request.getUri().toString();
       final HttpRequestBase httpMethod = createHttpMethod(uri, request.getMethod());
@@ -287,6 +290,7 @@ public class ManualClosingApacheHttpClient43Engine implements ApacheHttpClientEn
       finally
       {
          cleanUpAfterExecute(httpMethod);
+         ResteasyProviderFactory.getInstance().property(Constants.USING_HTTPCLIENT, null);
       }
 
       ClientResponse response = new ClientResponse(request.getClientConfiguration(), request.getTracingLogger())
