@@ -26,6 +26,7 @@ import org.jboss.resteasy.plugins.server.Cleanables;
 import org.jboss.resteasy.resteasy_jaxrs.i18n.LogMessages;
 import org.jboss.resteasy.resteasy_jaxrs.i18n.Messages;
 import org.jboss.resteasy.specimpl.BuiltResponse;
+import org.jboss.resteasy.specimpl.NOOPBuiltResponse;
 import org.jboss.resteasy.specimpl.RequestImpl;
 import org.jboss.resteasy.spi.Dispatcher;
 import org.jboss.resteasy.spi.Failure;
@@ -207,7 +208,9 @@ public class SynchronousDispatcher implements Dispatcher
          return;
       }
       Response handledResponse = new ExceptionHandler(providerFactory, unwrappedExceptions).handleException(request, e);
+    /*****  ORIGINAL CODE *
       if (handledResponse == null) throw new UnhandledException(e);
+
       if (!bufferExceptionEntity)
       {
          response.getOutputHeaders().add("resteasy.buffer.exception.entity", "false");
@@ -224,6 +227,44 @@ public class SynchronousDispatcher implements Dispatcher
          tracingLogger.log("FINISHED", response.getStatus());
          tracingLogger.flush(response.getOutputHeaders());
       }
+   *******/
+      /********** PROPOSED CODE CHANGE ######## */
+      if (handledResponse != null){
+         if (!bufferExceptionEntity)
+         {
+            response.getOutputHeaders().add("resteasy.buffer.exception.entity", "false");
+         }
+      } else {
+       // When there is a exception but no ExceptionMapper or standard
+       // exception response handler,
+       // create NOOP response to allow ContainerResponseFilter(s) to run
+       // in writeNomapResponse.
+       handledResponse = new NOOPBuiltResponse();
+       }
+      try
+      {
+         ServerResponseWriter.writeNomapResponse(((BuiltResponse) handledResponse), request, response, providerFactory, onComplete);
+      }
+      catch (Exception e1)
+      {
+         // Any exception thrown before ServerResponseWriter was called
+         // must take priority over an exception thrown in ServerResponseWriter
+         if (handledResponse instanceof NOOPBuiltResponse) {
+            throw new UnhandledException(e);
+         } else {
+            throw new UnhandledException(e1);
+         }
+      } finally {
+
+         // Any unhandled exception thrown before ServerResponseWriter was called
+         // must be handled.
+         if (handledResponse instanceof NOOPBuiltResponse) throw new UnhandledException(e);
+
+         RESTEasyTracingLogger tracingLogger = RESTEasyTracingLogger.getInstance(request);
+         tracingLogger.log("FINISHED", response.getStatus());
+         tracingLogger.flush(response.getOutputHeaders());
+      }
+      /* ############## **/
    }
 
 
