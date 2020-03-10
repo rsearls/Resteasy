@@ -91,6 +91,13 @@ public class ApacheHttpAsyncClient4Engine implements AsyncClientHttpEngine, Clos
 {
    protected final CloseableHttpAsyncClient client;
    protected final boolean closeHttpClient;
+   protected HttpContextProvider httpContextProvider = null;
+
+   public ApacheHttpAsyncClient4Engine(final CloseableHttpAsyncClient client, final boolean closeHttpClient,
+                                       final HttpContextProvider httpContextProvider ) {
+      this(client, closeHttpClient);
+      this.httpContextProvider = httpContextProvider;
+   }
 
    public ApacheHttpAsyncClient4Engine(final CloseableHttpAsyncClient client, final boolean closeHttpClient)
    {
@@ -176,7 +183,12 @@ public class ApacheHttpAsyncClient4Engine implements AsyncClientHttpEngine, Clos
          HttpAsyncResponseConsumer<T> responseConsumer = new BufferingResponseConsumer<T>(request, extractor);
          FutureCallback<T> httpCallback = callback != null ? new CallbackAdapter<T>(callback) : null;
 
-         return client.execute(requestProducer, responseConsumer, httpCallback);
+         if (httpContextProvider == null) {
+            return client.execute(requestProducer, responseConsumer, httpCallback);
+         } else {
+            return client.execute(requestProducer, responseConsumer,
+                    httpContextProvider.getContext(), httpCallback);
+         }
       }
       else
       {
@@ -189,7 +201,13 @@ public class ApacheHttpAsyncClient4Engine implements AsyncClientHttpEngine, Clos
          HttpAsyncRequestProducer requestProducer = HttpAsyncMethods.create(httpRequest);
          StreamingResponseConsumer<T> responseConsumer = new StreamingResponseConsumer<T>(request, extractor);
 
-         Future<T> httpFuture = client.execute(requestProducer, responseConsumer, null);
+         Future<T> httpFuture = null;
+         if (httpContextProvider == null) {
+            httpFuture = client.execute(requestProducer, responseConsumer, null);
+         } else {
+            httpFuture = client.execute(requestProducer, responseConsumer,
+                    httpContextProvider.getContext(),null);
+         }
          return responseConsumer.future(httpFuture);
       }
    }
