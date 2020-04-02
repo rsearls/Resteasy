@@ -15,5 +15,7 @@
 			   <outputDirectory/>
         </fileSet>
     </fileSets>
-
+<!-- ***
+must exclude ./testsuite/integration-tests/src/test/java/org/jboss/resteasy/test/UndertowTestRunner.java
+*** -->
 </assembly>
