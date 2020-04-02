@@ -5,17 +5,15 @@
 	<formats>
 		<format>zip</format>
 	</formats>
-	<!--
-	<includeBaseDirectory>false</includeBaseDirectory>
-	-->
 	<baseDirectory>src</baseDirectory>
 	    <fileSets>
         <fileSet>
             <directory>${basedir}/src</directory>
 			   <outputDirectory/>
+			  <excludes>
+				  <exclude>test/resources/arquillian.xml</exclude>
+				  <exclude>test/java/org/jboss/resteasy/test/UndertowTestRunner.java</exclude>
+			  </excludes>
         </fileSet>
     </fileSets>
-<!-- ***
-must exclude ./testsuite/integration-tests/src/test/java/org/jboss/resteasy/test/UndertowTestRunner.java
-*** -->
 </assembly>
