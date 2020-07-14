@@ -184,7 +184,8 @@ public class PublisherTest {
        AtomicInteger errors;
        Subscription subscription;
 
-       public MyFlowableSubscriber(Consumer<? super T> onNext,AtomicInteger errors, CountDownLatch latch) {
+      MyFlowableSubscriber(final Consumer<? super T> onNext,
+                                   final AtomicInteger errors, final CountDownLatch latch) {
            this.onNext = onNext;
            this.errors = errors;
            this.latch = latch;

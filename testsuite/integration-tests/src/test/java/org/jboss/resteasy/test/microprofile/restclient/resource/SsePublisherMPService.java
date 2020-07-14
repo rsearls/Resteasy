@@ -10,7 +10,6 @@ import io.reactivex.ObservableOnSubscribe;
 import org.jboss.resteasy.annotations.Stream;
 import org.jboss.resteasy.test.rx.resource.Thing;
 import org.reactivestreams.Publisher;
-import org.jboss.resteasy.test.rx.resource.Thing;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

@@ -5,7 +5,6 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import org.jboss.resteasy.annotations.Stream;
 import org.jboss.resteasy.test.rx.resource.Thing;
 import org.reactivestreams.Publisher;
-import org.jboss.resteasy.test.rx.resource.Thing;
 
 import javax.inject.Singleton;
 import javax.ws.rs.GET;

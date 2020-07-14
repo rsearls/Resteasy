@@ -1,6 +1,5 @@
 package org.jboss.resteasy.test.microprofile.restclient;
 
-import org.jboss.resteasy.test.rx.resource.Thing;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableSubscriber;
 import org.jboss.arquillian.container.test.api.Deployment;

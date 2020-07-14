@@ -1,6 +1,5 @@
 package org.jboss.resteasy.test.microprofile.restclient.resource;
 
-import io.reactivex.Flowable;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import org.jboss.resteasy.annotations.Stream;
 import org.jboss.resteasy.test.rx.resource.Thing;
