@@ -4,6 +4,7 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
+import org.jboss.resteasy.client.jaxrs.internal.ClientInvocation;
 import org.jboss.resteasy.client.jaxrs.internal.ClientInvocationBuilder;
 import org.jboss.resteasy.plugins.providers.sse.InboundSseEventImpl;
 import org.jboss.resteasy.plugins.providers.sse.client.SseEventSourceImpl;
@@ -258,6 +259,12 @@ public class FlowableRxInvokerImpl implements FlowableRxInvoker
       }
       SseEventSourceImpl sseEventSource = (SseEventSourceImpl) builder.build();
       sseEventSource.setAlwaysReconnect(false);
+      // mp-rest-client defines a ClientInvoker when a class proxy is to be called.
+      // Make it available in sseEventSource
+      ClientInvocation clientInvocation = ((ClientInvocationBuilder)syncInvoker).getClientInvocation();
+      if (clientInvocation != null && clientInvocation.getClientInvoker() != null) {
+         sseEventSource.setClientInvocation(clientInvocation);
+      }
       return sseEventSource;
    }
 

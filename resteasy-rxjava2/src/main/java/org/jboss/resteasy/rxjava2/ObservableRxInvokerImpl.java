@@ -3,6 +3,7 @@ package org.jboss.resteasy.rxjava2;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import org.jboss.resteasy.client.jaxrs.internal.ClientInvocation;
 import org.jboss.resteasy.client.jaxrs.internal.ClientInvocationBuilder;
 import org.jboss.resteasy.plugins.providers.sse.InboundSseEventImpl;
 import org.jboss.resteasy.plugins.providers.sse.client.SseEventSourceImpl;
@@ -246,6 +247,12 @@ public class ObservableRxInvokerImpl implements ObservableRxInvoker
       }
       SseEventSourceImpl sseEventSource = (SseEventSourceImpl) builder.build();
       sseEventSource.setAlwaysReconnect(false);
+      // mp-rest-client defines a ClientInvoker when a class proxy is to be called.
+      // Make it available in sseEventSource
+      ClientInvocation clientInvocation = ((ClientInvocationBuilder)syncInvoker).getClientInvocation();
+      if (clientInvocation != null && clientInvocation.getClientInvoker() != null) {
+         sseEventSource.setClientInvocation(clientInvocation);
+      }
       return sseEventSource;
    }
 

@@ -131,7 +131,7 @@ public class Rx2FlowableTest {
    }
 
    //////////////////////////////////////////////////////////////////////////////
-
+/****
    @SuppressWarnings("unchecked")
    @Test
    public void testGet() throws Exception {
@@ -146,7 +146,7 @@ public class Rx2FlowableTest {
       Assert.assertEquals(0, errors.get());
       Assert.assertEquals(xStringList, stringList);
    }
-
+*******/
    @SuppressWarnings("unchecked")
    @Test
    public void testGetThing() throws Exception {
@@ -176,7 +176,7 @@ public class Rx2FlowableTest {
       Assert.assertEquals(0, errors.get());
       Assert.assertEquals(xThingListList, thingListList);
    }
-
+/*********
    @SuppressWarnings("unchecked")
    @Test
    public void testGetBytes() throws Exception {
@@ -840,7 +840,7 @@ public class Rx2FlowableTest {
          Assert.assertTrue(Arrays.equals(Bytes.BYTES, b));
       }
    }
-
+*************/
    private static boolean throwableContains(Throwable t, String s) {
       while (t != null) {
          if (t.getMessage().contains(s))
