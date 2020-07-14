@@ -1,11 +1,28 @@
 package org.jboss.resteasy.test.rx.rxjava2;
 
-import io.reactivex.Flowable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+
+import javax.ws.rs.ClientErrorException;
+import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
+import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.rxjava2.FlowableRxInvoker;
+import org.jboss.resteasy.rxjava2.FlowableRxInvokerProvider;
 import org.jboss.resteasy.test.rx.resource.Bytes;
 import org.jboss.resteasy.test.rx.resource.RxScheduledExecutorService;
 import org.jboss.resteasy.test.rx.resource.TRACE;
@@ -23,20 +40,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
+import io.reactivex.Flowable;
 
 /**
  * @tpSubChapter Reactive classes
@@ -122,7 +131,7 @@ public class Rx2FlowableTest {
    }
 
    //////////////////////////////////////////////////////////////////////////////
-/****
+
    @SuppressWarnings("unchecked")
    @Test
    public void testGet() throws Exception {
@@ -137,7 +146,7 @@ public class Rx2FlowableTest {
       Assert.assertEquals(0, errors.get());
       Assert.assertEquals(xStringList, stringList);
    }
-*******/
+
    @SuppressWarnings("unchecked")
    @Test
    public void testGetThing() throws Exception {
@@ -167,7 +176,7 @@ public class Rx2FlowableTest {
       Assert.assertEquals(0, errors.get());
       Assert.assertEquals(xThingListList, thingListList);
    }
-/*********
+
    @SuppressWarnings("unchecked")
    @Test
    public void testGetBytes() throws Exception {
@@ -831,7 +840,7 @@ public class Rx2FlowableTest {
          Assert.assertTrue(Arrays.equals(Bytes.BYTES, b));
       }
    }
-*************/
+
    private static boolean throwableContains(Throwable t, String s) {
       while (t != null) {
          if (t.getMessage().contains(s))
