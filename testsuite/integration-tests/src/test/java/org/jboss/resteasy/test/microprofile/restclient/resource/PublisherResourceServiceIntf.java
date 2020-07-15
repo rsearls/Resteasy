@@ -1,7 +1,6 @@
 package org.jboss.resteasy.test.microprofile.restclient.resource;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
-import org.jboss.resteasy.annotations.Stream;
 import org.jboss.resteasy.test.rx.resource.Thing;
 import org.reactivestreams.Publisher;
 
@@ -19,25 +18,21 @@ public interface PublisherResourceServiceIntf {
     @GET
     @Path("get/string")
     @Produces(MediaType.TEXT_PLAIN)
-    @Stream
     Publisher<String> get();
 
     @GET
     @Path("get/thing")
     @Produces(MediaType.APPLICATION_JSON)
-    @Stream
     Publisher<Thing> getThing();
 
     @GET
     @Path("get/thing/list")
     @Produces(MediaType.APPLICATION_JSON)
-    @Stream
     Publisher<List<Thing>> getThingList();
 
     @GET
     @Path("get/bytes")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    @Stream
     Publisher<byte[]> getBytes();
 
 }

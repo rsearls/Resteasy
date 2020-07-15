@@ -39,6 +39,7 @@ import org.jboss.resteasy.spi.ResteasyAsynchronousContext;
 import org.jboss.resteasy.spi.ResteasyAsynchronousResponse;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.jboss.resteasy.spi.util.FindAnnotation;
+import org.reactivestreams.Publisher;
 
 public class SseEventOutputImpl extends GenericType<OutboundSseEvent> implements SseEventSink
 {
@@ -58,6 +59,11 @@ public class SseEventOutputImpl extends GenericType<OutboundSseEvent> implements
    private volatile boolean responseFlushed = false;
 
    private final Object lock = new Object();
+
+   // Dummy class to get instance of Stream annotation.  Needed for
+   // (support of microprofile-rest-client) Publisher return type.
+   @Stream
+   public static class MicroprofileStreamAnnotationCreator {}
 
    public SseEventOutputImpl(final MessageBodyWriter<OutboundSseEvent> writer)
    {
@@ -195,6 +201,17 @@ public class SseEventOutputImpl extends GenericType<OutboundSseEvent> implements
                else
                {
                   Stream stream = FindAnnotation.findAnnotation(method.getMethodAnnotations(),Stream.class);
+
+                  if (stream == null) {
+                     // Check for microprofile-rest-client specific return type.
+                     // Spec does not require Stream setting but resteasy does
+                     // in order to process method properly.
+                     Class<?> returnType = method.getReturnType();
+                     if (returnType != null && returnType.getName().equals(Publisher.class.getName())) {
+                        stream = MicroprofileStreamAnnotationCreator.class.getAnnotation(Stream.class);
+                     }
+                  }
+
                   if (stream != null)
                   {
                      // Get element media type from @Produces.
@@ -202,7 +219,7 @@ public class SseEventOutputImpl extends GenericType<OutboundSseEvent> implements
                      MediaType elementType = ServerResponseWriter.getResponseMediaType(jaxrsResponse, request, response, ResteasyProviderFactory.getInstance(), method);
                      Map<String, String> parameterMap = new HashMap<String, String>();
                      parameterMap.put(SseConstants.SSE_ELEMENT_MEDIA_TYPE, elementType.toString());
-                     String[] streamType = getStreamType(method);
+                     String[] streamType = getStreamType(stream);
                      MediaType mediaType = new MediaType(streamType[0], streamType[1], parameterMap);
                      jaxrsResponse = (BuiltResponse) Response.ok().type(mediaType).build();
                   }
@@ -384,13 +401,12 @@ public class SseEventOutputImpl extends GenericType<OutboundSseEvent> implements
       return CompletableFuture.completedFuture(null);
    }
 
-   private String[] getStreamType(ResourceMethodInvoker method)
+   private String[] getStreamType(Stream stream)
    {
-      Stream stream = FindAnnotation.findAnnotation(method.getMethodAnnotations(),Stream.class);
       Stream.MODE mode = stream != null ? stream.value() : null;
       if (mode == null)
       {
-         return new String[]{"text", "event-stream"};
+        return new String[]{"text", "event-stream"};
       }
       else if (Stream.MODE.GENERAL.equals(mode))
       {

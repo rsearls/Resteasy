@@ -4,6 +4,7 @@ import org.jboss.resteasy.annotations.Stream;
 import org.jboss.resteasy.core.ResteasyContext.CloseableContext;
 import org.jboss.resteasy.plugins.providers.sse.OutboundSseEventImpl;
 import org.jboss.resteasy.plugins.providers.sse.SseConstants;
+import org.jboss.resteasy.plugins.providers.sse.SseEventOutputImpl;
 import org.jboss.resteasy.plugins.providers.sse.SseImpl;
 import org.jboss.resteasy.resteasy_jaxrs.i18n.Messages;
 import org.jboss.resteasy.specimpl.BuiltResponse;
@@ -73,7 +74,19 @@ public abstract class AsyncResponseConsumer
       {
          return new AsyncGeneralStreamingSseResponseConsumer(method, asyncStreamProvider);
       }
+
       Stream stream = method.getMethod().getAnnotation(Stream.class);
+
+      if (stream == null) {
+         // Check for microprofile-rest-client specific return type.
+         // Spec does not require Stream setting but resteasy does
+         // in order to process method properly.
+         Class<?> returnType = method.getReturnType();
+         if (returnType != null && returnType.getName().equals(Publisher.class.getName())) {
+            stream = SseEventOutputImpl.MicroprofileStreamAnnotationCreator.class.getAnnotation(Stream.class);
+         }
+      }
+
       if (stream != null)
       {
          if (Stream.MODE.RAW.equals(stream.value()))

@@ -5,7 +5,6 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
-import org.jboss.resteasy.annotations.Stream;
 import org.jboss.resteasy.test.rx.resource.Bytes;
 import org.jboss.resteasy.test.rx.resource.Thing;
 import org.reactivestreams.Publisher;
@@ -23,7 +22,6 @@ public class PublisherResourceService {
    @GET
    @Path("get/string")
    @Produces(MediaType.TEXT_PLAIN)
-   @Stream
    public Publisher<String> get() {
       return buildFlowableString("x", 3);
    }
@@ -31,7 +29,6 @@ public class PublisherResourceService {
    @GET
    @Path("get/thing")
    @Produces(MediaType.APPLICATION_JSON)
-   @Stream
    public Publisher<Thing> getThing() {
       return buildFlowableThing("x", 3);
    }
@@ -39,7 +36,6 @@ public class PublisherResourceService {
    @GET
    @Path("get/thing/list")
    @Produces(MediaType.APPLICATION_JSON)
-   @Stream
    public Publisher<List<Thing>> getThingList() {
       return buildFlowableThingList("x", 2, 3);
    }
@@ -47,7 +43,6 @@ public class PublisherResourceService {
    @GET
    @Path("get/bytes")
    @Produces(MediaType.APPLICATION_OCTET_STREAM)
-   @Stream
    public Publisher<byte[]> getBytes() {
       return buildFlowableBytes(3);
    }
