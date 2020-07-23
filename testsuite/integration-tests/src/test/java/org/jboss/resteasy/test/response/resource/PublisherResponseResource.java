@@ -24,7 +24,7 @@ public class PublisherResponseResource {
 
    private static boolean terminated = false;
    private static final Logger LOG = Logger.getLogger(PublisherResponseResource.class);
-
+/***********
    @GET
    @Path("text")
    @Produces("application/json")
@@ -104,19 +104,19 @@ public class PublisherResponseResource {
          terminated = true;
       });
    }
-
+***********/
    @GET
    @Path("sse")
    @Produces(MediaType.SERVER_SENT_EVENTS)
    public Publisher<String> sse() {
       return Flowable.create(source ->{
-         for(int i=0;i<30;i++) {
+         for(int i=0;i<3;i++) {
             source.onNext(i+"-"+ResteasyContext.getContextDataLevelCount());
          }
          source.onComplete();
       }, BackpressureStrategy.BUFFER);
    }
-
+   /***********
    @GET
    @Path("sse-infinite")
    @Produces(MediaType.SERVER_SENT_EVENTS)
@@ -134,4 +134,5 @@ public class PublisherResponseResource {
    public String sseInfiniteDone() {
       return String.valueOf(terminated);
    }
+   ***********/
 }

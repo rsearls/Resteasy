@@ -15,6 +15,8 @@ import org.jboss.resteasy.microprofile.client.async.AsyncInterceptorRxInvokerPro
 import org.jboss.resteasy.microprofile.client.header.ClientHeaderProviders;
 import org.jboss.resteasy.microprofile.client.header.ClientHeadersRequestFilter;
 import org.jboss.resteasy.microprofile.client.impl.MpClientBuilderImpl;
+import org.jboss.resteasy.microprofile.client.publisher.PublisherProvider;
+import org.jboss.resteasy.microprofile.client.publisher.PublisherRxInvokerProvider;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.jboss.resteasy.spi.ResteasyUriBuilder;
 
@@ -264,6 +266,8 @@ public class RestClientBuilderImpl implements RestClientBuilder {
         client = resteasyClientBuilder
                 .build();
         client.register(AsyncInterceptorRxInvokerProvider.class);
+        client.register(PublisherRxInvokerProvider.class);
+        client.register(PublisherProvider.class);
 
         actualClient = client.target(baseURI)
                 .proxyBuilder(aClass)
