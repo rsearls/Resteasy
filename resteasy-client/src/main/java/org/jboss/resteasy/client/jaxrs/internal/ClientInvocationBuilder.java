@@ -1,6 +1,7 @@
 package org.jboss.resteasy.client.jaxrs.internal;
 
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
+import org.jboss.resteasy.client.jaxrs.RxInvokerSourceID;
 import org.jboss.resteasy.client.jaxrs.i18n.Messages;
 
 import javax.ws.rs.HttpMethod;
@@ -361,6 +362,7 @@ public class ClientInvocationBuilder implements Invocation.Builder
    @Override
    public <T extends RxInvoker> T rx(Class<T> clazz)
    {
+      invocation.getClientConfiguration().property(RxInvokerSourceID.class.getSimpleName(), RxInvokerSourceID.RXJAVA2);
       RxInvokerProvider<T> provider = invocation.getClientConfiguration().getRxInvokerProvider(clazz);
       if (provider == null) {
          throw new IllegalStateException(Messages.MESSAGES.unableToInstantiate(clazz));

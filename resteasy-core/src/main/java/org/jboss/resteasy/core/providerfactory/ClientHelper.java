@@ -17,6 +17,9 @@ import javax.ws.rs.client.RxInvokerProvider;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -32,6 +35,7 @@ public class ClientHelper extends CommonProviders
    protected Map<Class<?>, AsyncClientResponseProvider> asyncClientResponseProviders;
    protected boolean attachedReactive;
    protected Map<Class<?>, Class<? extends RxInvokerProvider<?>>> reactiveClasses;
+   protected ReactiveClassRegistry reactiveClassRegistry;
 
    public ClientHelper() {
    }
@@ -60,8 +64,9 @@ public class ClientHelper extends CommonProviders
          this.asyncClientResponseProviders = parent.asyncClientResponseProviders;
          attachedAsyncClientResponseProviders = true;
       }
-      if (parent.reactiveClasses != null) {
-         this.reactiveClasses = parent.reactiveClasses;
+
+      if (parent.reactiveClassRegistry != null) {
+         this.reactiveClassRegistry = parent.reactiveClassRegistry;
          attachedReactive = true;
       }
    }
@@ -79,20 +84,16 @@ public class ClientHelper extends CommonProviders
    }
 
 
-   protected RxInvokerProvider<?> getRxInvokerProviderFromReactiveClass(final Class<?> clazz)
+   protected List<Class<? extends RxInvokerProvider<?>>> getRxInvokerProviderFromReactiveClass(final Class<?> clazz)
    {
-      if (getReactiveClassesForWrite() == null) return null;
-      Class<? extends RxInvokerProvider> rxInvokerProviderClass = getReactiveClassesForWrite().get(clazz);
-      if (rxInvokerProviderClass != null)
-      {
-         return rpf.createProviderInstance(rxInvokerProviderClass);
-      }
-      return null;
+      ReactiveClassRegistry reactiveRegistry = getReactiveClassRegistry();
+      return reactiveRegistry.getRxInvokerProviderList(clazz);
    }
 
    protected boolean isReactive(final Class<?> clazz)
    {
-      return getReactiveClassesForWrite() != null && getReactiveClassesForWrite().keySet().contains(clazz);
+      List<Class<? extends RxInvokerProvider<?>>> list = getReactiveClassRegistry().getRxInvokerProviderList(clazz);
+      return (list != null && !list.isEmpty());
    }
 
    protected void processProviderContracts(Class provider, Integer priorityOverride, boolean isBuiltin,
@@ -146,10 +147,10 @@ public class ClientHelper extends CommonProviders
    }
 
    public void addReactiveClass(Class provider, Class<?> clazz) {
-      Map<Class<?>, Class<? extends RxInvokerProvider<?>>> registry = getReactiveClassesForWrite();
-      registry.put(clazz, provider);
+      ReactiveClassRegistry reactiveRegistry = getReactiveClassRegistry();
+      reactiveRegistry.addReactiveClass(provider, clazz);
       attachedReactive = false;
-      reactiveClasses = registry;
+      reactiveClassRegistry = reactiveRegistry;
    }
 
    public void addAsyncClientResponseProvider(Class provider) {
@@ -255,13 +256,13 @@ public class ClientHelper extends CommonProviders
       return asyncClientResponseProviders;
    }
 
-   protected Map<Class<?>, Class<? extends RxInvokerProvider<?>>> getReactiveClassesForWrite() {
-      if (reactiveClasses == null) {
-         return new HashMap<>();
+   protected ReactiveClassRegistry getReactiveClassRegistry() {
+      if (reactiveClassRegistry == null) {
+         return new ReactiveClassRegistry();
       } else if (lockSnapshots || attachedReactive) {
-         return new HashMap<>(reactiveClasses);
+         return new ReactiveClassRegistry(reactiveClassRegistry);
       }
-      return reactiveClasses;
+      return reactiveClassRegistry;
    }
 
    public JaxrsInterceptorRegistry<ClientRequestFilter> getRequestFilters() {
@@ -276,7 +277,41 @@ public class ClientHelper extends CommonProviders
       return asyncClientResponseProviders;
    }
 
-   public Map<Class<?>, Class<? extends RxInvokerProvider<?>>> getReactiveClasses() {
-      return reactiveClasses;
+   /**
+    * There are 3 modules that support reactiveX methods in resource methods.
+    * There can be multiple RxInvokerProviders for a method return type.  This
+    * class keeps a list of RxInvokerProviders for a given return type.
+    */
+   public class ReactiveClassRegistry {
+      private Map<Class<?>, List<Class<? extends RxInvokerProvider<?>>>> reactiveClassesMap;
+
+      public ReactiveClassRegistry() {
+         reactiveClassesMap = new HashMap<>();
+      }
+
+      public ReactiveClassRegistry(final ReactiveClassRegistry registry) {
+         this.reactiveClassesMap = new HashMap<>(registry.getReactiveClasses());
+      }
+
+      public Map<Class<?>, List<Class<? extends RxInvokerProvider<?>>>> getReactiveClasses() {
+         return reactiveClassesMap;
+      }
+
+      public void addReactiveClass(Class provider, Class<?> clazz) {
+         List<Class<? extends RxInvokerProvider<?>>> list = reactiveClassesMap.get(clazz);
+         if (list == null) {
+            list = new ArrayList<Class<? extends RxInvokerProvider<?>>>();
+            list.add(provider);
+            reactiveClassesMap.put(clazz, list);
+         } else {
+            if (!list.contains(provider)) {
+               list.add(provider);
+            }
+         }
+      }
+
+      public List<Class<? extends RxInvokerProvider<?>>> getRxInvokerProviderList(Class<?> clazz) {
+         return reactiveClassesMap.get(clazz);
+      }
    }
 }

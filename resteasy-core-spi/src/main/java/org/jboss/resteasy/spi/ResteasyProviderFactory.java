@@ -345,7 +345,7 @@ public abstract class ResteasyProviderFactory extends RuntimeDelegate implements
 
    public abstract <I extends RxInvoker> RxInvokerProvider<I> getRxInvokerProvider(Class<I> clazz);
 
-   public abstract RxInvokerProvider<?> getRxInvokerProviderFromReactiveClass(Class<?> clazz);
+   public abstract List<Class<? extends RxInvokerProvider<?>>> getRxInvokerProviderFromReactiveClass(Class<?> clazz);
 
    public abstract boolean isReactive(Class<?> clazz);
 

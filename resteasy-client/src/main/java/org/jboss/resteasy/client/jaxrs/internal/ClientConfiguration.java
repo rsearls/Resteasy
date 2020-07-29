@@ -1,5 +1,7 @@
 package org.jboss.resteasy.client.jaxrs.internal;
 
+import org.jboss.resteasy.client.jaxrs.RxInvokerSourceID;
+import org.jboss.resteasy.client.jaxrs.RxInvokerSourceIdentity;
 import org.jboss.resteasy.core.ThreadLocalResteasyProviderFactory;
 import org.jboss.resteasy.resteasy_jaxrs.i18n.LogMessages;
 import org.jboss.resteasy.spi.HeaderValueProcessor;
@@ -29,6 +31,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -308,7 +311,35 @@ public class ClientConfiguration implements Configuration, Configurable<ClientCo
 
    public RxInvokerProvider<?> getRxInvokerProviderFromReactiveClass(Class<?> clazz)
    {
-      return providerFactory.getRxInvokerProviderFromReactiveClass(clazz);
+      List<Class<? extends RxInvokerProvider<?>>> list = providerFactory.getRxInvokerProviderFromReactiveClass(clazz);
+      if (list != null) {
+         if (list.isEmpty()) {
+            return null;
+         } else if (list.size() == 1) {
+            return providerFactory.createProviderInstance(list.get(0));
+         } else {
+            RxInvokerSourceID value = (RxInvokerSourceID)providerFactory.getProperty(
+                    RxInvokerSourceID.class.getSimpleName());
+
+            for (Class<? extends RxInvokerProvider<?>> l : list) {
+               if (RxInvokerSourceIdentity.class.isAssignableFrom(l)) {
+                  RxInvokerProvider provider = providerFactory.createProviderInstance(l);
+                  RxInvokerSourceIdentity source = (RxInvokerSourceIdentity)provider;
+                  if (source.isRxInvokerSource(value)) {
+                     return provider;
+                  }
+               } else {
+                  LogMessages.LOGGER.warnf("Provider: %s requires implementation of RxInvokerSourceIdentity",
+                          l.getClass().getName());
+               }
+               if (value == null) {
+                  LogMessages.LOGGER.warnf("RxInvokerSourceID must be defined for %s",
+                          l.getClass().getName());
+               }
+            }
+         }
+      }
+      return null;
    }
 
    public boolean isReactive(Class<?> clazz)

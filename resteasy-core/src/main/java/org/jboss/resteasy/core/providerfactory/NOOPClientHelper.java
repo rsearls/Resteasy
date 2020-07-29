@@ -13,6 +13,7 @@ import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.ReaderInterceptor;
 import javax.ws.rs.ext.WriterInterceptor;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,7 +28,7 @@ public final class NOOPClientHelper extends ClientHelper {
    }
 
    @Override
-   protected RxInvokerProvider<?> getRxInvokerProviderFromReactiveClass(Class<?> clazz) {
+   protected List<Class<? extends RxInvokerProvider<?>>> getRxInvokerProviderFromReactiveClass(Class<?> clazz) {
       throw new UnsupportedOperationException();
    }
 
@@ -60,7 +61,7 @@ public final class NOOPClientHelper extends ClientHelper {
    }
 
    @Override
-   protected Map<Class<?>, Class<? extends RxInvokerProvider<?>>> getReactiveClassesForWrite() {
+   protected ReactiveClassRegistry getReactiveClassRegistry() {
       throw new UnsupportedOperationException();
    }
 
@@ -76,11 +77,6 @@ public final class NOOPClientHelper extends ClientHelper {
 
    @Override
    public Map<Class<?>, AsyncClientResponseProvider> getAsyncClientResponseProviders() {
-      throw new UnsupportedOperationException();
-   }
-
-   @Override
-   public Map<Class<?>, Class<? extends RxInvokerProvider<?>>> getReactiveClasses() {
       throw new UnsupportedOperationException();
    }
 

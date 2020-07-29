@@ -1692,7 +1692,7 @@ public class ResteasyProviderFactoryImpl extends ResteasyProviderFactory impleme
       return null;
    }
 
-   public RxInvokerProvider<?> getRxInvokerProviderFromReactiveClass(Class<?> clazz)
+   public List<Class<? extends RxInvokerProvider<?>>> getRxInvokerProviderFromReactiveClass(Class<?> clazz)
    {
       return clientHelper.getRxInvokerProviderFromReactiveClass(clazz);
    }

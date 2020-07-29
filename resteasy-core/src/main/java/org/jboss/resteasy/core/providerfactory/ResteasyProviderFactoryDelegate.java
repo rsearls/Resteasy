@@ -565,7 +565,7 @@ public class ResteasyProviderFactoryDelegate extends ResteasyProviderFactory
    }
 
    @Override
-   public RxInvokerProvider<?> getRxInvokerProviderFromReactiveClass(Class<?> clazz)
+   public List<Class<? extends RxInvokerProvider<?>>> getRxInvokerProviderFromReactiveClass(Class<?> clazz)
    {
       return resteasyProviderFactoryDelegator.getRxInvokerProviderFromReactiveClass(clazz);
    }

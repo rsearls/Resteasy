@@ -11,6 +11,7 @@ import org.eclipse.microprofile.rest.client.ext.AsyncInvocationInterceptorFactor
 import org.eclipse.microprofile.rest.client.ext.QueryParamStyle;
 import org.jboss.resteasy.client.jaxrs.ClientHttpEngine;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
+import org.jboss.resteasy.client.jaxrs.RxInvokerSourceID;
 import org.jboss.resteasy.client.jaxrs.internal.ClientConfiguration;
 import org.jboss.resteasy.client.jaxrs.internal.ResteasyClientImpl;
 
@@ -44,5 +45,10 @@ public class MpClient extends ResteasyClientImpl {
 
     public void setQueryParamStyle(QueryParamStyle queryParamStyle) {
         this.queryParamStyle = queryParamStyle;
+    }
+
+    public void setRxInvokerSourceID(RxInvokerSourceID id) {
+        ClientConfiguration clientConfiguration = (ClientConfiguration)getConfiguration();
+        clientConfiguration.property(RxInvokerSourceID.class.getSimpleName(), id);
     }
 }
