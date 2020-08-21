@@ -60,7 +60,7 @@ public class InboundSseEventService {
         return eventList;
     }
 
-    static class LocalInboundSseEvent implements InboundSseEvent {
+    public static class LocalInboundSseEvent implements InboundSseEvent {
         private String name = null;
         private String id = null;
         private String comment = null;

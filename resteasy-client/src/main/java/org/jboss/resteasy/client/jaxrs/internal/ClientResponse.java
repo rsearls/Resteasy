@@ -6,6 +6,7 @@ import org.jboss.resteasy.core.ProvidersContextRetainer;
 import org.jboss.resteasy.core.ResteasyContext;
 import org.jboss.resteasy.core.interception.jaxrs.AbstractReaderInterceptorContext;
 import org.jboss.resteasy.core.interception.jaxrs.ClientReaderInterceptorContext;
+import org.jboss.resteasy.plugins.providers.sse.MpTypeSafeProcessor;
 import org.jboss.resteasy.specimpl.AbstractBuiltResponse;
 import org.jboss.resteasy.specimpl.BuiltResponse;
 import org.jboss.resteasy.spi.HeaderValueProcessor;
@@ -252,7 +253,9 @@ public abstract class ClientResponse extends BuiltResponse
       }
       finally
       {
-         ResteasyContext.popContextData(Providers.class);
+         if (!(obj instanceof MpTypeSafeProcessor)) {
+            ResteasyContext.popContextData(Providers.class);
+         }
          if (current != null) ResteasyContext.pushContext(Providers.class, current);
          if (obj instanceof ProvidersContextRetainer) ((ProvidersContextRetainer) obj).setProviders(configuration);
       }
