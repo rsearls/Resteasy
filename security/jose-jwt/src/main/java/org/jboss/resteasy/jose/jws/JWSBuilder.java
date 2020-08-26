@@ -92,7 +92,7 @@ public class JWSBuilder
       encoding.append('.');
       if (alg != Algorithm.none)
       {
-         encoding.append(Base64.getUrlEncoder().encodeToString(signature));
+         encoding.append(Base64.getUrlEncoder().withoutPadding().encodeToString(signature));
       }
       return encoding.toString();
    }

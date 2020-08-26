@@ -81,7 +81,7 @@ public class HMACProvider
       try
       {
          byte[] signature = sign(input.getContent(), input.getHeader().getAlgorithm(), key);
-         String x = Base64.getUrlEncoder().encodeToString(signature);
+         String x = Base64.getUrlEncoder().withoutPadding().encodeToString(signature);
          return x.equals(input.getEncodedSignature());
       }
       catch (Exception e)
