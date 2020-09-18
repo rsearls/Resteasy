@@ -45,6 +45,7 @@ public class JsonBindingProvider extends AbstractJsonBindingProvider
       implements MessageBodyReader<Object>, MessageBodyWriter<Object> {
 
    private final boolean disabled;
+   private Object LOCK = new Object();
 
    public JsonBindingProvider() {
       super();
@@ -81,7 +82,9 @@ public class JsonBindingProvider extends AbstractJsonBindingProvider
       final EmptyCheckInputStream is = new EmptyCheckInputStream(entityStream);
 
       try {
-         return jsonb.fromJson(is, genericType);
+         synchronized (LOCK) {
+            return jsonb.fromJson(is, genericType);
+         }
          // If null is returned, considered to be empty stream
       } catch (Throwable e)
       {
@@ -153,7 +156,9 @@ public class JsonBindingProvider extends AbstractJsonBindingProvider
                // and causes chunked encoding to happen.
             }
          };
-         entityStream.write(jsonb.toJson(t).getBytes(getCharset(mediaType)));
+         synchronized (LOCK) {
+            entityStream.write(jsonb.toJson(t).getBytes(getCharset(mediaType)));
+         }
          entityStream.flush();
       } catch (Throwable e)
       {
