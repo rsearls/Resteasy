@@ -20,6 +20,7 @@ import org.jboss.resteasy.microprofile.client.header.ClientHeaderProviders;
 import org.jboss.resteasy.microprofile.client.header.ClientHeadersRequestFilter;
 import org.jboss.resteasy.microprofile.client.impl.MpClient;
 import org.jboss.resteasy.microprofile.client.impl.MpClientBuilderImpl;
+import org.jboss.resteasy.microprofile.client.publisher.MpPublisherMessageBodyReader;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.jboss.resteasy.spi.ResteasyUriBuilder;
 
@@ -320,6 +321,7 @@ public class RestClientBuilderImpl implements RestClientBuilder {
                 .build();
         ((MpClient)client).setQueryParamStyle(queryParamStyle);
         client.register(AsyncInterceptorRxInvokerProvider.class);
+        client.register(MpPublisherMessageBodyReader.class);
 
         actualClient = client.target(baseURI)
                 .proxyBuilder(aClass)

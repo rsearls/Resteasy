@@ -24,6 +24,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import org.reactivestreams.Publisher;
 
 /**
  * A response object not attached to a client or server invocation.
@@ -93,7 +94,7 @@ public class BuiltResponse extends AbstractBuiltResponse
             {
                try
                {
-                  if (!EventInput.class.isInstance(entity))
+                  if (!Publisher.class.isInstance(entity) &&  !EventInput.class.isInstance(entity))
                   {
                      close();
                   }
