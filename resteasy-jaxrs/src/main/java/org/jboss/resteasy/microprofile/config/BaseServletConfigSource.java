@@ -2,6 +2,7 @@ package org.jboss.resteasy.microprofile.config;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,11 +44,10 @@ public class BaseServletConfigSource implements Serializable {
        return source.getValue(propertyName);
     }
 
-    public String getName() {
-       return source.getName();
-    }
-
     public Set<String> getPropertyNames() {
+        if (!available) {
+            return new HashSet<String>();
+        }
         return source.getPropertyNames();
     }
 }

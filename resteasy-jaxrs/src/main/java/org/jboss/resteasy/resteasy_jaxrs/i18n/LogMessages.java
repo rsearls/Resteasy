@@ -217,6 +217,10 @@ public interface LogMessages extends BasicLogger
    @Message(id = BASE + 235, value = "Unable to decode GZIP compressed Base64 data")
    void unableToDecodeGZIPBase64(@Cause Throwable cause);
 
+   @LogMessage(level = Level.INFO)
+   @Message(id = BASE + 240, value = "MicroProfile ConfigSource is {0}", format=Format.MESSAGE_FORMAT)
+   void undefinedConfigSource(String configName);
+
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
    //                                                  DEBUG                                                //
