@@ -1,30 +1,27 @@
 package org.jboss.resteasy.test.client;
 
-import javax.ws.rs.client.ClientBuilder;
-
-import org.apache.http.HttpHost;
+import org.apache.hc.core5.http.HttpHost;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
-import org.jboss.resteasy.client.jaxrs.engines.ApacheHttpClient43Engine;
-import org.jboss.resteasy.client.jaxrs.engines.ClientHttpEngineBuilder43;
-import org.jboss.resteasy.client.jaxrs.ClientHttpEngineBuilder;
+import org.jboss.resteasy.client.jaxrs.engines.ApacheHttpClient5Engine;
 import org.junit.Assert;
 import org.junit.Test;
+
+import javax.ws.rs.client.ClientBuilder;
 
 /**
  * @tpSubChapter Resteasy-client
  * @tpChapter HTTP proxy setup
  * @tpSince RESTEasy 3.8.0
  */
-public class HttpProxyTest {
+public class HttpProxyHTTP2Test {
 
    @Test
    public void testHttpProxyHostSetup() {
       final String testProxyHost = "myproxy.com";
       ResteasyClientBuilder clientBuilder = (ResteasyClientBuilder) ClientBuilder.newBuilder().property(ResteasyClientBuilder.PROPERTY_PROXY_HOST, testProxyHost);
-      clientBuilder.setClientHttpEngineBuilder(((ClientHttpEngineBuilder)new ClientHttpEngineBuilder43()));
       ResteasyClient client = clientBuilder.build();
-      ApacheHttpClient43Engine engine = (ApacheHttpClient43Engine)client.httpEngine();
+      ApacheHttpClient5Engine engine = (ApacheHttpClient5Engine)client.httpEngine();
       HttpHost proxy = engine.getDefaultProxy();
 
       Assert.assertEquals(testProxyHost, proxy.getHostName());
@@ -42,9 +39,8 @@ public class HttpProxyTest {
       final String testProxyScheme = "https";
       ResteasyClientBuilder clientBuilder = (ResteasyClientBuilder) ClientBuilder.newBuilder().property(ResteasyClientBuilder.PROPERTY_PROXY_HOST, testProxyHost)
             .property(ResteasyClientBuilder.PROPERTY_PROXY_PORT, testProxyPort).property(ResteasyClientBuilder.PROPERTY_PROXY_SCHEME, testProxyScheme);
-      clientBuilder.setClientHttpEngineBuilder(((ClientHttpEngineBuilder)new ClientHttpEngineBuilder43()));
       ResteasyClient client = clientBuilder.build();
-      ApacheHttpClient43Engine engine = (ApacheHttpClient43Engine)client.httpEngine();
+      ApacheHttpClient5Engine engine = (ApacheHttpClient5Engine)client.httpEngine();
       HttpHost proxy = engine.getDefaultProxy();
 
       Assert.assertEquals(testProxyHost, proxy.getHostName());
@@ -54,9 +50,8 @@ public class HttpProxyTest {
 
       //modify and re-use builder...
       clientBuilder.property(ResteasyClientBuilder.PROPERTY_PROXY_PORT, Integer.parseInt(testProxyPort) + 10).property(ResteasyClientBuilder.PROPERTY_PROXY_SCHEME, "http");
-      //---clientBuilder.setClientHttpEngineBuilder(((ClientHttpEngineBuilder)new ClientHttpEngineBuilder43()));
       client = clientBuilder.build();
-      engine = (ApacheHttpClient43Engine)client.httpEngine();
+      engine = (ApacheHttpClient5Engine)client.httpEngine();
       proxy = engine.getDefaultProxy();
 
       Assert.assertEquals(testProxyHost, proxy.getHostName());
@@ -70,9 +65,8 @@ public class HttpProxyTest {
       ResteasyClientBuilder clientBuilder = (ResteasyClientBuilder) ClientBuilder.newBuilder().property(ResteasyClientBuilder.PROPERTY_PROXY_HOST, "myproxy.com")
             .property(ResteasyClientBuilder.PROPERTY_PROXY_PORT, "8080").property(ResteasyClientBuilder.PROPERTY_PROXY_SCHEME, "https");
       clientBuilder.defaultProxy("myoverrideproxy.com");
-      clientBuilder.setClientHttpEngineBuilder(((ClientHttpEngineBuilder)new ClientHttpEngineBuilder43()));
       ResteasyClient client = clientBuilder.build();
-      ApacheHttpClient43Engine engine = (ApacheHttpClient43Engine)client.httpEngine();
+      ApacheHttpClient5Engine engine = (ApacheHttpClient5Engine)client.httpEngine();
       HttpHost proxy = engine.getDefaultProxy();
 
       Assert.assertEquals("myoverrideproxy.com", proxy.getHostName());
@@ -83,7 +77,7 @@ public class HttpProxyTest {
       //modify and re-use builder...
       clientBuilder.defaultProxy(null);
       client = clientBuilder.build();
-      engine = (ApacheHttpClient43Engine)client.httpEngine();
+      engine = (ApacheHttpClient5Engine)client.httpEngine();
       proxy = engine.getDefaultProxy();
 
       Assert.assertEquals("myproxy.com", proxy.getHostName());
@@ -95,7 +89,7 @@ public class HttpProxyTest {
       clientBuilder.property(ResteasyClientBuilder.PROPERTY_PROXY_HOST, null).property(ResteasyClientBuilder.PROPERTY_PROXY_PORT, null)
          .property(ResteasyClientBuilder.PROPERTY_PROXY_SCHEME, null);
       client = clientBuilder.build();
-      engine = (ApacheHttpClient43Engine)client.httpEngine();
+      engine = (ApacheHttpClient5Engine)client.httpEngine();
       proxy = engine.getDefaultProxy();
 
       Assert.assertNull(proxy);

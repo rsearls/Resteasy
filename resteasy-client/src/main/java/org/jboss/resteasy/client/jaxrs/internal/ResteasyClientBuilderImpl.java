@@ -3,10 +3,11 @@ package org.jboss.resteasy.client.jaxrs.internal;
 import org.apache.http.HttpHost;
 import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.jboss.resteasy.client.jaxrs.ClientHttpEngine;
+import org.jboss.resteasy.client.jaxrs.ClientHttpEngineBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.engines.ApacheHttpAsyncClient4Engine;
-import org.jboss.resteasy.client.jaxrs.engines.ClientHttpEngineBuilder43;
+import org.jboss.resteasy.client.jaxrs.engines.ClientHttpEngineBuilder5;
 import org.jboss.resteasy.client.jaxrs.i18n.LogMessages;
 import org.jboss.resteasy.client.jaxrs.i18n.Messages;
 import org.jboss.resteasy.client.jaxrs.spi.ClientConfigProvider;
@@ -20,7 +21,6 @@ import javax.net.ssl.SSLContext;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.RuntimeType;
 import javax.ws.rs.core.Configuration;
-
 import java.security.AccessController;
 import java.security.KeyStore;
 import java.security.PrivilegedActionException;
@@ -75,6 +75,7 @@ public class ResteasyClientBuilderImpl extends ResteasyClientBuilder
    protected boolean cookieManagementEnabled;
    protected boolean disableAutomaticRetries = false;
    protected boolean followRedirects;
+   protected ClientHttpEngineBuilder clientHttpEngineBuilder=null;
 
    static ResteasyProviderFactory PROVIDER_FACTORY;
 
@@ -412,7 +413,8 @@ public class ResteasyClientBuilderImpl extends ResteasyClientBuilder
          // check for proxy config parameters
          setProxyIfNeeded(config);
       }
-      ClientHttpEngine engine = httpEngine != null ? httpEngine : new ClientHttpEngineBuilder43().resteasyClientBuilder(this).build();
+      ClientHttpEngine engine = httpEngine != null ? httpEngine : getClientHttpEngineBuilder().resteasyClientBuilder(this).build();
+
       if (resetProxy) {
          this.defaultProxy = null;
       }
@@ -725,5 +727,31 @@ public class ResteasyClientBuilderImpl extends ResteasyClientBuilder
    @Override
    public boolean isFollowRedirects() {
       return followRedirects;
+   }
+
+   /**
+    * Return the default ClientHttpEngineBuilder if the user has not already
+    * specified one.
+    *
+    * @return
+    */
+   private ClientHttpEngineBuilder getClientHttpEngineBuilder() {
+      if (this.clientHttpEngineBuilder == null) {
+         this.clientHttpEngineBuilder = new ClientHttpEngineBuilder5();
+      }
+      return this.clientHttpEngineBuilder;
+   }
+
+   /**
+    * Allow the user to specify a custom ClientHttpEngineBuilder.
+    * Method provided to allow backward compatibility. (e.g. specifying
+    * ClientHttpEngineBuilder43).
+    * @param clientHttpEngineBuilder
+    * @return
+    */
+   @Override
+   public ResteasyClientBuilderImpl setClientHttpEngineBuilder(ClientHttpEngineBuilder  clientHttpEngineBuilder) {
+      this.clientHttpEngineBuilder = clientHttpEngineBuilder;
+      return this;
    }
 }

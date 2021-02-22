@@ -73,6 +73,13 @@
             <maven-resource group="org.apache.james" artifact="apache-mime4j-storage"/>
         </module-def>
 
+        <!-- todo this is temporary and should be removed when wildfly makes the needed update
+        -->
+        <module-def name="org.apache.httpcomponents.core5">
+            <maven-resource group="org.apache.httpcomponents.core5" artifact="httpcore5"/>
+            <maven-resource group="org.apache.httpcomponents.client5" artifact="httpclient5"/>
+        </module-def>
+
         <!-- already present in wildfly -->
         <module-def name="javax.ws.rs.api">
             <maven-resource group="org.jboss.spec.javax.ws.rs" artifact="jboss-jaxrs-api_2.1_spec"/>

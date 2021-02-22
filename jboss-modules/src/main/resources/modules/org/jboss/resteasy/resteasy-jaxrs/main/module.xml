@@ -42,6 +42,7 @@
         <module name="org.apache.commons.io"/>
         <module name="org.apache.commons.codec" />
         <module name="org.apache.httpcomponents"/>
+        <module name="org.apache.httpcomponents.core5"/>
         <module name="org.apache.log4j"/>
         <module name="org.hibernate.validator" optional="true" services="import"/>
         <module name="org.slf4j" />

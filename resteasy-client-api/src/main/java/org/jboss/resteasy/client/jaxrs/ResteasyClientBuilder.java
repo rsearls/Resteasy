@@ -273,4 +273,8 @@ public abstract class ResteasyClientBuilder extends ClientBuilder
    public abstract ResteasyClientBuilder setFollowRedirects(boolean followRedirects);
 
    public abstract boolean isFollowRedirects();
+
+   public abstract ResteasyClientBuilder setClientHttpEngineBuilder(
+           ClientHttpEngineBuilder  clientHttpEngineBuilder);
+
 }

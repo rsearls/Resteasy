@@ -25,6 +25,30 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
+/* apache 5.x new package names
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.classic.methods.HttpUriRequest;
+import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
+import org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.core5.concurrent.BasicFuture;
+import org.apache.hc.core5.concurrent.FutureCallback;
+import org.apache.hc.core5.http.ContentTooLongException;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.HttpException;
+import org.apache.hc.core5.http.HttpResponse;
+import org.apache.hc.core5.http.NameValuePair;
+import org.apache.hc.core5.http.io.entity.ByteArrayEntity;
+import org.apache.hc.core5.http.message.BasicNameValuePair;
+import org.apache.http.nio.protocol.AbstractAsyncResponseConsumer;
+import org.apache.hc.core5.reactor.IOReactorStatus;
+import org.apache.http.nio.entity.ContentInputStream;
+import org.apache.hc.core5.http.nio.support.classic.SharedInputBuffer;
+import org.apache.hc.core5.http.protocol.HttpContext;
+ */
 import org.apache.commons.io.IOUtils;
 import org.apache.http.ContentTooLongException;
 import org.apache.http.Header;

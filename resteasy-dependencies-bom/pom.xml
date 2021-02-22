@@ -45,6 +45,9 @@
         <version.stephenc.jcip.jcip-annotations>1.0-1</version.stephenc.jcip.jcip-annotations>
         <version.org.apache.httpcomponents.httpclient>4.5.13</version.org.apache.httpcomponents.httpclient>
         <version.org.apache.httpcomponents.httpcore>4.4.13</version.org.apache.httpcomponents.httpcore>
+        <version.org.apache.httpcomponents.httpclient5>5.0.3</version.org.apache.httpcomponents.httpclient5>
+        <version.org.apache.httpcomponents.httpcore5>5.0.3</version.org.apache.httpcomponents.httpcore5>
+
         <version.org.apache.httpcomponents.httpasyncclient>4.1.4</version.org.apache.httpcomponents.httpasyncclient>
         <version.org.apache.james.apache-mime4j>0.8.3</version.org.apache.james.apache-mime4j>
         <version.org.apache.maven>3.3.9</version.org.apache.maven> <!-- Used to download aether-provider -->
@@ -296,6 +299,17 @@
                         <artifactId>validation-api</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.httpcomponents.client5</groupId>
+                <artifactId>httpclient5</artifactId>
+                <version>${version.org.apache.httpcomponents.httpclient5}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents.core5</groupId>
+                <artifactId>httpcore5</artifactId>
+                <version>${version.org.apache.httpcomponents.httpcore5}</version>
             </dependency>
 
             <dependency>
