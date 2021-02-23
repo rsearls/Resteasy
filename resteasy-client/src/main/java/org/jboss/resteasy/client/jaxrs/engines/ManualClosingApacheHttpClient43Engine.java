@@ -48,7 +48,11 @@ import java.util.Map;
 
 /**
  * An Apache HTTP engine for use with the new Builder Config style.
+ *
+ * This class will be removed at some time in the future when
+ * resteasy switches to using HTTP/2.
  */
+@Deprecated
 public class ManualClosingApacheHttpClient43Engine implements ApacheHttpClientEngine
 {
 

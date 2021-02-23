@@ -6,7 +6,11 @@ import org.jboss.resteasy.client.jaxrs.i18n.LogMessages;
 
 /**
  * An Apache HTTP engine for use with the new Builder Config style.
+ *
+ * This class will be removed at some time in the future when
+ * resteasy switches to using HTTP/2.
  */
+@Deprecated
 public class ApacheHttpClient43Engine extends ManualClosingApacheHttpClient43EngineAppraisal
 {
    public ApacheHttpClient43Engine()

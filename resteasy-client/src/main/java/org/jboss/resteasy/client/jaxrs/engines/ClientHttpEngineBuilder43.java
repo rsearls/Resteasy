@@ -45,6 +45,11 @@ import org.jboss.resteasy.client.jaxrs.ClientHttpEngineBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.spi.ClientConfigProvider;
 
+/**
+ * This class will be removed at some time in the future when
+ * resteasy switches to using HTTP/2.
+ */
+@Deprecated
 public class ClientHttpEngineBuilder43 implements ClientHttpEngineBuilder {
 
    private ResteasyClientBuilder that;
