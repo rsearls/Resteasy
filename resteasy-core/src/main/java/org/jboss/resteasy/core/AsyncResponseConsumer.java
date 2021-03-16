@@ -2,7 +2,7 @@ package org.jboss.resteasy.core;
 
 import org.jboss.resteasy.annotations.Stream;
 import org.jboss.resteasy.core.ResteasyContext.CloseableContext;
-import org.jboss.resteasy.plugins.providers.sse.OutboundSseEventImpl;
+import org.jboss.resteasy.reactive.server.jaxrs.OutboundSseEventImpl;
 import org.jboss.resteasy.plugins.providers.sse.SseConstants;
 import org.jboss.resteasy.plugins.providers.sse.SseImpl;
 import org.jboss.resteasy.resteasy_jaxrs.i18n.Messages;

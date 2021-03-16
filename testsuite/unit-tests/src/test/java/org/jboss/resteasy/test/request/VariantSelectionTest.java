@@ -1,6 +1,6 @@
 package org.jboss.resteasy.test.request;
 
-import org.jboss.resteasy.core.request.ServerDrivenNegotiation;
+import org.jboss.resteasy.reactive.server.core.request.ServerDrivenNegotiation;
 import org.junit.Test;
 
 import javax.ws.rs.core.MediaType;

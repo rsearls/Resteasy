@@ -1,32 +1,27 @@
 package org.jboss.resteasy.plugins.delegates;
 
 import org.jboss.resteasy.resteasy_jaxrs.i18n.Messages;
-import org.jboss.resteasy.util.HeaderParameterParser;
 
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.ext.RuntimeDelegate;
-
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
  * @version $Revision: 1 $
  */
-public class MediaTypeHeaderDelegate implements RuntimeDelegate.HeaderDelegate<MediaType>
+//public class MediaTypeHeaderDelegate implements RuntimeDelegate.HeaderDelegate<MediaType>
+public class MediaTypeHeaderDelegate extends org.jboss.resteasy.reactive.common.headers.MediaTypeHeaderDelegate
 {
    public static final MediaTypeHeaderDelegate INSTANCE = new MediaTypeHeaderDelegate();
 
-   private static Map<String, MediaType> map = new ConcurrentHashMap<String, MediaType>();
-   private static Map<MediaType, String> reverseMap = new ConcurrentHashMap<MediaType, String>();
+   //private static Map<String, MediaType> map = new ConcurrentHashMap<String, MediaType>();
+   //private static Map<MediaType, String> reverseMap = new ConcurrentHashMap<MediaType, String>();
    private static final int MAX_MT_CACHE_SIZE = System.getSecurityManager() == null
       ? Integer.getInteger("org.jboss.resteasy.max_mediatype_cache_size", 200)
       : AccessController.doPrivileged((PrivilegedAction<Integer>) () ->
          Integer.getInteger("org.jboss.resteasy.max_mediatype_cache_size", 200));
-
+/******
    public MediaType fromString(String type) throws IllegalArgumentException
    {
       if (type == null) throw new IllegalArgumentException(Messages.MESSAGES.mediaTypeValueNull());
@@ -61,23 +56,23 @@ public class MediaTypeHeaderDelegate implements RuntimeDelegate.HeaderDelegate<M
       }
       return true;
    }
-
+**********/
    public static MediaType parse(String type)
    {
-      MediaType result = map.get(type);
+      MediaType result = getMap().get(type);
       if (result == null) {
           result = internalParse(type);
-          final int size = map.size();
+          final int size = getMap().size();
           if (size >= MAX_MT_CACHE_SIZE) {
               clearCache();
           }
           final String normalisedType = internalToString(result);
-          map.put(type, result);
-          reverseMap.put(result, normalisedType);
+          getMap().put(type, result);
+          getReverseMap().put(result, normalisedType);
       }
       return result;
    }
-
+/*******
    private static MediaType internalParse(String type)
    {
       int typeIndex = type.indexOf('/');
@@ -150,23 +145,24 @@ public class MediaTypeHeaderDelegate implements RuntimeDelegate.HeaderDelegate<M
       }
       return false;
    }
-
+***********/
+   @Override
    public String toString(MediaType type)
    {
       if (type == null) throw new IllegalArgumentException(Messages.MESSAGES.paramNull());
-      String result = reverseMap.get(type);
+      String result = getReverseMap().get(type);
       if (result == null) {
           result = internalToString(type);
-          final int size = reverseMap.size();
+          final int size = getReverseMap().size();
           if (size >= MAX_MT_CACHE_SIZE) {
              clearCache();
           }
-          reverseMap.put(type, result);
-          map.put(result, type);
+          getReverseMap().put(type, result);
+          getMap().put(result, type);
       }
       return result;
    }
-
+/*******
    private static String internalToString(MediaType type)
    {
       StringBuilder buf = new StringBuilder();
@@ -182,10 +178,10 @@ public class MediaTypeHeaderDelegate implements RuntimeDelegate.HeaderDelegate<M
       }
       return buf.toString();
    }
-
+***********/
    public static void clearCache()
    {
-      map.clear();
-      reverseMap.clear();
+      getMap().clear();
+      getReverseMap().clear();
    }
 }

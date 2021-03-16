@@ -128,7 +128,7 @@ public class ClientInvocation implements Invocation
       this.client = clientInvocation.client;
       this.configuration = new ClientConfiguration(clientInvocation.configuration);
       this.headers = new ClientRequestHeaders(this.configuration);
-      MultivaluedTreeMap.copy(clientInvocation.headers.getHeaders(), this.headers.headers);
+      MultivaluedTreeMap.copy(clientInvocation.headers.getHeaders(), this.headers.getHeaders());
       this.method = clientInvocation.method;
       this.entity = clientInvocation.entity;
       this.entityGenericType = clientInvocation.entityGenericType;

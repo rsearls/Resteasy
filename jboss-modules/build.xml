@@ -170,6 +170,16 @@
         <module-def name="org.jboss.resteasy.resteasy-validator-provider-11">
         </module-def>
 
+        <module-def name="io.quarkus.resteasy.reactive.resteasy-reactive">
+            <maven-resource group="io.quarkus.resteasy.reactive" artifact="resteasy-reactive"/>
+        </module-def>
+        <module-def name="io.quarkus.resteasy.reactive.resteasy-reactive-common">
+            <maven-resource group="io.quarkus.resteasy.reactive" artifact="resteasy-reactive-common"/>
+        </module-def>
+        <module-def name="io.quarkus.resteasy.reactive.resteasy-reactive-client">
+            <maven-resource group="io.quarkus.resteasy.reactive" artifact="resteasy-reactive-client"/>
+        </module-def>
+
         <!-- no need to create zip file as maven-assembly-plugin running after antrun plugin takes care of that -->
         <!--
         <zip destfile="${output.dir}/zz-resteasy-jboss-modules-${project.version}.zip">

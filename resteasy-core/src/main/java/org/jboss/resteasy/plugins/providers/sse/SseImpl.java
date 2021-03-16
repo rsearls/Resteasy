@@ -4,6 +4,8 @@ import javax.ws.rs.sse.OutboundSseEvent;
 import javax.ws.rs.sse.Sse;
 import javax.ws.rs.sse.SseBroadcaster;
 
+import org.jboss.resteasy.reactive.server.jaxrs.OutboundSseEventImpl;
+
 public class SseImpl implements Sse
 {
 

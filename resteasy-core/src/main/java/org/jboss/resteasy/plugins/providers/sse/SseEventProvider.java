@@ -30,6 +30,7 @@ import org.jboss.resteasy.resteasy_jaxrs.i18n.Messages;
 import org.jboss.resteasy.spi.AsyncMessageBodyWriter;
 import org.jboss.resteasy.spi.AsyncOutputStream;
 import org.jboss.resteasy.util.MediaTypeHelper;
+import org.jboss.resteasy.reactive.server.jaxrs.OutboundSseEventImpl;
 
 @Provider
 @Produces({"text/event-stream", "application/x-stream-general"})

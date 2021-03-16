@@ -39,6 +39,7 @@ import org.jboss.resteasy.spi.ResteasyAsynchronousContext;
 import org.jboss.resteasy.spi.ResteasyAsynchronousResponse;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.jboss.resteasy.spi.util.FindAnnotation;
+import org.jboss.resteasy.reactive.server.jaxrs.OutboundSseEventImpl;
 
 public class SseEventOutputImpl extends GenericType<OutboundSseEvent> implements SseEventSink
 {

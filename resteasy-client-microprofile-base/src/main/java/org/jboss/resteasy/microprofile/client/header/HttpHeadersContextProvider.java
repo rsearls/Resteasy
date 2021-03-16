@@ -1,9 +1,9 @@
 package org.jboss.resteasy.microprofile.client.header;
 
-import org.jboss.resteasy.util.CookieParser;
-import org.jboss.resteasy.util.DateUtil;
+import org.jboss.resteasy.reactive.common.util.CookieParser;
+import org.jboss.resteasy.reactive.common.util.DateUtil;
 import org.jboss.resteasy.util.MediaTypeHelper;
-import org.jboss.resteasy.util.WeightedLanguage;
+import org.jboss.resteasy.reactive.common.util.WeightedLanguage;
 
 import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.core.Cookie;

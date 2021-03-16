@@ -3,7 +3,7 @@ package org.jboss.resteasy.specimpl;
 import org.jboss.resteasy.resteasy_jaxrs.i18n.Messages;
 import org.jboss.resteasy.spi.ResteasyUriBuilder;
 import org.jboss.resteasy.util.Encode;
-import org.jboss.resteasy.util.PathHelper;
+import org.jboss.resteasy.reactive.common.util.PathHelper;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.core.UriBuilder;

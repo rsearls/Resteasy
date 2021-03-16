@@ -24,11 +24,11 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Variant;
 
 import org.jboss.resteasy.core.ResteasyContext;
-import org.jboss.resteasy.core.request.ServerDrivenNegotiation;
+import org.jboss.resteasy.reactive.server.core.request.ServerDrivenNegotiation;
 import org.jboss.resteasy.spi.HttpRequest;
 import org.jboss.resteasy.spi.HttpResponse;
 import org.jboss.resteasy.spi.ResteasyConfiguration;
-import org.jboss.resteasy.util.DateUtil;
+import org.jboss.resteasy.reactive.common.util.DateUtil;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>

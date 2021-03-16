@@ -1,11 +1,7 @@
 package org.jboss.resteasy.util;
 
-import org.jboss.resteasy.specimpl.MultivaluedMapImpl;
-
 import javax.ws.rs.core.MultivaluedMap;
-
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.ByteBuffer;
 import java.nio.charset.CharacterCodingException;
@@ -14,7 +10,6 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,9 +19,10 @@ import java.util.regex.Pattern;
  */
 public class Encode
 {
-   private static final String UTF_8 = StandardCharsets.UTF_8.name();
+   private static org.jboss.resteasy.reactive.common.util.Encode resteasyReactiveEncode =
+           new org.jboss.resteasy.reactive.common.util.Encode();
 
-   private static final Pattern PARAM_REPLACEMENT = Pattern.compile("_resteasy_uri_parameter");
+   private static final String UTF_8 = StandardCharsets.UTF_8.name();
 
    private static final String[] pathEncoding = new String[128];
    private static final String[] pathSegmentEncoding = new String[128];
@@ -110,7 +106,6 @@ public class Encode
 
       /*
        * query       = *( pchar / "/" / "?" )
-
       */
       for (int i = 0; i < 128; i++)
       {
@@ -207,7 +202,6 @@ public class Encode
       return encodeValue(value, queryNameValueEncoding);
    }
 
-   //private static final Pattern nonCodes = Pattern.compile("%([^a-fA-F0-9]|$)");
    private static final Pattern nonCodes = Pattern.compile("%([^a-fA-F0-9]|[a-fA-F0-9]$|$|[a-fA-F0-9][^a-fA-F0-9])");
    private static final Pattern encodedChars = Pattern.compile("%([a-fA-F0-9][a-fA-F0-9])");
    private static final Pattern encodedCharsMulti = Pattern.compile("((%[a-fA-F0-9][a-fA-F0-9])+)");
@@ -232,7 +226,6 @@ public class Encode
       builder.append(path, start, path.length());
       return builder.toString();
    }
-
    private static String decodeBytes(String enc, CharsetDecoder decoder)
    {
       Matcher matcher = encodedChars.matcher(enc);
@@ -261,46 +254,12 @@ public class Encode
     */
    public static String encodeNonCodes(String string)
    {
-      Matcher matcher = nonCodes.matcher(string);
-      StringBuilder builder = new StringBuilder();
-
-
-      // FYI: we do not use the no-arg matcher.find()
-      //      coupled with matcher.appendReplacement()
-      //      because the matched text may contain
-      //      a second % and we must make sure we
-      //      encode it (if necessary).
-      int idx = 0;
-      while (matcher.find(idx))
-      {
-         int start = matcher.start();
-         builder.append(string.substring(idx, start));
-         builder.append("%25");
-         idx = start + 1;
-      }
-      builder.append(string.substring(idx));
-      return builder.toString();
+      return resteasyReactiveEncode.encodeNonCodes(string);
    }
 
    public static boolean savePathParams(String segmentString, StringBuilder newSegment, List<String> params)
    {
-      boolean foundParam = false;
-      // Regular expressions can have '{' and '}' characters.  Replace them to do match
-      CharSequence segment = PathHelper.replaceEnclosedCurlyBracesCS(segmentString);
-      Matcher matcher = PathHelper.URI_TEMPLATE_PATTERN.matcher(segment);
-      int start = 0;
-      while (matcher.find())
-      {
-         newSegment.append(segment, start, matcher.start());
-         foundParam = true;
-         String group = matcher.group();
-         // Regular expressions can have '{' and '}' characters.  Recover earlier replacement
-         params.add(PathHelper.recoverEnclosedCurlyBraces(group));
-         newSegment.append("_resteasy_uri_parameter");
-         start = matcher.end();
-      }
-      newSegment.append(segment, start, segment.length());
-      return foundParam;
+      return resteasyReactiveEncode.savePathParams(segmentString, newSegment, params);
    }
 
    /**
@@ -381,11 +340,8 @@ public class Encode
     */
    public static String encodePathSegmentSaveEncodings(String segment)
    {
-      String result = encodeFromArray(segment, pathSegmentEncoding, false);
-      result = encodeNonCodes(result);
-      return result;
+      return resteasyReactiveEncode.encodePathSegmentSaveEncodings(segment);
    }
-
 
    /**
     * Encodes everything of a query parameter name or value.
@@ -476,32 +432,12 @@ public class Encode
     */
    public static String encodeString(String s)
    {
-      try
-      {
-         return URLEncoder.encode(s, UTF_8);
-      }
-      catch (UnsupportedEncodingException e)
-      {
-         throw new RuntimeException(e);
-      }
+      return resteasyReactiveEncode.encodeString(s);
    }
 
    public static String pathParamReplacement(String segment, List<String> params)
    {
-      StringBuilder newSegment = new StringBuilder();
-      Matcher matcher = PARAM_REPLACEMENT.matcher(segment);
-      int i = 0;
-      int start = 0;
-      while (matcher.find())
-      {
-         newSegment.append(segment, start, matcher.start());
-         String replacement = params.get(i++);
-         newSegment.append(replacement);
-         start = matcher.end();
-      }
-      newSegment.append(segment, start, segment.length());
-      segment = newSegment.toString();
-      return segment;
+      return resteasyReactiveEncode.pathParamReplacement(segment, params);
    }
 
    /**
@@ -512,23 +448,7 @@ public class Encode
     */
    public static MultivaluedMap<String, String> decode(MultivaluedMap<String, String> map)
    {
-      MultivaluedMapImpl<String, String> decoded = new MultivaluedMapImpl<String, String>();
-      for (Map.Entry<String, List<String>> entry : map.entrySet())
-      {
-         List<String> values = entry.getValue();
-         for (String value : values)
-         {
-            try
-            {
-               decoded.add(URLDecoder.decode(entry.getKey(), UTF_8), URLDecoder.decode(value, UTF_8));
-            }
-            catch (UnsupportedEncodingException e)
-            {
-               throw new RuntimeException(e);
-            }
-         }
-      }
-      return decoded;
+      return resteasyReactiveEncode.decode(map);
    }
 
    /**
@@ -540,60 +460,17 @@ public class Encode
     */
    public static MultivaluedMap<String, String> decode(MultivaluedMap<String, String> map, String charset)
    {
-      if (charset == null)
-      {
-         charset = UTF_8;
-      }
-      MultivaluedMapImpl<String, String> decoded = new MultivaluedMapImpl<String, String>();
-      for (Map.Entry<String, List<String>> entry : map.entrySet())
-      {
-         List<String> values = entry.getValue();
-         for (String value : values)
-         {
-            try
-            {
-               decoded.add(URLDecoder.decode(entry.getKey(), charset), URLDecoder.decode(value, charset));
-            }
-            catch (UnsupportedEncodingException e)
-            {
-               throw new RuntimeException(e);
-            }
-         }
-      }
-      return decoded;
+      return resteasyReactiveEncode.decode(map, charset);
    }
 
    public static MultivaluedMap<String, String> encode(MultivaluedMap<String, String> map)
    {
-      MultivaluedMapImpl<String, String> decoded = new MultivaluedMapImpl<String, String>();
-      for (Map.Entry<String, List<String>> entry : map.entrySet())
-      {
-         List<String> values = entry.getValue();
-         for (String value : values)
-         {
-            try
-            {
-               decoded.add(URLEncoder.encode(entry.getKey(), UTF_8), URLEncoder.encode(value, UTF_8));
-            }
-            catch (UnsupportedEncodingException e)
-            {
-               throw new RuntimeException(e);
-            }
-         }
-      }
-      return decoded;
+      return resteasyReactiveEncode.encode(map);
    }
 
    public static String decode(String string)
    {
-      try
-      {
-         return URLDecoder.decode(string, UTF_8);
-      }
-      catch (UnsupportedEncodingException e)
-      {
-         throw new RuntimeException(e);
-      }
+      return resteasyReactiveEncode.decode(string);
    }
 
 }

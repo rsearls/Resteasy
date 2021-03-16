@@ -1,13 +1,13 @@
 package org.jboss.resteasy.specimpl;
 
 import org.jboss.resteasy.core.Headers;
-import org.jboss.resteasy.plugins.delegates.LocaleDelegate;
+import org.jboss.resteasy.reactive.common.headers.LocaleDelegate;
 import org.jboss.resteasy.resteasy_jaxrs.i18n.Messages;
 import org.jboss.resteasy.spi.HeaderValueProcessor;
 import org.jboss.resteasy.spi.HttpResponseCodes;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
-import org.jboss.resteasy.util.CaseInsensitiveMap;
-import org.jboss.resteasy.util.DateUtil;
+import org.jboss.resteasy.reactive.common.util.CaseInsensitiveMap;
+import org.jboss.resteasy.reactive.common.util.DateUtil;
 
 import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.GenericEntity;
@@ -15,6 +15,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
@@ -508,11 +509,15 @@ public abstract class AbstractBuiltResponse extends Response
    }
 
 
-   private final class LinkHeaders
+   private final class LinkHeaders extends org.jboss.resteasy.reactive.common.headers.LinkHeaders
    {
-      private Map<String, Link> linksByRelationship = new HashMap<String, Link>();
-      private List<Link> links = new ArrayList<Link>();
-
+      LinkHeaders() {
+         super();
+      }
+      LinkHeaders(final MultivaluedMap<String, Object> headers) {
+         // no-op  resteasy does not this resteasy-reactive's constructor
+         super(new MultivaluedHashMap<String, Object>());
+      }
       public LinkHeaders addLinkObjects(MultivaluedMap<String, Object> headers, HeaderValueProcessor factory)
       {
          List<Object> values = headers.get("Link");
@@ -533,32 +538,6 @@ public abstract class AbstractBuiltResponse extends Response
          }
          return this;
       }
-
-      public LinkHeaders addLink(final Link link)
-      {
-         links.add(link);
-         for (String rel : link.getRels())
-         {
-            linksByRelationship.put(rel, link);
-         }
-         return this;
-      }
-
-      public Link getLinkByRelationship(String rel)
-      {
-         return linksByRelationship.get(rel);
-      }
-
-      /**
-       * All the links defined.
-       *
-       * @return links
-       */
-      public List<Link> getLinks()
-      {
-         return links;
-      }
-
    }
 
    protected static class InputStreamWrapper <T extends BuiltResponse>

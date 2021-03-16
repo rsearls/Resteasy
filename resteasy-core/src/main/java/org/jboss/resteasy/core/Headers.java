@@ -1,6 +1,6 @@
 package org.jboss.resteasy.core;
 
-import org.jboss.resteasy.util.CaseInsensitiveMap;
+import org.jboss.resteasy.reactive.common.util.CaseInsensitiveMap;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>

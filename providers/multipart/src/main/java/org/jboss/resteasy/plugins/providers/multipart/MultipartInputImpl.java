@@ -13,7 +13,7 @@ import org.jboss.logging.Logger;
 import org.jboss.resteasy.core.ProvidersContextRetainer;
 import org.jboss.resteasy.core.ResteasyContext;
 import org.jboss.resteasy.spi.HttpRequest;
-import org.jboss.resteasy.util.CaseInsensitiveMap;
+import org.jboss.resteasy.reactive.common.util.CaseInsensitiveMap;
 import org.jboss.resteasy.plugins.providers.multipart.i18n.Messages;
 import org.jboss.resteasy.resteasy_jaxrs.i18n.LogMessages;
 

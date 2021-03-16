@@ -1,6 +1,6 @@
 package org.jboss.resteasy.test.resource.request.resource;
 
-import org.jboss.resteasy.util.DateUtil;
+import org.jboss.resteasy.reactive.common.util.DateUtil;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

@@ -9,7 +9,7 @@ import org.jboss.resteasy.spi.NotImplementedYetException;
 import org.jboss.resteasy.spi.ResteasyAsynchronousContext;
 import org.jboss.resteasy.spi.ResteasyAsynchronousResponse;
 import org.jboss.resteasy.spi.RunnableWithException;
-import org.jboss.resteasy.util.CaseInsensitiveMap;
+import org.jboss.resteasy.reactive.common.util.CaseInsensitiveMap;
 import org.jboss.resteasy.util.HttpHeaderNames;
 import org.jboss.resteasy.util.ReadFromStream;
 

@@ -2,7 +2,7 @@ package org.jboss.resteasy.embedded.test.providers.custom.resource;
 
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.plugins.providers.ProviderHelper;
-import org.jboss.resteasy.util.TypeConverter;
+import org.jboss.resteasy.reactive.common.util.TypeConverter;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;

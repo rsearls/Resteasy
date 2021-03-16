@@ -48,7 +48,7 @@ import org.jboss.resteasy.spi.Registry;
 import org.jboss.resteasy.spi.ResteasyDeployment;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.jboss.resteasy.test.TestPortProvider;
-import org.jboss.resteasy.util.ParameterParser;
+import org.jboss.resteasy.reactive.common.util.ParameterParser;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;

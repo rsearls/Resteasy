@@ -22,7 +22,7 @@ import javax.ws.rs.core.SecurityContext;
 import org.jboss.resteasy.core.ResteasyContext;
 import org.jboss.resteasy.security.doseta.i18n.LogMessages;
 import org.jboss.resteasy.security.doseta.i18n.Messages;
-import org.jboss.resteasy.util.ParameterParser;
+import org.jboss.resteasy.reactive.common.util.ParameterParser;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>

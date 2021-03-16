@@ -2,7 +2,8 @@ package org.jboss.resteasy.specimpl;
 
 import org.jboss.resteasy.spi.ResteasyUriBuilder;
 import org.jboss.resteasy.util.Encode;
-import org.jboss.resteasy.util.PathHelper;
+import org.jboss.resteasy.reactive.common.util.PathHelper;
+import org.jboss.resteasy.reactive.common.util.PathSegmentImpl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URI;

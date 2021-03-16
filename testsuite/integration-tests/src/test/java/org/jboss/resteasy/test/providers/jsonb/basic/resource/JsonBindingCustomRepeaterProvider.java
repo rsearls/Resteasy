@@ -2,7 +2,7 @@ package org.jboss.resteasy.test.providers.jsonb.basic.resource;
 
 import org.jboss.resteasy.plugins.providers.ProviderHelper;
 import org.jboss.resteasy.util.NoContent;
-import org.jboss.resteasy.util.TypeConverter;
+import org.jboss.resteasy.reactive.common.util.TypeConverter;
 
 import javax.annotation.Priority;
 import javax.ws.rs.Consumes;

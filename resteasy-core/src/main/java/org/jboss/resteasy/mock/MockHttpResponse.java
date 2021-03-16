@@ -1,7 +1,7 @@
 package org.jboss.resteasy.mock;
 
 import org.jboss.resteasy.spi.HttpResponse;
-import org.jboss.resteasy.util.CaseInsensitiveMap;
+import org.jboss.resteasy.reactive.common.util.CaseInsensitiveMap;
 import org.jboss.resteasy.util.HttpHeaderNames;
 
 import javax.ws.rs.core.MediaType;

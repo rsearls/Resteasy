@@ -1,6 +1,6 @@
 package org.jboss.resteasy.core.registry;
 
-import org.jboss.resteasy.util.PathHelper;
+import org.jboss.resteasy.reactive.common.util.PathHelper;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package org.jboss.resteasy.test.util;
 
-import org.jboss.resteasy.util.TypeConverter;
+import org.jboss.resteasy.reactive.common.util.TypeConverter;
 import org.junit.Assert;
 import org.junit.Test;
 

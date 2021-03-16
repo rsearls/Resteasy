@@ -1,6 +1,6 @@
 package org.jboss.resteasy.core;
 
-import org.jboss.resteasy.specimpl.PathSegmentImpl;
+import org.jboss.resteasy.reactive.common.util.PathSegmentImpl;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;

@@ -4,6 +4,7 @@ package org.jboss.resteasy.util;
  * A CharSequence backed by a char[] (no copy on creation)
  *
  */
+@Deprecated
 public class ArrayCharSequence implements CharSequence
 {
    private final char[] buf;

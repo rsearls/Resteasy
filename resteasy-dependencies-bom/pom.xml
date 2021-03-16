@@ -109,6 +109,7 @@
         <version.io.projectreactor>Dysprosium-SR12</version.io.projectreactor>
 
         <version.asyncutil>0.1.0</version.asyncutil>
+        <version-resteasy-reactive>999-SNAPSHOT</version-resteasy-reactive>
     </properties>
 
     <distributionManagement>
@@ -998,6 +999,27 @@
                 <groupId>com.ibm.async</groupId>
                 <artifactId>asyncutil</artifactId>
                 <version>${version.asyncutil}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkus.resteasy.reactive</groupId>
+                <artifactId>resteasy-reactive</artifactId>
+                <version>${version-resteasy-reactive}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkus.resteasy.reactive</groupId>
+                <artifactId>resteasy-reactive-client</artifactId>
+                <version>${version-resteasy-reactive}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>io.vertx</groupId>
+                        <artifactId>vertx-core</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkus.resteasy.reactive</groupId>
+                <artifactId>resteasy-reactive-common</artifactId>
+                <version>${version-resteasy-reactive}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

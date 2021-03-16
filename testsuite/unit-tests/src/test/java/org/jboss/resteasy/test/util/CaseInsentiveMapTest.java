@@ -1,6 +1,6 @@
 package org.jboss.resteasy.test.util;
 
-import org.jboss.resteasy.util.CaseInsensitiveMap;
+import org.jboss.resteasy.reactive.common.util.CaseInsensitiveMap;
 import org.junit.Assert;
 import org.junit.Test;
 

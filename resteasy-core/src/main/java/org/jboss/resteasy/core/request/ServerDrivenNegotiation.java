@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
-
+import org.jboss.resteasy.reactive.server.core.request.VariantQuality;
+import org.jboss.resteasy.reactive.server.core.request.QualityValue;
+import org.jboss.resteasy.reactive.server.core.request.AcceptHeaders;
 
 /**
  * {@link Variant} selection.

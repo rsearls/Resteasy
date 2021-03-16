@@ -4,7 +4,7 @@ import io.vertx.core.http.HttpServerRequest;
 import org.jboss.resteasy.core.Headers;
 import org.jboss.resteasy.specimpl.ResteasyHttpHeaders;
 import org.jboss.resteasy.specimpl.ResteasyUriInfo;
-import org.jboss.resteasy.util.CookieParser;
+import org.jboss.resteasy.reactive.common.util.CookieParser;
 import org.jboss.resteasy.util.HttpHeaderNames;
 import org.jboss.resteasy.util.MediaTypeHelper;
 

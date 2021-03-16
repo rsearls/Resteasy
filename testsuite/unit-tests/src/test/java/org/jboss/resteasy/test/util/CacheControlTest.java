@@ -1,7 +1,7 @@
 package org.jboss.resteasy.test.util;
 
-import org.jboss.resteasy.core.ExtendedCacheControl;
-import org.jboss.resteasy.plugins.delegates.CacheControlDelegate;
+import org.jboss.resteasy.reactive.common.util.ExtendedCacheControl;
+import org.jboss.resteasy.reactive.common.headers.CacheControlDelegate;
 import org.jboss.resteasy.plugins.providers.RegisterBuiltin;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.junit.Assert;

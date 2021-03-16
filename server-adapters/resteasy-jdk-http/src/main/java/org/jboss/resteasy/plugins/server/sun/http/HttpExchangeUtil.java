@@ -5,10 +5,10 @@ import com.sun.net.httpserver.HttpsServer;
 import org.jboss.resteasy.core.Headers;
 import org.jboss.resteasy.specimpl.ResteasyHttpHeaders;
 import org.jboss.resteasy.specimpl.ResteasyUriInfo;
-import org.jboss.resteasy.util.CookieParser;
+import org.jboss.resteasy.reactive.common.util.CookieParser;
 import org.jboss.resteasy.util.HttpHeaderNames;
 import org.jboss.resteasy.util.MediaTypeHelper;
-import org.jboss.resteasy.util.PathHelper;
+import org.jboss.resteasy.reactive.common.util.PathHelper;
 
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;

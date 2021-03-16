@@ -1,6 +1,6 @@
 package org.jboss.resteasy.test.request;
 
-import org.jboss.resteasy.plugins.delegates.NewCookieHeaderDelegate;
+import org.jboss.resteasy.reactive.common.headers.NewCookieHeaderDelegate;
 import org.junit.Assert;
 import org.junit.Test;
 

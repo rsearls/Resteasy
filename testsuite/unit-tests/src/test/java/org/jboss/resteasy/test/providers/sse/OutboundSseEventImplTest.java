@@ -8,7 +8,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.sse.OutboundSseEvent;
 
-import org.jboss.resteasy.plugins.providers.sse.OutboundSseEventImpl;
+import org.jboss.resteasy.reactive.server.jaxrs.OutboundSseEventImpl;
 import org.jboss.resteasy.test.providers.resource.ContractsData;
 import org.junit.Assert;
 import org.junit.Test;

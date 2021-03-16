@@ -1,7 +1,7 @@
 package org.jboss.resteasy.client.jaxrs.cache;
 
 import org.jboss.resteasy.resteasy_jaxrs.i18n.LogMessages;
-import org.jboss.resteasy.util.DateUtil;
+import org.jboss.resteasy.reactive.common.util.DateUtil;
 import org.jboss.resteasy.util.MediaTypeHelper;
 import org.jboss.resteasy.util.ReadFromStream;
 

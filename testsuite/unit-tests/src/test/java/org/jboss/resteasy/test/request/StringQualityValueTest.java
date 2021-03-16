@@ -2,8 +2,8 @@ package org.jboss.resteasy.test.request;
 
 import javax.ws.rs.BadRequestException;
 
-import org.jboss.resteasy.core.request.AcceptHeaders;
-import org.jboss.resteasy.core.request.QualityValue;
+import org.jboss.resteasy.reactive.server.core.request.AcceptHeaders;
+import org.jboss.resteasy.reactive.server.core.request.QualityValue;
 import org.junit.Test;
 
 import java.util.ArrayList;

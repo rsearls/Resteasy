@@ -1,6 +1,6 @@
 package org.jboss.resteasy.plugins.delegates;
 
-import org.jboss.resteasy.core.ExtendedCacheControl;
+import org.jboss.resteasy.reactive.common.util.ExtendedCacheControl;
 import org.jboss.resteasy.resteasy_jaxrs.i18n.Messages;
 
 import javax.ws.rs.core.CacheControl;

@@ -2,7 +2,7 @@ package org.jboss.resteasy.jsapi;
 
 import org.jboss.resteasy.jsapi.i18n.LogMessages;
 import org.jboss.resteasy.jsapi.i18n.Messages;
-import org.jboss.resteasy.util.PathHelper;
+import org.jboss.resteasy.reactive.common.util.PathHelper;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;

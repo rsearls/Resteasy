@@ -7,7 +7,7 @@ import org.jboss.resteasy.security.doseta.DKIMSignature;
 import org.jboss.resteasy.security.doseta.DosetaKeyRepository;
 import org.jboss.resteasy.security.doseta.Verification;
 import org.jboss.resteasy.spi.MarshalledEntity;
-import org.jboss.resteasy.util.ParameterParser;
+import org.jboss.resteasy.reactive.common.util.ParameterParser;
 import org.junit.Assert;
 
 import javax.ws.rs.Consumes;

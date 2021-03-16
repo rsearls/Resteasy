@@ -28,7 +28,7 @@ import org.jboss.resteasy.plugins.providers.jaxb.i18n.LogMessages;
 import org.jboss.resteasy.plugins.providers.jaxb.i18n.Messages;
 import org.jboss.resteasy.spi.ResteasyConfiguration;
 import org.jboss.resteasy.util.NoContent;
-import org.jboss.resteasy.util.TypeConverter;
+import org.jboss.resteasy.reactive.common.util.TypeConverter;
 import org.xml.sax.InputSource;
 
 /**

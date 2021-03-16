@@ -25,7 +25,7 @@ import org.jboss.resteasy.client.jaxrs.internal.ClientInvocation;
 import org.jboss.resteasy.client.jaxrs.internal.ClientResponse;
 import org.jboss.resteasy.client.jaxrs.internal.FinalizedClientResponse;
 import org.jboss.resteasy.spi.config.ConfigurationFactory;
-import org.jboss.resteasy.util.CaseInsensitiveMap;
+import org.jboss.resteasy.reactive.common.util.CaseInsensitiveMap;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;

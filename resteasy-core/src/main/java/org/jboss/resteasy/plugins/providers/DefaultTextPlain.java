@@ -3,7 +3,7 @@ package org.jboss.resteasy.plugins.providers;
 import org.jboss.resteasy.spi.AsyncMessageBodyWriter;
 import org.jboss.resteasy.spi.AsyncOutputStream;
 import org.jboss.resteasy.util.NoContent;
-import org.jboss.resteasy.util.TypeConverter;
+import org.jboss.resteasy.reactive.common.util.TypeConverter;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;

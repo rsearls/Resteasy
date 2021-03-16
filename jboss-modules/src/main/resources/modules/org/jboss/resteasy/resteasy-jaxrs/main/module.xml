@@ -55,5 +55,8 @@
         <module name="org.jboss.resteasy.resteasy-jaxrs-public" export="true"/>
         <module name="org.jboss.resteasy.resteasy-cdi"/>
         <module name="org.jboss.weld.api"/>
+        <module name="io.quarkus.resteasy.reactive.resteasy-reactive" export="true"/>
+        <module name="io.quarkus.resteasy.reactive.resteasy-reactive-common" export="true"/>
+        <module name="io.quarkus.resteasy.reactive.resteasy-reactive-client" export="true"/>
     </dependencies>
 </module>

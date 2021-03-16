@@ -3,7 +3,7 @@ package org.jboss.resteasy.security.doseta;
 import org.jboss.resteasy.security.SigningAlgorithm;
 import org.jboss.resteasy.security.doseta.i18n.Messages;
 import org.jboss.resteasy.specimpl.MultivaluedMapImpl;
-import org.jboss.resteasy.util.ParameterParser;
+import org.jboss.resteasy.reactive.common.util.ParameterParser;
 
 import javax.ws.rs.core.MultivaluedMap;
 

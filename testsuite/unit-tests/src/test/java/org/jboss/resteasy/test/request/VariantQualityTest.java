@@ -1,7 +1,7 @@
 package org.jboss.resteasy.test.request;
 
-import org.jboss.resteasy.core.request.QualityValue;
-import org.jboss.resteasy.core.request.VariantQuality;
+import org.jboss.resteasy.reactive.server.core.request.QualityValue;
+import org.jboss.resteasy.reactive.server.core.request.VariantQuality;
 import org.junit.Test;
 
 import java.math.BigDecimal;

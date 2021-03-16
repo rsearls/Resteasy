@@ -6,6 +6,7 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriBuilderException;
 
 import org.jboss.resteasy.resteasy_jaxrs.i18n.Messages;
+import org.jboss.resteasy.reactive.common.jaxrs.LinkImpl;
 
 import java.net.URI;
 import java.util.HashMap;
