@@ -1020,6 +1020,12 @@
                 <groupId>io.quarkus.resteasy.reactive</groupId>
                 <artifactId>resteasy-reactive-common</artifactId>
                 <version>${version-resteasy-reactive}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>io.quarkus.resteasy.reactive</groupId>
+                        <artifactId>resteasy-reactive-runtime-delegate</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>
