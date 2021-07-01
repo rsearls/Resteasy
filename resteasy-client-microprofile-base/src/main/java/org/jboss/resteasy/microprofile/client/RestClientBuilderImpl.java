@@ -54,6 +54,7 @@ import java.net.URL;
 import java.security.AccessController;
 import java.security.KeyStore;
 import java.security.PrivilegedAction;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -243,22 +244,15 @@ public class RestClientBuilderImpl implements RestClientBuilder {
         ResteasyClient client;
 
         ResteasyClientBuilder resteasyClientBuilder;
-        List<String> noProxyHosts = Arrays.asList(
-                getSystemProperty("http.nonProxyHosts", "localhost|127.*|[::1]").split("\\|"));
+        String noProxyHostsStr = getSystemProperty("http.nonProxyHosts", "localhost|127.*|[::1]");
         if (this.proxyHost != null) {
             resteasyClientBuilder = builderDelegate.defaultProxy(proxyHost, this.proxyPort);
         } else {
             String envProxyHost = getSystemProperty("http.proxyHost", null);
             boolean isUriMatched = false;
-            if (envProxyHost != null && !noProxyHosts.isEmpty()) {
-                for (String s : noProxyHosts) {
-                    Pattern p = Pattern.compile(s);
-                    Matcher m = p.matcher(baseURI.getHost());
-                    isUriMatched = m.matches();
-                    if (isUriMatched) {
-                        break;
-                    }
-                }
+
+            if (envProxyHost != null && !noProxyHostsStr.isEmpty()) {
+                isUriMatched = checkHostValidity(noProxyHostsStr, baseURI.getHost());
             }
 
             if (envProxyHost != null && !isUriMatched) {
@@ -341,6 +335,61 @@ public class RestClientBuilderImpl implements RestClientBuilder {
                 new ProxyInvocationHandler(aClass, actualClient, getLocalProviderInstances(), client, beanManager));
         ClientHeaderProviders.registerForClass(aClass, proxy, beanManager);
         return proxy;
+    }
+
+    /**
+     * Convert list of allowable hosts to regex strings and evaluate proposed host.
+     * @param srcRulesStr
+     * @param hostname
+     * @return
+     */
+    public boolean checkHostValidity(String srcRulesStr, String hostname) {
+        // retain '.' as a char; not a regex special char
+        String rulesStr = srcRulesStr.replaceAll("\\.", "\\\\.");
+        String [] rulesList = rulesStr.split("\\|");
+        ArrayList<String> rulesRegexPats = new ArrayList();
+
+        for (String s : rulesList) {
+            ArrayList<String> wCardArray = new ArrayList();
+            String[] wildCardList = s.split("\\*");
+
+            if (wildCardList.length == 1) {
+                wCardArray.add(wildCardList[0]);
+            } else {
+                for (int i = 0; i < wildCardList.length - 1; i++) {
+                    if (s.startsWith("*")) {
+                        wCardArray.add("*");
+                    } else {
+                        wCardArray.add(wildCardList[i]);
+                        wCardArray.add("*");
+                    }
+                }
+                wCardArray.add(wildCardList[wildCardList.length - 1]);
+            }
+            if (s.endsWith("*")) {
+                wCardArray.add("*");
+            }
+            // make regex substitutions
+            StringBuilder sb = new StringBuilder();
+            for (String ss : wCardArray) {
+                if (ss.equals("*")) {
+                    sb.append("(.+?)");
+                } else {
+                    sb.append("(" + ss + ")");
+                }
+            }
+            rulesRegexPats.add("(" + sb.toString() + ")");
+        }
+
+        // check for a valid host
+        for (String r : rulesRegexPats) {
+            Pattern pattern = Pattern.compile(r);
+            Matcher matcher = pattern.matcher(hostname);
+            if (matcher.matches()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
