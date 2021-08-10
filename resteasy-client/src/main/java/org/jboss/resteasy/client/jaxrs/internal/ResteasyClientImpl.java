@@ -4,6 +4,8 @@ import org.jboss.resteasy.client.jaxrs.ClientHttpEngine;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.jboss.resteasy.client.jaxrs.i18n.Messages;
+import org.jboss.resteasy.concurrent.ContextualExecutors;
+import org.jboss.resteasy.concurrent.ContextualScheduledExecutorService;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -28,25 +30,27 @@ public class ResteasyClientImpl implements ResteasyClient
 {
    protected final ClientHttpEngine httpEngine;
    protected final ExecutorService asyncInvocationExecutor;
-   protected final ScheduledExecutorService scheduledExecutorService;
+   protected final ContextualScheduledExecutorService scheduledExecutorService;
    protected ClientConfiguration configuration;
    protected boolean closed;
    protected boolean cleanupExecutor;
 
 
    protected ResteasyClientImpl(final ClientHttpEngine httpEngine, final ExecutorService asyncInvocationExecutor, final boolean cleanupExecutor,
-                                final ScheduledExecutorService scheduledExecutorService, final ClientConfiguration configuration)
+                                // rls test  final ContextualScheduledExecutorService scheduledExecutorService,
+                                final ScheduledExecutorService scheduledExecutorService,
+                                final ClientConfiguration configuration)
    {
       this.cleanupExecutor = cleanupExecutor;
       this.httpEngine = httpEngine;
       this.asyncInvocationExecutor = asyncInvocationExecutor;
       this.configuration = configuration;
-      this.scheduledExecutorService = scheduledExecutorService;
+      this.scheduledExecutorService = (ContextualScheduledExecutorService)scheduledExecutorService;
    }
 
    protected ResteasyClientImpl(final ClientHttpEngine httpEngine, final ExecutorService asyncInvocationExecutor, final boolean cleanupExecutor, final ClientConfiguration configuration)
    {
-      this(httpEngine, asyncInvocationExecutor, cleanupExecutor, null, configuration);
+      this(httpEngine, asyncInvocationExecutor, cleanupExecutor, ContextualExecutors.scheduledThreadPool(), configuration);
    }
 
    public ClientHttpEngine httpEngine()

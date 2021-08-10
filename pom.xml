@@ -110,7 +110,9 @@
                 <module>resteasy-client-microprofile</module>
                 <module>resteasy-client-jetty</module>
                 <module>resteasy-client-vertx</module>
+                <!-- rls test
                 <module>resteasy-client-reactor-netty</module>
+                -->
                 <module>providers</module>
                 <module>resteasy-cache</module>
                 <module>resteasy-guice</module>
@@ -365,6 +367,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- rls TMP for Experimental -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
@@ -414,6 +417,7 @@
                     </execution>
                 </executions>
             </plugin>
+     <!-- rls end       -->
         </plugins>
     </build>
     <reporting>

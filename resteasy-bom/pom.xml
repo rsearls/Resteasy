@@ -146,11 +146,13 @@
                 <artifactId>resteasy-client-vertx</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!-- rls test
             <dependency>
                 <groupId>org.jboss.resteasy</groupId>
                 <artifactId>resteasy-client-reactor-netty</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            -->
             <dependency>
                 <groupId>org.jboss.resteasy</groupId>
                 <artifactId>resteasy-client-microprofile</artifactId>
