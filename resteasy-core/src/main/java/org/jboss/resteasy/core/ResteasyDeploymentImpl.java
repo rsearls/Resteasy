@@ -1,5 +1,6 @@
 package org.jboss.resteasy.core;
 
+import jakarta.ws.rs.container.DynamicFeature;
 import org.jboss.resteasy.core.providerfactory.ResteasyProviderFactoryImpl;
 import org.jboss.resteasy.plugins.interceptors.RoleBasedSecurityFeature;
 import org.jboss.resteasy.plugins.providers.JaxrsServerFormUrlEncodedProvider;
@@ -9,6 +10,7 @@ import org.jboss.resteasy.plugins.server.resourcefactory.JndiComponentResourceFa
 import org.jboss.resteasy.plugins.server.servlet.ResteasyContextParameters;
 import org.jboss.resteasy.resteasy_jaxrs.i18n.LogMessages;
 import org.jboss.resteasy.resteasy_jaxrs.i18n.Messages;
+import org.jboss.resteasy.spi.PriorityServiceLoader;
 import org.jboss.resteasy.spi.config.ConfigurationFactory;
 import org.jboss.resteasy.spi.Dispatcher;
 import org.jboss.resteasy.spi.InjectorFactory;
@@ -28,8 +30,10 @@ import jakarta.ws.rs.core.Feature;
 import jakarta.ws.rs.core.FeatureContext;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.ext.Providers;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -43,6 +47,7 @@ import java.util.TreeMap;
  */
 public class ResteasyDeploymentImpl implements ResteasyDeployment
 {
+   private final String JAKARTA_WS_RS_LOADSERVICES = "jakarta.ws.rs.loadServices";
    protected boolean widerRequestMatching;
    protected boolean useContainerFormParams = false;
    protected boolean deploymentSensitiveFactoryEnabled = false;
@@ -610,6 +615,7 @@ public class ResteasyDeploymentImpl implements ResteasyDeployment
             useScanning = false;
          }
       }
+      processApplicationServices(application);
       return useScanning;
    }
 
@@ -1125,5 +1131,50 @@ public class ResteasyDeploymentImpl implements ResteasyDeployment
    @Override
    public void setStatisticsEnabled(boolean statisticsEnabled) {
       this.statisticsEnabled = statisticsEnabled;
+   }
+
+   /**
+    * REST 3.1 Section 4.1.2
+    *   * classes provided via the application getClasses method or classes found
+    *     through scanning the classes in the WAR file are processed by the existing
+    *     procedures.
+    *   * JAR files in the war file are evaluated for service classes. When property
+    *     "jakarta.ws.rs.loadServices" is set to FALSE service classes implementing
+    *     type DynamicFeature or Feature are NOT processed.
+    */
+   private void processApplicationServices(Application config) {
+      /******* this is a tmp part of testing.
+      {
+         PriorityServiceLoader<Providers> psl =
+                 PriorityServiceLoader.load(Providers.class);
+         Iterator<Providers> it = psl.iterator();
+         while (it.hasNext()) {
+               actualProviderClasses.add(((Object)it.next()).getClass());
+         }
+      }
+      *************/
+
+      boolean flag = true;
+      if (config != null) {
+         Object obj = config.getProperties().get(JAKARTA_WS_RS_LOADSERVICES);
+         flag = (obj == null) ? true : (boolean)obj;
+      }
+
+      if (flag) {
+         {
+            PriorityServiceLoader<DynamicFeature> psl = PriorityServiceLoader.load(DynamicFeature.class);
+            Iterator<DynamicFeature> it = psl.iterator();
+            while (it.hasNext()) {
+               actualProviderClasses.add(it.next().getClass());
+            }
+         }
+         {
+            PriorityServiceLoader<Feature> psl = PriorityServiceLoader.load(Feature.class);
+            Iterator<Feature> it = psl.iterator();
+            while (it.hasNext()) {
+               actualProviderClasses.add(it.next().getClass());
+            }
+         }
+      }
    }
 }
