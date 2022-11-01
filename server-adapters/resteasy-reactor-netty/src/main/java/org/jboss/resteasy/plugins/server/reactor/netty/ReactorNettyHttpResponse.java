@@ -56,7 +56,11 @@ public class ReactorNettyHttpResponse implements HttpResponse {
 
     @Override
     public void setStatus(int status) {
-        resp.status(status);
+        if (!resp.hasSentHeaders()) {
+            resp.status(status);
+        } else {
+            throw new IllegalStateException(Messages.MESSAGES.alreadyCommitted());
+        }
     }
 
     @Override

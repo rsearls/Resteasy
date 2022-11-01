@@ -13,7 +13,42 @@
     <name>RESTEasy Reactor-Netty Integration</name>
     <description/>
 
+    <properties>
+        <byteman.version>4.0.20</byteman.version>
+    </properties>
     <dependencies>
+        <!-- rls debugging only ... to be removed -->
+        <dependency>
+            <groupId>org.jboss.byteman</groupId>
+            <artifactId>byteman</artifactId>
+            <version>${byteman.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.byteman</groupId>
+            <artifactId>byteman-submit</artifactId>
+            <scope>test</scope>
+            <version>${byteman.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.byteman</groupId>
+            <artifactId>byteman-install</artifactId>
+            <scope>test</scope>
+            <version>${byteman.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.byteman</groupId>
+            <artifactId>byteman-bmunit</artifactId>
+            <scope>test</scope>
+            <version>${byteman.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.testng</groupId>
+                    <artifactId>testng</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- ########### -->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-common</artifactId>
@@ -176,6 +211,37 @@
                                    </includes>
                                </configuration>
                            </execution>
+                           <!-- rls test plugin start -->
+                           <execution>
+                               <id>byteman data</id>
+                               <goals>
+                                   <goal>test</goal>
+                               </goals>
+                               <configuration>
+                                   <includes>
+                                       <include>org/jboss/resteasy/test/StreamingOutputTest.java</include>
+                                   </includes>
+                                   <systemPropertyVariables>
+                                       <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                                   </systemPropertyVariables>
+                                   <!-- ensure we don't inherit a byteman jar form any env settings -->
+                                   <useSystemClassLoader>true</useSystemClassLoader>
+                                   <useManifestOnlyJar>true</useManifestOnlyJar>
+                                   <forkMode>once</forkMode>
+                                   <parallel>false</parallel>
+                                   <environmentVariables>
+                                       <BYTEMAN_HOME></BYTEMAN_HOME>
+                                   </environmentVariables>
+                                   <systemProperties>
+                                       <property>
+                                           <name>org.jboss.byteman.home</name>
+                                           <value></value>
+                                       </property>
+                                   </systemProperties>
+                                   <argLine>-Djdk.attach.allowAttachSelf</argLine>
+                               </configuration>
+                           </execution>
+                           <!-- rls test plugin end -->
                        </executions>
                     </plugin>
                 </plugins>

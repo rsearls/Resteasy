@@ -1,0 +1,12 @@
+RULE test method testConcurrent ENTERED
+CLASS org.jboss.resteasy.test.StreamingOutputTest
+METHOD testConcurrent()
+DO debug("ENTERED testConcurrent")
+ENDRULE
+
+RULE test method testConcurrent EXIT
+CLASS org.jboss.resteasy.test.StreamingOutputTest
+METHOD testConcurrent()
+AT EXIT
+DO debug("EXIT testConcurrent")
+ENDRULE

@@ -161,7 +161,9 @@
                 <module>resteasy-feature-pack</module>
                 <module>arquillian</module>
                 <module>profiling-tests</module>
+                <!-- rls tmp
                 <module>testsuite</module>
+                -->
                 <!-- Build this last -->
                 <module>resteasy-bom</module>
             </modules>
