@@ -45,3 +45,6 @@ jobs:
         with:
           name: server-logs
           path: '**/*.log'
+      - name: Display Byteman data
+        run: cat server-adapters/resteasy-reactor-netty/target/surefire-reports/TEST-org.jboss.resteasy.test.StreamingOutputTest.xml
+

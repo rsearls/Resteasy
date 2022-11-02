@@ -157,6 +157,73 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jboss.byteman</groupId>
+                <artifactId>byteman-rulecheck-maven-plugin</artifactId>
+                <version>${byteman.version}</version>
+                <executions>
+                    <execution>
+                        <id>rulecheck-test</id>
+                        <goals>
+                            <goal>rulecheck</goal>
+                        </goals>
+                        <configuration>
+                            <packages>
+                                <package>org.jboss.resteasy.test</package>
+                                <package>reactor.netty.http</package>
+                            </packages>
+                            <includes>
+                                <include>**/*.btm</include>
+                            </includes>
+                            <verbose>true</verbose>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <executions>
+                    <!-- rls test plugin start -->
+                    <execution>
+                        <id>byteman data</id>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>org/jboss/resteasy/test/StreamingOutputTest.java</include>
+                            </includes>
+                            <systemPropertyVariables>
+                                <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                            </systemPropertyVariables>
+                            <!-- ensure we don't inherit a byteman jar form any env settings -->
+                            <useSystemClassLoader>true</useSystemClassLoader>
+                            <useManifestOnlyJar>true</useManifestOnlyJar>
+                            <forkMode>once</forkMode>
+                            <!-- rls
+                            <parallel>false</parallel>
+                            -->
+                            <environmentVariables>
+                                <BYTEMAN_HOME></BYTEMAN_HOME>
+                            </environmentVariables>
+                            <systemProperties>
+                                <property>
+                                    <name>org.jboss.byteman.home</name>
+                                    <value></value>
+                                </property>
+                            </systemProperties>
+                            <argLine>-Djdk.attach.allowAttachSelf</argLine>
+                        </configuration>
+                    </execution>
+                    <!-- rls test plugin end -->
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
     <profiles>
         <profile>
             <id>i18n</id>
@@ -211,37 +278,6 @@
                                    </includes>
                                </configuration>
                            </execution>
-                           <!-- rls test plugin start -->
-                           <execution>
-                               <id>byteman data</id>
-                               <goals>
-                                   <goal>test</goal>
-                               </goals>
-                               <configuration>
-                                   <includes>
-                                       <include>org/jboss/resteasy/test/StreamingOutputTest.java</include>
-                                   </includes>
-                                   <systemPropertyVariables>
-                                       <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-                                   </systemPropertyVariables>
-                                   <!-- ensure we don't inherit a byteman jar form any env settings -->
-                                   <useSystemClassLoader>true</useSystemClassLoader>
-                                   <useManifestOnlyJar>true</useManifestOnlyJar>
-                                   <forkMode>once</forkMode>
-                                   <parallel>false</parallel>
-                                   <environmentVariables>
-                                       <BYTEMAN_HOME></BYTEMAN_HOME>
-                                   </environmentVariables>
-                                   <systemProperties>
-                                       <property>
-                                           <name>org.jboss.byteman.home</name>
-                                           <value></value>
-                                       </property>
-                                   </systemProperties>
-                                   <argLine>-Djdk.attach.allowAttachSelf</argLine>
-                               </configuration>
-                           </execution>
-                           <!-- rls test plugin end -->
                        </executions>
                     </plugin>
                 </plugins>
