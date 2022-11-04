@@ -202,7 +202,9 @@
                             <!-- ensure we don't inherit a byteman jar form any env settings -->
                             <useSystemClassLoader>true</useSystemClassLoader>
                             <useManifestOnlyJar>true</useManifestOnlyJar>
+                            <!-- rls test
                             <forkMode>once</forkMode>
+                            -->
                             <!-- rls
                             <parallel>false</parallel>
                             -->
