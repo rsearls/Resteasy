@@ -49,9 +49,6 @@
                     <systemPropertyVariables>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                     </systemPropertyVariables>
-                    <!--
-                    <argLine>-Djdk.attach.allowAttachSelf</argLine>
-                    -->
                 </configuration>
             </plugin>
         </plugins>
