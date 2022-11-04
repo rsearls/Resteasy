@@ -8,7 +8,7 @@ on:
       os:
         description: "Runner OS"
         required: true
-        default: "ubuntu-latest"
+        default: "windows-latest"
         type: string
       javaVersion:
         description: "Java Version"
