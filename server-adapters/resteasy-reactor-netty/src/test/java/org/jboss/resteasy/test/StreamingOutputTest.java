@@ -34,8 +34,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.jboss.resteasy.test.TestPortProvider.generateURL;
-// rls start byteman debug .. to be removed
-import reactor.blockhound.BlockHound;
+// rls start byteman debug .. to be removed;
 import org.jboss.byteman.contrib.bmunit.BMScript;
 import org.jboss.byteman.contrib.bmunit.BMUnitConfig;
 import org.junit.runner.RunWith;
@@ -160,7 +159,6 @@ public class StreamingOutputTest
             }
          }
       };
-      BlockHound.install(); // rls debug
       Thread t = new Thread(r);
       t.start();
       Future<Response> futureResponse = client.target(BASE_URI)
