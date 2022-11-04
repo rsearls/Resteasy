@@ -217,6 +217,7 @@
                             </systemProperties>
                             <argLine>-Djdk.attach.allowAttachSelf</argLine>
                             <redirectTestOutputToFile>false</redirectTestOutputToFile><!-- rls test -->
+                            <useUnlimitedThreads>true</useUnlimitedThreads><!-- rls test -->
                         </configuration>
                     </execution>
                     <!-- rls test plugin end -->
