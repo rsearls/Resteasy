@@ -7,6 +7,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 //import org.junit.Ignore;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import jakarta.ws.rs.GET;
@@ -131,6 +132,7 @@ public class StreamingOutputTest
       ReactorNettyContainer.stop();
    }
 
+   @Ignore  // rls test 
    @Test
    public void testConcurrent() throws Exception
    {
