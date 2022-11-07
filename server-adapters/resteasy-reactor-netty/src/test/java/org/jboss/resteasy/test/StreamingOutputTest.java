@@ -177,7 +177,8 @@ public class StreamingOutputTest
       Assert.assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
       Assert.assertEquals(expectedText, response.readEntity(String.class));
    }
-
+   // ignore rls test
+   @Ignore
    @Test
    public void testStreamingOutput() throws Exception
    {
@@ -195,7 +196,8 @@ public class StreamingOutputTest
               "\n"));
       Assert.assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
    }
-
+   // ignore rls test
+   @Ignore
    @Test
    public void testStreamingOutputForLargeContent()
    {
