@@ -40,8 +40,8 @@ import org.jboss.byteman.contrib.bmunit.BMScript;
 import org.jboss.byteman.contrib.bmunit.BMUnitConfig;
 import org.junit.runner.RunWith;
 @RunWith(org.jboss.byteman.contrib.bmunit.BMUnitRunner.class)
-@BMUnitConfig(loadDirectory="target/test-classes")
-//@BMUnitConfig(loadDirectory="target/test-classes", debug=true, verbose=true, bmunitVerbose = true)
+//@BMUnitConfig(loadDirectory="target/test-classes")
+@BMUnitConfig(loadDirectory="target/test-classes", debug=true, verbose=true, bmunitVerbose = true)
 @BMScript(value="check.btm")
 // rls end byteman debug .. to be removed
 /**
