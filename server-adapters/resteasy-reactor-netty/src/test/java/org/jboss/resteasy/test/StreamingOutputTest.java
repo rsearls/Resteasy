@@ -133,7 +133,7 @@ public class StreamingOutputTest
    }
 
    // ignore rls test
-   @Ignore
+   //@Ignore
    @Test
    public void testConcurrent() throws Exception
    {
@@ -178,7 +178,7 @@ public class StreamingOutputTest
       Assert.assertEquals(expectedText, response.readEntity(String.class));
    }
    // ignore rls test
-   @Ignore
+   //@Ignore
    @Test
    public void testStreamingOutput() throws Exception
    {
@@ -197,13 +197,14 @@ public class StreamingOutputTest
       Assert.assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
    }
    // ignore rls test
-   @Ignore
+   //@Ignore
    @Test
    public void testStreamingOutputForLargeContent()
    {
       testStreamingLargeContent("/org/jboss/resteasy/test/largeContent");
    }
-
+   // ignore rls test
+   @Ignore
    @Test
    public void testAsyncStreamingOutputForLargeContent()
    {
