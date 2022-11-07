@@ -197,7 +197,7 @@ public class StreamingOutputTest
       Assert.assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
    }
    // ignore rls test
-   //@Ignore
+   @Ignore
    @Test
    public void testStreamingOutputForLargeContent()
    {
