@@ -42,5 +42,6 @@ target
 jaxrs/security/resteasy-crypto/*signed*.txt
 myDB.script
 myDB.properties
+**/.cache/
 
 .DS_Store
