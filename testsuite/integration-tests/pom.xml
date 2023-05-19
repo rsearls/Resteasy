@@ -523,6 +523,7 @@
                 <configuration>
                     <environmentVariables>
                         <TEST_ENV_VAR>test-env-value</TEST_ENV_VAR>
+                        <project.target.dir>${build.directory}</project.target.dir>
                     </environmentVariables>
                     <systemPropertyVariables>
                         <module.jar.path>${module.jar.path}</module.jar.path>

@@ -1,0 +1,22 @@
+package org.jboss.resteasy.test.resource.param.resource;
+
+import java.io.File;
+
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.annotation.WebListener;
+
+@WebListener
+public class PostOfficeServletContextListener implements ServletContextListener {
+
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+        if (!new File(PostOfficeResource.UPLOAD_FOLDER).exists()) {
+            new File(PostOfficeResource.UPLOAD_FOLDER).mkdir();
+        }
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+    }
+}
